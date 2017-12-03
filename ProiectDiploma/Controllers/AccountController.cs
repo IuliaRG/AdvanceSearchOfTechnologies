@@ -18,6 +18,7 @@ using ProiectDiploma.Providers;
 using ProiectDiploma.Results;
 using BusinessObjects;
 using Abstracts;
+using DAL;
 
 namespace ProiectDiploma.Controllers
 {
@@ -30,6 +31,41 @@ namespace ProiectDiploma.Controllers
 
         public AccountController()
         {
+        }
+
+        public class RoleDto
+        {
+            public string Name { get; set; }
+        }
+
+        [AllowAnonymous]
+        [Route("AddNewRole")]
+        public async Task<IHttpActionResult> AddNewRole(RoleDto model)
+        {
+            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            IdentityRole role = new IdentityRole(model.Name);
+            var result = await roleManager.CreateAsync(role);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+       // [Authorize(Roles = "Admin")]
+        [Route("AssignToRole")]
+        public async Task<IHttpActionResult> AssignToRole(RegisterBindingModel model, string RoleName)
+        {
+            var user = await UserManager.FindByNameAsync(model.Email);
+            var result = await UserManager.AddToRoleAsync(user.Id, RoleName);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -468,6 +504,7 @@ namespace ProiectDiploma.Controllers
                     LoginProvider = providerKeyClaim.Issuer,
                     ProviderKey = providerKeyClaim.Value,
                     UserName = identity.FindFirstValue(ClaimTypes.Name)
+
                 };
             }
         }

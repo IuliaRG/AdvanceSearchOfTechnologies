@@ -74,7 +74,9 @@
     <Compile Include="Dto\StudentDetailsDto.cs" />
     <Compile Include="Dto\TeacherDetailsDto.cs" />
     <Compile Include="Dto\UserDetailsDto.cs" />
+    <Compile Include="Entity\ApplicationRole.cs" />
     <Compile Include="Entity\ApplicationUser.cs" />
+    <Compile Include="Entity\ApplicationUserRole.cs" />
     <Compile Include="Entity\StudentDetails.cs" />
     <Compile Include="Entity\TeacherDetails.cs" />
     <Compile Include="Entity\UserDetails.cs" />

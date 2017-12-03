@@ -46,11 +46,11 @@ namespace BuisniessLogic
         }
         public void InitDetails(object userId)
         {
-            
-                var entity = userRepository.GetById(userId);
-                entity.UserDetails = new UserDetails();
-                userRepository.Save();
-           
+
+            var entity = userRepository.GetById(userId);
+            entity.UserDetails = new UserDetails();
+            userRepository.Save();
+
         }
         /*   public void AddStudent(StudentDetailsDto Student)
              {
@@ -60,14 +60,13 @@ namespace BuisniessLogic
                      studentDetailsRepository.Save();
                  }*/
         public void UpdateStudent()
-
         {
 
         }
         public void AddOrUpdateStudent(StudentDetailsDto Student)
         {
-            StudentDetails entityStudent=null;
-            if ( Student.Id!=null)
+            StudentDetails entityStudent = null;
+            if (Student.Id != null)
             {
                 entityStudent = studentDetailsRepository.GetById(Student.Id);
                 var entity = SchoolMapper.FromStudentDetailsDtos(Student, entityStudent);
@@ -80,13 +79,11 @@ namespace BuisniessLogic
                 studentDetailsRepository.Insert(entity);
             }
 
-          
-               
             studentDetailsRepository.Save();
         }
         public void AddTeacher(TeacherDetailsDto Student)
         {
-            
+
             var entity = SchoolMapper.FromTeachersDetailsDtos(Student);
             teacherDetailsRepository.Insert(entity);
             teacherDetailsRepository.Save();
@@ -99,7 +96,7 @@ namespace BuisniessLogic
             userDetailsRepository.Insert(entity);
             userDetailsRepository.Save();
         }
-       
+
         public IEnumerable<StudentDetailsDto> GetAllStudents()
         {
             throw new NotImplementedException();
@@ -110,11 +107,4 @@ namespace BuisniessLogic
             throw new NotImplementedException();
         }
     }
-
-        }
-
-       
-
-        
-
-
+}

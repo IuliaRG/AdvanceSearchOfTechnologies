@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Abstracts
 {
-   public class DataToCheck
+    public enum UserRole
     {
-       public enum UserRole { NormalUser, Admin, UserTest2 };
-    }
+        NormalUser = 0,
+        Admin,
+        UserTest2
+    };
 }

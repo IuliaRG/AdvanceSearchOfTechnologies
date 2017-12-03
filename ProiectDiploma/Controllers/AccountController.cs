@@ -54,11 +54,19 @@ namespace ProiectDiploma.Controllers
             return Ok();
         }
 
-       // [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("AssignToRole")]
         public async Task<IHttpActionResult> AssignToRole(RegisterBindingModel model, string RoleName)
         {
+            var id = RequestContext.Principal.Identity.GetUserId();
+            var isAdmin = await UserManager.IsInRoleAsync(id, "Admin");
+            if (!isAdmin)
+            {
+                return Unauthorized();
+            }
+
             var user = await UserManager.FindByNameAsync(model.Email);
+            var roles = await UserManager.GetRolesAsync(id);
             var result = await UserManager.AddToRoleAsync(user.Id, RoleName);
             if (!result.Succeeded)
             {

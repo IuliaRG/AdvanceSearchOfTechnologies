@@ -21,17 +21,17 @@ namespace DAL
         protected override void Seed(ApplicationDbContext context)
         {
            
-            if (!(context.Roles.Any(it => it.Name == DataToCheck.UserRole.Admin.ToString())))
+            if (!(context.Roles.Any(it => it.Name == UserRole.Admin.ToString())))
             {
-                context.Roles.AddOrUpdate(new ApplicationRole() { Name = DataToCheck.UserRole.Admin.ToString() });
+                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.Admin.ToString() });
             }
-            if (!(context.Roles.Any(it => it.Name == DataToCheck.UserRole.NormalUser.ToString())))
+            if (!(context.Roles.Any(it => it.Name == UserRole.NormalUser.ToString())))
             {
-                context.Roles.AddOrUpdate(new ApplicationRole() { Name = DataToCheck.UserRole.NormalUser.ToString()  });
+                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.NormalUser.ToString()  });
             }
-          if (!(context.Roles.Any(it => it.Name == DataToCheck.UserRole.UserTest2.ToString())))
+          if (!(context.Roles.Any(it => it.Name == UserRole.UserTest2.ToString())))
             {
-                context.Roles.AddOrUpdate(new ApplicationRole() { Name = DataToCheck.UserRole.UserTest2.ToString() });
+                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.UserTest2.ToString() });
             }
      
             context.SaveChanges();

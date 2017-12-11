@@ -4,4 +4,5 @@
 angular.module('AdvanceSearchTechnologies', [
     'ngRoute',
     'home',
+    'usersmanager',
 ]);

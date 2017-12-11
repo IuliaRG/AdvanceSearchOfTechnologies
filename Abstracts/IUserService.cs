@@ -9,16 +9,13 @@ namespace Abstracts
 {
     public interface IUserService
     {
-        UserDetailsDto GetUser();
-        IEnumerable<StudentDetailsDto> GetAll();
-        IEnumerable<StudentDetailsDto> GetAllStudents();
-        IEnumerable<TeacherDetailsDto> GetAllTechers();
-
+        ApplicationUser GetUser(object id);
+        IEnumerable<ApplicationUserDto> GetUsersOnPage(ItemsPaginingParametersDto parameters);
+        IEnumerable<ApplicationUserDto> GetAllUsers();
         void InitDetails(object userId);
-        void AddOrUpdateStudent(StudentDetailsDto Student);
-        void AddTeacher(TeacherDetailsDto Student);
-        void AddUser(UserDetailsDto Student);
-
+        void DeleteUser(object id);
+       
+        void AddOrUpdateUser(ApplicationUserDto user);
 
     }
 }

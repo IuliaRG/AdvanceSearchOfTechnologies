@@ -11,7 +11,7 @@ namespace BusinessObjects
 {
     public class ApplicationUser : IdentityUser
     {
-        private UserManager<IdentityUser> userManager;
+       // private UserManager<IdentityUser> userManager;
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -19,7 +19,8 @@ namespace BusinessObjects
             // Add custom user claims here
             return userIdentity;
         }
-       
+        public Boolean IsDeleted { get; set; }
+        public Boolean IsActive { get; set; }
         public virtual UserDetails UserDetails { get; set; }
 
     }

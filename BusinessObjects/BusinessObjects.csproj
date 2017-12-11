@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\ApplicationUserDto.cs" />
+    <Compile Include="Dto\ItemsPaginingParametersDto.cs" />
     <Compile Include="Dto\StudentDetailsDto.cs" />
     <Compile Include="Dto\TeacherDetailsDto.cs" />
     <Compile Include="Dto\UserDetailsDto.cs" />

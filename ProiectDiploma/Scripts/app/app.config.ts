@@ -9,6 +9,9 @@ angular.
                 when('/home', {
                     template: '<home></home>'
                 }).
+                when('/usersmanager', {
+                    template: '<usersmanager></usersmanager>'
+                }).
                 otherwise('/home');
         }
     ]);

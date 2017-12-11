@@ -16,6 +16,7 @@ namespace BuisniessLogic
         IRepository<ApplicationUser> userRepository;
         IRepository<StudentDetails> studentDetailsRepository;
         IRepository<TeacherDetails> teacherDetailsRepository;
+        IEnumerable<UserDetailsDto> usersToSend;
 
         public UserService(IRepository<UserDetails> userDetailsRepository, IRepository<ApplicationUser> userRepository, IRepository<TeacherDetails> teacherDetailsRepository, IRepository<StudentDetails> studentDetailsRepository)
         {
@@ -24,26 +25,43 @@ namespace BuisniessLogic
             this.studentDetailsRepository = studentDetailsRepository;
             this.teacherDetailsRepository = teacherDetailsRepository;
         }
-        public UserDetailsDto GetUser()
-        {
-            var result = new UserDetailsDto();
-            result.Name = "Ana";
-            result.Address = "....";
-            return result;
-        }
-        /*  public IEnumerable<UserDetailsDto> GetAll()
-          {
-              var userEnitiy = userDetailsRepository.GetAll();
-              var result = userEnitiy.ToUserDetailsDtos();
-              return result;
-          }*/
 
-        public IEnumerable<StudentDetailsDto> GetAll()
+        /*   public IEnumerable<UserDetailsDto> GetAllUsers()
+           {
+               var userEnitiy = userDetailsRepository.GetAll();
+               var result = userEnitiy.ToUserDetailsDtos();
+               return result;
+           }*/
+        public IEnumerable<ApplicationUserDto> GetAllUsers()
         {
-            var userEnitiy = studentDetailsRepository.GetAll();
-            var result = userEnitiy.ToStudentDetailsDtos();
+            var userEnitiy = userRepository.GetAll();
+            var result = userEnitiy.ToApplicationUserDtos();
             return result;
         }
+        public IEnumerable<ApplicationUserDto> GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
+        {
+            var users= GetAllUsers();
+            IEnumerable<ApplicationUserDto> allUsers = users.AsQueryable();
+            var usersOrderByName=(from user in users.
+                         OrderBy(a => a.UserDetailsDto.FirstName)
+                        select user).AsQueryable();
+            if (paginationParameters.SearchText != null)
+            {
+                allUsers =
+               from user in users
+               where (user.UserDetailsDto.FirstName.Contains(paginationParameters.SearchText) || user.UserDetailsDto.LastName.Contains(paginationParameters.SearchText) || user.UserDetailsDto.Address.Contains(paginationParameters.SearchText) )
+               select user;
+                
+            }
+            int count = allUsers.Count();
+            int CurrentPage = paginationParameters.PageNumber;
+            int TotalPages = (int)Math.Ceiling(count / (double)paginationParameters.ItemsOnPage);
+            var usersToSend = allUsers.Skip((CurrentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            return usersToSend;
+            
+        }
+       
+
         public void InitDetails(object userId)
         {
 
@@ -52,18 +70,9 @@ namespace BuisniessLogic
             userRepository.Save();
 
         }
-        /*   public void AddStudent(StudentDetailsDto Student)
-             {
-
-                     var entity = SchoolMapper.FromStudentDetailsDtos(Student);
-                     studentDetailsRepository.Insert(entity);
-                     studentDetailsRepository.Save();
-                 }*/
-        public void UpdateStudent()
-        {
-
-        }
-        public void AddOrUpdateStudent(StudentDetailsDto Student)
+       
+      
+       /* public void AddOrUpdateStudent(StudentDetailsDto Student)
         {
             StudentDetails entityStudent = null;
             if (Student.Id != null)
@@ -81,30 +90,40 @@ namespace BuisniessLogic
 
             studentDetailsRepository.Save();
         }
-        public void AddTeacher(TeacherDetailsDto Student)
+       */
+      
+        public void AddOrUpdateUser(ApplicationUserDto user)
         {
+            ApplicationUser entityUser = null;
+            if (user.Id != null)
+            {
+                entityUser = userRepository.GetById(user.Id);
+                var entity = UserMapper.FromApplicationUserDto(user, entityUser);
+                userRepository.Update(entity);
+            }
+            else
+            {
+                entityUser = userRepository.GetById(user.Id);
+                var entity = UserMapper.FromApplicationUserDto(user, entityUser);
+                userRepository.Insert(entity);
+            }
 
-            var entity = SchoolMapper.FromTeachersDetailsDtos(Student);
-            teacherDetailsRepository.Insert(entity);
-            teacherDetailsRepository.Save();
+            userRepository.Save();
         }
-        public void AddUser(UserDetailsDto user)
-        {
 
-            //  var result = .ToStudentDetailsDtos();
-            var entity = UserDetailsMapper.FromUserDetailsDtos(user);
-            userDetailsRepository.Insert(entity);
-            userDetailsRepository.Save();
+        public void DeleteUser(object id)
+        {
+            var entity=userRepository.GetById(id);
+            entity.IsDeleted = true;
+            userRepository.Save();
         }
 
-        public IEnumerable<StudentDetailsDto> GetAllStudents()
+        public ApplicationUser GetUser(object id)
         {
-            throw new NotImplementedException();
-        }
+            var entity = userRepository.GetById(id);
+            return entity;
 
-        public IEnumerable<TeacherDetailsDto> GetAllTechers()
-        {
-            throw new NotImplementedException();
+
         }
     }
 }

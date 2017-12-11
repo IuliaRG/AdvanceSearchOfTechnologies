@@ -288,6 +288,8 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\home\home.template.html" />
+    <Content Include="Scripts\app\simpleuser\simpleusers.template.html" />
+    <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -386,6 +388,9 @@
     <TypeScriptCompile Include="Scripts\app\home\home.component.ts" />
     <TypeScriptCompile Include="Scripts\app\home\home.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\home\home.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
+    <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />

@@ -52,7 +52,7 @@ private IUserService service;
                  service.AddOrUpdateUser(user);
                   return Ok();
          }
-        [HttpDelete]
+        [Route("Delete/{id}")]
 
         public IHttpActionResult Delete(string id)
         {

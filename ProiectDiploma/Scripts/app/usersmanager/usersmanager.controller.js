@@ -1,15 +1,9 @@
 var UsersManagerController = (function () {
-    function UsersManagerController($window, $http) {
-        this.UsersManagerVM = new UsersManagerModel();
-        this.HttpService = $http;
+    function UsersManagerController(iDataService, $window, $http) {
+        this._httpService = $http;
+        this._iDataService = iDataService;
     }
     return UsersManagerController;
-}());
-var UsersManagerModel = (function () {
-    function UsersManagerModel() {
-        this.drones = new Array();
-    }
-    return UsersManagerModel;
 }());
 var UserManagerDto = (function () {
     function UserManagerDto(email, password) {

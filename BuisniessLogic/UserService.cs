@@ -118,7 +118,7 @@ namespace BuisniessLogic
             userRepository.Save();
         }
 
-        public ApplicationUser GetUser(object id)
+        public ApplicationUser GetUserById(object id)
         {
             var entity = userRepository.GetById(id);
             return entity;

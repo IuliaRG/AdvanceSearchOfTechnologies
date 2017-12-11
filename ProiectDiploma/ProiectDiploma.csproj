@@ -355,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\app\login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -385,9 +386,13 @@
     <TypeScriptCompile Include="Scripts\app\app.config.ts" />
     <TypeScriptCompile Include="Scripts\app\app.module.ts" />
     <TypeScriptCompile Include="Scripts\app\app.run.ts" />
+    <TypeScriptCompile Include="Scripts\app\core\core.module.ts" />
     <TypeScriptCompile Include="Scripts\app\home\home.component.ts" />
     <TypeScriptCompile Include="Scripts\app\home\home.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\home\home.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.service.ts" />
+    <TypeScriptCompile Include="Scripts\app\core\services\userservice.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />

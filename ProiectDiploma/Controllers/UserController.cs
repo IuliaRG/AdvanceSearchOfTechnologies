@@ -17,23 +17,23 @@ namespace ProiectDiploma.Controllers
 private IUserService service;
 
 
-        [Route("api/User/GetAll")]
+        [Route("GetAll")]
         public IEnumerable<ApplicationUserDto> GetAll()
           {
              service = DIContainerST.GetInstance().Resolve<IUserService>();
               var user = service.GetAllUsers();
               return user;
           }
-        [Route("api/User/{id}")]
+        [Route("{id}")]
         public ApplicationUser GetUserByID(string id)
         {
             service = DIContainerST.GetInstance().Resolve<IUserService>();
-            var user = service.GetUser(id);
+            var user = service.GetUserById(id);
             return user;
         }
 
-        
-         public IEnumerable<ApplicationUserDto> GetPageItems()
+        [Route("GetPage")]
+        public IEnumerable<ApplicationUserDto> GetPageItems()
          {
              service = DIContainerST.GetInstance().Resolve<IUserService>();
              ItemsPaginingParametersDto itemPage=  new ItemsPaginingParametersDto();
@@ -43,15 +43,16 @@ private IUserService service;
              var user = service.GetUsersOnPage(itemPage);
              return user;
          }
-        [Route("api/User")]
-
-         public IHttpActionResult PostUser(ApplicationUserDto user)
+        [Route("AddOrUpdate")]
+        
+         public IHttpActionResult AddOrUpdate(ApplicationUserDto user)
          {
 
                  service = DIContainerST.GetInstance().Resolve<IUserService>();
                  service.AddOrUpdateUser(user);
                   return Ok();
          }
+        
         [Route("Delete/{id}")]
 
         public IHttpActionResult Delete(string id)

@@ -1,9 +1,11 @@
 ﻿class UsersManagerController {
-    protected UsersManagerVM: UsersManagerModel;
-    protected HttpService: ng.IHttpService
-    constructor($window: ng.IWindowService, $http: ng.IHttpService) {
-        this.UsersManagerVM = new UsersManagerModel();
-        this.HttpService = $http
+   // protected UsersManagerVM: UsersManagerModel;
+    protected _httpService: ng.IHttpService
+    protected _iDataService: IDataService;
+    constructor(iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
+       
+        this._httpService = $http;
+        this._iDataService = iDataService;
     }
 
 
@@ -11,12 +13,7 @@
     
 }
 
-class UsersManagerModel {
-    public drones: Array<any>;
-    constructor() {
-        this.drones = new Array<any>();
-    }
-}
+
 class UserManagerDto {
     public username: string;
     public email: string;

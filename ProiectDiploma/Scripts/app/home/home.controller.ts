@@ -1,14 +1,10 @@
 ﻿class HomeController {
-    public HomeVM: HomeModel;
+   
 
     constructor($window: ng.IWindowService) {
-        this.HomeVM = new HomeModel();
+        console.log("ds");
+        console.log(4);
     }
 }
 
-class HomeModel {
-    public drones: Array<any>;
-    constructor() {
-        this.drones = new Array<any>();
-    }
-}
+

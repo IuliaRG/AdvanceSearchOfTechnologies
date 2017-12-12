@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.
-    module('home').
-    component('home', {
+    module('usersmanager').
+    component('usersmanager', {
         templateUrl: 'scripts/app/usersmanager/usersmanager.template.html',
         controller: ['IDataService', '$window', '$scope','$http',UsersManagerController]
     });

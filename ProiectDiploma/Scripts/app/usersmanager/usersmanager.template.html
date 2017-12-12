@@ -10,32 +10,17 @@
             <th class="col-md-2 col-xs-2">UserName</th>
             <th class="col-md-1 col-xs-1">Email</th>
         </tr>
-        
+
     </thead>
     <tbody>
-        <tr>
+        <tr ng-repeat="user in $ctrl.UsersManagerVM.users" >
             <th scope="row">1</th>
-            <td>Vatanay Özbeyli</td>
-            <td>UI & UX</td>
-            <td>Istanbul</td>
+            <td>{{user.FirstName}}</td>
+            <td>{{user.LastName}}</td>
+            <td>{{user.Adress}}</td>
+            <td>{{user.UserName}}</td>
+            <td>{{user.Email}}</td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Burak Özkan</td>
-            <td>Software Developer</td>
-            <td>Istanbul</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Egemen Özbeyli</td>
-            <td>Purchasing</td>
-            <td>Kocaeli</td>
-        </tr>
-        <tr>
-            <th scope="row">4</th>
-            <td>Engin Kızıl</td>
-            <td>Sales</td>
-            <td>Bozuyük</td>
-        </tr>
+       
     </tbody>
 </table>

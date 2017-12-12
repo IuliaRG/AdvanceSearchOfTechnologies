@@ -288,6 +288,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\home\home.template.html" />
+    <Content Include="Scripts\app\login\login.template.html" />
     <Content Include="Scripts\app\simpleuser\simpleusers.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
     <Content Include="Scripts\bootstrap.js" />
@@ -355,7 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\app\login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -393,6 +393,7 @@
     <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.module.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.service.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\userservice.ts" />
+    <TypeScriptCompile Include="Scripts\app\login\login.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />

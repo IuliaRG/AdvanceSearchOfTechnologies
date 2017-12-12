@@ -1,6 +1,6 @@
 ﻿class UsersManagerController {
     protected UsersManagerVM: UsersManagerModel;
-    protected _httpService: ng.IHttpService
+    protected _httpService: ng.IHttpService;
     protected _iDataService: IDataService;
     protected a: any;
     protected b: any;
@@ -11,6 +11,7 @@
         this._httpService = $http;
         this._iDataService = iDataService;
         this.UsersManagerVM = new UsersManagerModel();
+        debugger
         this._iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
     }
 

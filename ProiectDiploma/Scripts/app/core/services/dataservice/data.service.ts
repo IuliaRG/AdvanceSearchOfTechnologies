@@ -12,38 +12,39 @@ class DataService implements IDataService {
 
     public Get(url: string, caller: any, successCallback: Function): any {
         this._iHttpService.get(
-            url, {}).then(function (response) {
+            url, {}).then( (response)=> {
                 console.log(response);
                 successCallback(response.data, caller);
-            }).catch(function (err) {
+            }).catch((err) => {
                 console.log(err);
             });
     }
     public GetById(url: string, id: any, caller: any, successCallback: Function): any {
         this._iHttpService.get(
-            url + id, {}).then(function (response) {
+            url + id, {}).then( (response) => {
                 console.log(response);
                 successCallback(response.data, caller);
-            }).catch(function (err) {
+            }).catch( (err) =>{
                 console.log(err);
             });
     }
-    public Post(url: string, entity: any, caller: any, successCallback: Function): any {
+   
+    public Post(url: string, data: any, caller: any, successCallback: Function): any {
         this._iHttpService.post(
-            url, entity).then(function (response) {
+            url, { data: data, }).then( (response) =>{
                 console.log(response);
                 successCallback(response.data, caller);
-            }).catch(function (err) {
+            }).catch( (err) =>{
                 console.log(err);
             });
     }
 
     public Delete(url: string, id: any, caller: any, successCallback: Function): any {
         this._iHttpService.delete(
-            url + id).then(function (response) {
+            url + id, {}).then( (response)=> {
                 console.log(response);
                 successCallback(response.data, caller);
-            }).catch(function (err) {
+            }).catch((err) =>{
                 console.log(err);
             });
     }

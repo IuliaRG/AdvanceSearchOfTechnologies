@@ -1,9 +1,11 @@
 ﻿class HomeController {
-   
+    protected _httpService: ng.IHttpService;
+    protected a: any;
+    constructor( $http: ng.IHttpService) {
 
-    constructor($window: ng.IWindowService) {
-        console.log("ds");
-        console.log(4);
+        this._httpService = $http;
+        alert("ggsdgsg");
+        this.a = "hey";
     }
 }
 

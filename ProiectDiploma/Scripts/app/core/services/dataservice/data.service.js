@@ -18,8 +18,8 @@ var DataService = (function () {
             console.log(err);
         });
     };
-    DataService.prototype.Post = function (url, entity, caller, successCallback) {
-        this._iHttpService.post(url, entity).then(function (response) {
+    DataService.prototype.Post = function (url, data, caller, successCallback) {
+        this._iHttpService.post(url, { data: data, }).then(function (response) {
             console.log(response);
             successCallback(response.data, caller);
         }).catch(function (err) {
@@ -27,7 +27,7 @@ var DataService = (function () {
         });
     };
     DataService.prototype.Delete = function (url, id, caller, successCallback) {
-        this._iHttpService.delete(url + id).then(function (response) {
+        this._iHttpService.delete(url + id, {}).then(function (response) {
             console.log(response);
             successCallback(response.data, caller);
         }).catch(function (err) {

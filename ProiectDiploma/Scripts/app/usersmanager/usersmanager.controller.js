@@ -5,6 +5,7 @@ var UsersManagerController = (function () {
         this._httpService = $http;
         this._iDataService = iDataService;
         this.UsersManagerVM = new UsersManagerModel();
+        debugger;
         this._iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
     }
     UsersManagerController.prototype.GetUsersCallback = function (users, self) {

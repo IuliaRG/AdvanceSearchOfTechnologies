@@ -1,7 +1,8 @@
 var HomeController = (function () {
-    function HomeController($window) {
-        console.log("ds");
-        console.log(4);
+    function HomeController($http) {
+        this._httpService = $http;
+        alert("ggsdgsg");
+        this.a = "hey";
     }
     return HomeController;
 }());

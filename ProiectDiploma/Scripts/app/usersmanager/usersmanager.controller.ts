@@ -3,6 +3,8 @@
     protected _httpService: ng.IHttpService
     protected _iDataService: IDataService;
     protected a: any;
+    protected b: any;
+    protected c: any;
    // public Users: Array<UserModel>;
     constructor(iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
         console.log("sjfd");

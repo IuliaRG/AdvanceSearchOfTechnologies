@@ -18,12 +18,13 @@ var DataService = (function () {
             console.log(err);
         });
     };
-    DataService.prototype.Post = function (url, data, caller, successCallback) {
+    DataService.prototype.Post = function (url, data, caller, successCallback, errorCallback) {
         this._iHttpService.post(url, { data: data, }).then(function (response) {
             console.log(response);
+            debugger;
             successCallback(response.data, caller);
         }).catch(function (err) {
-            //errorCallback(err);
+            errorCallback(err);
         });
     };
     DataService.prototype.Delete = function (url, id, caller, successCallback) {

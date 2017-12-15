@@ -4,35 +4,21 @@
     public LoginVM: LogInModel;
     constructor(iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
 
-       
+        
         this._iDataService = iDataService;
-       
         this.LoginVM = new LogInModel();
         
     }
-    protected PostUsersCallback(users: any, self: LogInController): void {
-        var user: UserLogInModel = new UserLogInModel();
-        user.token = users.access_token;
-        user.email = users.userName;
-        user.tokenType = users.token_type;
+  
+    public LogInClick(): void {
+        alert("hi");
+        var self = this;
       
-    }
-    protected ErrorCallback(error): void {
-        var response = JSON.parse(error.responseText);
-        var self = this;
-        self.LoginVM.ErrorMessage = response.Message;
-        self.LoginVM.ShowError = true;
-
-    }
-    public LoginClick(): void {
-
-        var self = this;
-        var dto: LogInDto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var data = JSON.stringify(dto);
-        
+        debugger;
         self.LoginVM.ShowError = false;
         if (self.LoginVM.Email == null) {
             self.LoginVM.ErrorMessage = "Your Email field cannot be blank!";
+       
             self.LoginVM.ShowError = true;
             return;
         }
@@ -46,8 +32,26 @@
             self.LoginVM.ShowError = true;
             return;
         }
-        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback);
+        var dto: LogInDto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
+        var data = JSON.stringify(dto);
+        console.log(data);
+        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback, this.ErrorCallback);
         
+    }
+    protected PostUsersCallback(users: any, self: LogInController): void {
+        var user: UserLogInModel = new UserLogInModel();
+        user.token = users.access_token;
+        user.email = users.userName;
+        debugger
+        user.tokenType = users.token_type;
+
+    }
+    protected ErrorCallback(error): void {
+        var response = JSON.parse(error.responseText);
+        var self = this;
+        self.LoginVM.ErrorMessage = response.Message;
+        self.LoginVM.ShowError = true;
+
     }
     protected validateEmail(email): boolean {
         var emailValidation = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;

@@ -5,16 +5,17 @@
         <form  class="form">
             <div class="col-md-4">
                 <div class="form-group">
-                    <input type="text" class="form-control"  placeholder="username" required="" />
+                    <input type="text" class="form-control"  placeholder="username" ng-model="$ctrl.LoginVM.Email " />
                 </div>
 
                 <div class="form-group">
-                    <input type="password" class="form-control"  placeholder="password" required="" />
+                    <input type="password" class="form-control"  placeholder="password"   ng-model="$ctrl.LoginVM.Password" />
                 </div>
 
                 <div class="form-group">
-                    <button ng-click="LoginClick()" class="btn btn-success">Login</button>
-                    <span class="text-danger"></span>
+                    <button  type="submit" class="btn btn-success" ng-click="LogInClick()" >Login</button>
+                    <br /><br />
+                    <span ng-show="$ctrl.LoginVM.ShowError" class="error-message">{{$ctrl.LoginVM.ErrorMessage}}</span>
                 </div>
 
             </div>

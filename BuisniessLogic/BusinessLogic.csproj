@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsersManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abstracts\Abstracts.csproj">

@@ -3,7 +3,7 @@
 angular.module('AdvanceSearchTechnologies', [
     'ngRoute',
     'home',
-    'usersmanager',
     'login',
+    'usersmanager',
 ]);
 //# sourceMappingURL=app.module.js.map

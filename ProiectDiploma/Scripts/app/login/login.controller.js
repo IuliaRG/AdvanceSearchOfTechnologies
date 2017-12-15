@@ -3,22 +3,10 @@ var LogInController = (function () {
         this._iDataService = iDataService;
         this.LoginVM = new LogInModel();
     }
-    LogInController.prototype.PostUsersCallback = function (users, self) {
-        var user = new UserLogInModel();
-        user.token = users.access_token;
-        user.email = users.userName;
-        user.tokenType = users.token_type;
-    };
-    LogInController.prototype.ErrorCallback = function (error) {
-        var response = JSON.parse(error.responseText);
+    LogInController.prototype.LogInClick = function () {
+        alert("hi");
         var self = this;
-        self.LoginVM.ErrorMessage = response.Message;
-        self.LoginVM.ShowError = true;
-    };
-    LogInController.prototype.LoginClick = function () {
-        var self = this;
-        var dto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var data = JSON.stringify(dto);
+        debugger;
         self.LoginVM.ShowError = false;
         if (self.LoginVM.Email == null) {
             self.LoginVM.ErrorMessage = "Your Email field cannot be blank!";
@@ -35,7 +23,23 @@ var LogInController = (function () {
             self.LoginVM.ShowError = true;
             return;
         }
-        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback);
+        var dto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
+        var data = JSON.stringify(dto);
+        console.log(data);
+        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback, this.ErrorCallback);
+    };
+    LogInController.prototype.PostUsersCallback = function (users, self) {
+        var user = new UserLogInModel();
+        user.token = users.access_token;
+        user.email = users.userName;
+        debugger;
+        user.tokenType = users.token_type;
+    };
+    LogInController.prototype.ErrorCallback = function (error) {
+        var response = JSON.parse(error.responseText);
+        var self = this;
+        self.LoginVM.ErrorMessage = response.Message;
+        self.LoginVM.ShowError = true;
     };
     LogInController.prototype.validateEmail = function (email) {
         var emailValidation = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;

@@ -393,7 +393,9 @@
     <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.module.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\dataservice\data.service.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\userservice.ts" />
+    <TypeScriptCompile Include="Scripts\app\login\login.component.ts" />
     <TypeScriptCompile Include="Scripts\app\login\login.controller.ts" />
+    <TypeScriptCompile Include="Scripts\app\login\login.module.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />

@@ -23,7 +23,7 @@ var DataService = (function () {
             console.log(response);
             successCallback(response.data, caller);
         }).catch(function (err) {
-            console.log(err);
+            //errorCallback(err);
         });
     };
     DataService.prototype.Delete = function (url, id, caller, successCallback) {

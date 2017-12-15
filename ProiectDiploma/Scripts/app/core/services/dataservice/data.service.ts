@@ -35,7 +35,7 @@ class DataService implements IDataService {
                 console.log(response);
                 successCallback(response.data, caller);
             }).catch( (err) =>{
-                console.log(err);
+                //errorCallback(err);
             });
     }
 

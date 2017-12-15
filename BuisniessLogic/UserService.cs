@@ -16,7 +16,7 @@ namespace BuisniessLogic
         IRepository<ApplicationUser> userRepository;
         IRepository<StudentDetails> studentDetailsRepository;
         IRepository<TeacherDetails> teacherDetailsRepository;
-        IEnumerable<UserDetailsDto> usersToSend;
+        
 
         public UserService(IRepository<UserDetails> userDetailsRepository, IRepository<ApplicationUser> userRepository, IRepository<TeacherDetails> teacherDetailsRepository, IRepository<StudentDetails> studentDetailsRepository)
         {

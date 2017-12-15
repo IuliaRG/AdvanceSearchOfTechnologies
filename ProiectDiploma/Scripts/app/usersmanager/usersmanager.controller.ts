@@ -7,11 +7,12 @@
     protected c: any;
    // public Users: Array<UserModel>;
     constructor(iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
-        console.log("sjfd");
+       
         this._httpService = $http;
         this._iDataService = iDataService;
+      
         this.UsersManagerVM = new UsersManagerModel();
-        debugger
+       
         this._iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
     }
 

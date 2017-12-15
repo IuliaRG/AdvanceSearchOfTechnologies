@@ -29,7 +29,7 @@ namespace BusinessObjects.Mapper
                 UserName = it.UserName,
                 IsDeleted = it.IsDeleted,
                 IsActive = it.IsActive,
-                UserDetailsDto = it.UserDetails.ToUserDetailsDto()
+               UserDetailsDto = it.UserDetails.ToUserDetailsDto()
 
             });
 

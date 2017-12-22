@@ -35,11 +35,21 @@ namespace BusinessObjects.Mapper
 
             return result;
         }
+        public static ApplicationUserDto ToApplicationUserDto(this ApplicationUser user)
+        {
+            var result = new ApplicationUserDto();
+            result.Id = user.Id;
+            result.Email = user.Email;
+            result.UserName = user.UserName;
+            result.IsDeleted = user.IsDeleted;
+            result.IsActive = user.IsActive;
+            result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
+
+            return result;
+        }
         public static ApplicationUser FromApplicationUserDto(this ApplicationUserDto applicationDetailsDto, ApplicationUser entityApplicationDetails)
         {
-           
-            if (applicationDetailsDto.Id != null)
-                entityApplicationDetails.Id = applicationDetailsDto.Id;
+            entityApplicationDetails = new ApplicationUser();
             entityApplicationDetails.Email = applicationDetailsDto.Email;
             entityApplicationDetails.UserName = applicationDetailsDto.UserName;
             entityApplicationDetails.IsDeleted = applicationDetailsDto.IsDeleted;

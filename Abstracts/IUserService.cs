@@ -9,12 +9,13 @@ namespace Abstracts
 {
     public interface IUserService
     {
-        ApplicationUser GetUserById(object id);
+        ApplicationUserDto GetUserById(object id);
         IEnumerable<ApplicationUserDto> GetUsersOnPage(ItemsPaginingParametersDto parameters);
         IEnumerable<ApplicationUserDto> GetAllUsers();
         void InitDetails(object userId);
         void DeleteUser(object id);
         void AddOrUpdateUser(ApplicationUserDto user);
+       
 
     }
 }

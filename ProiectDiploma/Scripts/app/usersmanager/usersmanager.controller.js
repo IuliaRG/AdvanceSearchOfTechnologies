@@ -1,5 +1,4 @@
 var UsersManagerController = (function () {
-    // public Users: Array<UserModel>;
     function UsersManagerController(iDataService, $window, $http) {
         this._httpService = $http;
         this._iDataService = iDataService;
@@ -17,9 +16,14 @@ var UsersManagerModel = (function () {
     }
     return UsersManagerModel;
 }());
-var UserModel = (function () {
-    function UserModel() {
+var UserDto = (function () {
+    function UserDto() {
     }
-    return UserModel;
+    return UserDto;
+}());
+var UserDetailsDto = (function () {
+    function UserDetailsDto() {
+    }
+    return UserDetailsDto;
 }());
 //# sourceMappingURL=usersmanager.controller.js.map

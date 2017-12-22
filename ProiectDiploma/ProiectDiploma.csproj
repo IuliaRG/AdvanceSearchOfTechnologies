@@ -257,8 +257,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseAuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserManagerController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DIContainerST.cs" />
     <Compile Include="Global.asax.cs">
@@ -290,6 +292,7 @@
     <Content Include="Scripts\app\home\home.template.html" />
     <Content Include="Scripts\app\login\login.template.html" />
     <Content Include="Scripts\app\simpleuser\simpleusers.template.html" />
+    <Content Include="Scripts\app\userdetails\userdetails.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -396,6 +399,9 @@
     <TypeScriptCompile Include="Scripts\app\login\login.component.ts" />
     <TypeScriptCompile Include="Scripts\app\login\login.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\login\login.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.controller.ts" />
+    <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.module.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />

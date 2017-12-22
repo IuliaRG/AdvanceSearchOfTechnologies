@@ -1,28 +1,22 @@
 ﻿class LogInController {
-    protected _iDataService: IDataService;
-    protected data: any;
+    protected iDataService: IDataService;
+    public req: any;
     public LoginVM: LogInModel;
-    constructor(iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
-
-        
-        this._iDataService = iDataService;
+    constructor(iDataService: IDataService, $window: ng.IWindowService) {
+        this.iDataService = iDataService;
         this.LoginVM = new LogInModel();
-        
     }
   
     public LogInClick(): void {
-        alert("hi");
         var self = this;
-      
-        debugger;
         self.LoginVM.ShowError = false;
         if (self.LoginVM.Email == null) {
             self.LoginVM.ErrorMessage = "Your Email field cannot be blank!";
-       
+
             self.LoginVM.ShowError = true;
             return;
         }
-        if (self.validateEmail(self.LoginVM.Email )==false) {
+        if (self.validateEmail(self.LoginVM.Email) == false) {
             self.LoginVM.ErrorMessage = "Email address is not valid!";
             self.LoginVM.ShowError = true;
             return;
@@ -32,17 +26,24 @@
             self.LoginVM.ShowError = true;
             return;
         }
+        console.log(self.LoginVM.Email);
         var dto: LogInDto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var data = JSON.stringify(dto);
-        console.log(data);
-        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback, this.ErrorCallback);
-        
+        var req = {
+            method: 'POST',
+            url: '/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
+        }
+        self.iDataService.LogIn( req, self);
+
     }
+
     protected PostUsersCallback(users: any, self: LogInController): void {
         var user: UserLogInModel = new UserLogInModel();
         user.token = users.access_token;
         user.email = users.userName;
-        debugger
         user.tokenType = users.token_type;
 
     }
@@ -59,7 +60,8 @@
 
     }
     protected validatePassword(password): boolean {
-        var passwordValidation = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var passwordValidation = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;;
+        
         return passwordValidation.test(password);
 
     }

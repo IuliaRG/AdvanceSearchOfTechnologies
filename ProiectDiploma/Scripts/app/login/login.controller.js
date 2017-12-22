@@ -1,12 +1,10 @@
 var LogInController = (function () {
-    function LogInController(iDataService, $window, $http) {
-        this._iDataService = iDataService;
+    function LogInController(iDataService, $window) {
+        this.iDataService = iDataService;
         this.LoginVM = new LogInModel();
     }
     LogInController.prototype.LogInClick = function () {
-        alert("hi");
         var self = this;
-        debugger;
         self.LoginVM.ShowError = false;
         if (self.LoginVM.Email == null) {
             self.LoginVM.ErrorMessage = "Your Email field cannot be blank!";
@@ -23,16 +21,22 @@ var LogInController = (function () {
             self.LoginVM.ShowError = true;
             return;
         }
+        console.log(self.LoginVM.Email);
         var dto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var data = JSON.stringify(dto);
-        console.log(data);
-        this._iDataService.Post("/token", this.data, this, this.PostUsersCallback, this.ErrorCallback);
+        var req = {
+            method: 'POST',
+            url: '/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
+        };
+        self.iDataService.LogIn(req, self);
     };
     LogInController.prototype.PostUsersCallback = function (users, self) {
         var user = new UserLogInModel();
         user.token = users.access_token;
         user.email = users.userName;
-        debugger;
         user.tokenType = users.token_type;
     };
     LogInController.prototype.ErrorCallback = function (error) {
@@ -46,7 +50,8 @@ var LogInController = (function () {
         return emailValidation.test(email);
     };
     LogInController.prototype.validatePassword = function (password) {
-        var passwordValidation = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var passwordValidation = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+        ;
         return passwordValidation.test(password);
     };
     return LogInController;

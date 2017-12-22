@@ -68,6 +68,8 @@ namespace BuisniessLogic
             var entity = userRepository.GetById(userId);
             entity.UserDetails = new UserDetails();
             userRepository.Save();
+           
+         
 
         }
        
@@ -95,7 +97,7 @@ namespace BuisniessLogic
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;
-            if (user.Id != null)
+            if (user.UserName != null)
             {
                 entityUser = userRepository.GetById(user.Id);
                 var entity = UserMapper.FromApplicationUserDto(user, entityUser);
@@ -110,17 +112,18 @@ namespace BuisniessLogic
 
             userRepository.Save();
         }
+       
 
         public void DeleteUser(object id)
         {
-            var entity=userRepository.GetById(id);
+            var entity=userRepository.GetById(id).ToApplicationUserDto();
             entity.IsDeleted = true;
             userRepository.Save();
         }
 
-        public ApplicationUser GetUserById(object id)
+        public ApplicationUserDto GetUserById(object id)
         {
-            var entity = userRepository.GetById(id);
+            var entity = userRepository.GetById(id).ToApplicationUserDto();
             return entity;
 
 

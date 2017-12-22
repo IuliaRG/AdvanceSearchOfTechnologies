@@ -24,14 +24,14 @@ private IUserService service;
               var user = service.GetAllUsers();
               return user;
           }
-        [Route("{id}")]
-        public ApplicationUser GetUserByID(string id)
+        [Route("")]
+        public ApplicationUserDto GetUserByID(string id)
         {
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             var user = service.GetUserById(id);
             return user;
         }
-
+       
         [Route("GetPage")]
         public IEnumerable<ApplicationUserDto> GetPageItems()
          {

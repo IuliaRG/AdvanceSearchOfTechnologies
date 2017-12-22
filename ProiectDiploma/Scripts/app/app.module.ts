@@ -6,5 +6,6 @@ angular.module('AdvanceSearchTechnologies', [
     'home',
     'login',
     'usersmanager',
+    'userdetails',
     
 ]);

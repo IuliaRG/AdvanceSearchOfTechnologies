@@ -1,6 +1,21 @@
-﻿
-<span class="counter pull-right"></span>
+﻿<span class="counter pull-right"></span>
+   <script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+           
+        </ul>
+        Selected: <b>jj</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
 <table class="table table-hover table-bordered results">
+    
     <thead>
         <tr>
             <th>Nr.</th>
@@ -17,10 +32,43 @@
             <th scope="row">1</th>
             <td>{{user.FirstName}}</td>
             <td>{{user.LastName}}</td>
-            <td>{{user.Adress}}</td>
-            <td>{{user.UserName}}</td>
+            <td>{{user.UserDetailsDto.Address}}</td>
+            <!--<td>{{user.UserName}}</td>-->
             <td>{{user.Email}}</td>
+            <td >
+                <a href="/index.html#!/userdetails?id={{user.Id}}">Edit</a>
+                <button >Detele</button>
+            </td>
+            
         </tr>
        
     </tbody>
 </table>
+<!--<div ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <label>FirstName:</label>
+            <input type="text" ng-model="" class="form-control">
+
+            <label>LasttName:</label>
+            <input type="text" ng-model="" class="form-control">
+            <label>FirstName:</label>
+            <input type="text" ng-model="" class="form-control">
+            <label>Address:</label>
+            <input type="text" ng-model="" class="form-control">
+            <label>Email:</label>
+            <input type="text" ng-model="" class="form-control">
+            <label>UserName:</label>
+            <input type="text" ng-model="" class="form-control">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    <button class="btn btn-default" ng-click="open()">Open me!</button>
+    
+</div>-->

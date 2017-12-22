@@ -24,10 +24,10 @@ namespace ProiectDiploma.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseAuthController
     {
         private const string LocalLoginProvider = "Local";
-        private ApplicationUserManager _userManager;
+      
 
         public AccountController()
         {
@@ -38,43 +38,8 @@ namespace ProiectDiploma.Controllers
             public string Name { get; set; }
         }
 
-        [AllowAnonymous]
-        [Route("AddNewRole")]
-        public async Task<IHttpActionResult> AddNewRole(RoleDto model)
-        {
-            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-            var roleManager = new RoleManager<IdentityRole>(roleStore);
-            IdentityRole role = new IdentityRole(model.Name);
-            var result = await roleManager.CreateAsync(role);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+        
 
-            return Ok();
-        }
-
-        //[Authorize(Roles = "Admin")]
-        [Route("AssignToRole")]
-        public async Task<IHttpActionResult> AssignToRole(RegisterBindingModel model, string RoleName)
-        {
-            var id = RequestContext.Principal.Identity.GetUserId();
-            var isAdmin = await UserManager.IsInRoleAsync(id, "Admin");
-            if (!isAdmin)
-            {
-                return Unauthorized();
-            }
-
-            var user = await UserManager.FindByNameAsync(model.Email);
-            var roles = await UserManager.GetRolesAsync(id);
-            var result = await UserManager.AddToRoleAsync(user.Id, RoleName);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
-        }
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
@@ -83,17 +48,6 @@ namespace ProiectDiploma.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 

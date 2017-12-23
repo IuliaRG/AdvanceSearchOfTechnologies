@@ -26,4 +26,9 @@ var UserDetailsDto = (function () {
     }
     return UserDetailsDto;
 }());
+var PaginationModel = (function () {
+    function PaginationModel() {
+    }
+    return PaginationModel;
+}());
 //# sourceMappingURL=usersmanager.controller.js.map

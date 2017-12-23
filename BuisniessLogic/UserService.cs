@@ -26,12 +26,7 @@ namespace BuisniessLogic
             this.teacherDetailsRepository = teacherDetailsRepository;
         }
 
-        /*   public IEnumerable<UserDetailsDto> GetAllUsers()
-           {
-               var userEnitiy = userDetailsRepository.GetAll();
-               var result = userEnitiy.ToUserDetailsDtos();
-               return result;
-           }*/
+      
         public IEnumerable<ApplicationUserDto> GetAllUsers()
         {
             var userEnitiy = userRepository.GetAll();
@@ -66,48 +61,28 @@ namespace BuisniessLogic
         {
 
             var entity = userRepository.GetById(userId);
-            entity.UserDetails = new UserDetails();
+         entity.UserDetails = new UserDetails();
             userRepository.Save();
            
          
 
         }
        
-      
-       /* public void AddOrUpdateStudent(StudentDetailsDto Student)
-        {
-            StudentDetails entityStudent = null;
-            if (Student.Id != null)
-            {
-                entityStudent = studentDetailsRepository.GetById(Student.Id);
-                var entity = SchoolMapper.FromStudentDetailsDtos(Student, entityStudent);
-                studentDetailsRepository.Update(entity);
-            }
-            else
-            {
-                entityStudent = new StudentDetails();
-                var entity = SchoolMapper.FromStudentDetailsDtos(Student, entityStudent);
-                studentDetailsRepository.Insert(entity);
-            }
-
-            studentDetailsRepository.Save();
-        }
-       */
-      
+     
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;
             if (user.UserName != null)
             {
-                entityUser = userRepository.GetById(user.Id);
-                var entity = UserMapper.FromApplicationUserDto(user, entityUser);
-                userRepository.Update(entity);
+                entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == user.UserName);
+               entityUser.FromApplicationUserDto(user);
+                userRepository.Update(entityUser);
             }
             else
             {
-                entityUser = userRepository.GetById(user.Id);
-                var entity = UserMapper.FromApplicationUserDto(user, entityUser);
-                userRepository.Insert(entity);
+                entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == user.UserName);
+                entityUser.FromApplicationUserDto(user);
+                userRepository.Insert(entityUser);
             }
 
             userRepository.Save();

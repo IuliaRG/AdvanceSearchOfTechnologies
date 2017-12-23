@@ -19,6 +19,7 @@ using ProiectDiploma.Results;
 using BusinessObjects;
 using Abstracts;
 using DAL;
+using System.Linq;
 
 namespace ProiectDiploma.Controllers
 {
@@ -133,6 +134,7 @@ namespace ProiectDiploma.Controllers
 
             return Ok();
         }
+       
 
         // POST api/Account/SetPassword
         [Route("SetPassword")]

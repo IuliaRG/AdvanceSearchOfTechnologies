@@ -47,29 +47,27 @@ namespace BusinessObjects.Mapper
 
             return result;
         }
-        public static ApplicationUser FromApplicationUserDto(this ApplicationUserDto applicationDetailsDto, ApplicationUser entityApplicationDetails)
+        public static ApplicationUser FromApplicationUserDto(this ApplicationUser entityApplicationDetails, ApplicationUserDto applicationDetailsDto)
         {
-            entityApplicationDetails = new ApplicationUser();
+       
             entityApplicationDetails.Email = applicationDetailsDto.Email;
             entityApplicationDetails.UserName = applicationDetailsDto.UserName;
             entityApplicationDetails.IsDeleted = applicationDetailsDto.IsDeleted;
             entityApplicationDetails.IsActive = applicationDetailsDto.IsActive;
-            entityApplicationDetails.UserDetails = applicationDetailsDto.UserDetailsDto.FromUserDetailsDtos();
+            entityApplicationDetails.UserDetails.FromUserDetailsDtos(applicationDetailsDto.UserDetailsDto);
 
             return entityApplicationDetails;
         }
        
 
-        public static UserDetails FromUserDetailsDtos(this UserDetailsDto userDetailsDto)
+        public static UserDetails FromUserDetailsDtos(this UserDetails userDetails, UserDetailsDto userDetailsDto)
     {
-        var entityUser = new UserDetails();
-        if (userDetailsDto.Id.HasValue)
-         entityUser.Id = userDetailsDto.Id.Value;
-        entityUser.FirstName = userDetailsDto.FirstName;
-         entityUser.LastName = userDetailsDto.LastName;
-            entityUser.Address = userDetailsDto.Address;
 
-        return entityUser;
+            userDetails.FirstName = userDetailsDto.FirstName;
+            userDetails.LastName = userDetailsDto.LastName;
+            userDetails.Address = userDetailsDto.Address;
+
+        return userDetails;
     }
         public static UserDetailsDto ToUserDetailsDto(this UserDetails userDetails)
         {

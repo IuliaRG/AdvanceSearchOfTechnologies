@@ -19,6 +19,30 @@ namespace ProiectDiploma.Controllers
     public class UserManagerController : BaseAuthController
     {
         private IUserService service;
+      
+        [Route("AddUser")]
+        public async Task<IHttpActionResult> AddUser( ApplicationUserDto userDto)
+        {
+            var id = RequestContext.Principal.Identity.GetUserId();
+            await AdminAuthorization(id);
+           
+
+            var user = new ApplicationUser() { UserName = userDto.Email, Email = userDto.Email };
+
+            IdentityResult result = await UserManager.CreateAsync(user, userDto.Password);
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
+            service.InitDetails(user.Id);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+           
+           // service = DIContainerST.GetInstance().Resolve<IUserService>();
+            service.AddOrUpdateUser(userDto);
+
+            return Ok();
+        }
         [Route("AddNewRole")]
         public async Task<IHttpActionResult> AddNewRole(RoleDto model)
         {

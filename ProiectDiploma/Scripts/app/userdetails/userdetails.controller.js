@@ -11,6 +11,8 @@ var UserDetailsController = (function () {
         console.log(user);
         self.UserDetailsVM.FromUserDto(user);
     };
+    UserDetailsController.prototype.EditUser = function () {
+    };
     return UserDetailsController;
 }());
 var UserDetailsModel = (function () {

@@ -38,3 +38,8 @@ class UserDetailsDto {
     public LastName: string;
     public Address: string;
 }
+class PaginationModel{
+    public PageNumber: number;
+    public ItemsOnPage: number;
+    public SearchText: string;
+}

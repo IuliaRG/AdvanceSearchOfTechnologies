@@ -21,7 +21,9 @@
        
     }
 
-
+    public EditUser(): void {
+        
+    }
 }
 class UserDetailsModel {
     public Id: number;

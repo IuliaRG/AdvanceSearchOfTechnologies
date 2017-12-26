@@ -72,10 +72,10 @@ namespace BusinessObjects.Mapper
         public static UserDetailsDto ToUserDetailsDto(this UserDetails userDetails)
         {
             var dtoUser = new UserDetailsDto();
-            dtoUser.Id = userDetails.Id;
-            dtoUser.FirstName = userDetails.FirstName;
-            dtoUser.LastName = userDetails.LastName;
-            dtoUser.Address = userDetails.Address;
+                dtoUser.Id = userDetails.Id;
+                dtoUser.FirstName = userDetails.FirstName;
+                dtoUser.LastName = userDetails.LastName;
+                dtoUser.Address = userDetails.Address;
 
             return dtoUser;
         }

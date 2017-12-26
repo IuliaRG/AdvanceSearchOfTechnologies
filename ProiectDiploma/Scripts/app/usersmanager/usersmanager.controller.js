@@ -1,12 +1,27 @@
 var UsersManagerController = (function () {
     function UsersManagerController(iDataService, $window, $http) {
-        this._httpService = $http;
-        this._iDataService = iDataService;
+        this.httpService = $http;
+        this.iDataService = iDataService;
         this.UsersManagerVM = new UsersManagerModel();
-        this._iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.PaginationVM = new PaginationModel();
+        //this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.Pagination();
     }
     UsersManagerController.prototype.GetUsersCallback = function (users, self) {
         self.UsersManagerVM.users = users;
+        //self.UsersManagerVM.FromUsersDto(users);
+    };
+    UsersManagerController.prototype.Pagination = function () {
+        var self = this;
+        var pageDto = {
+            "PageNumber": self.PaginationVM.PageNumber,
+            "ItemsOnPage": self.PaginationVM.ItemsOnPage,
+        };
+        self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
+    };
+    UsersManagerController.prototype.SetItemsPerPage = function (itemsNumber) {
+        this.PaginationVM.ItemsOnPage = itemsNumber;
+        this.Pagination();
     };
     return UsersManagerController;
 }());

@@ -8,8 +8,25 @@ namespace BusinessObjects
 {
  public   class ItemsPaginingParametersDto
     {
-        public int PageNumber { get; set; }
-        public int ItemsOnPage { get; set; }
+        public int MaxPageItems { get; set; } = 20;
+        public int PageNumber { get; set; } = 1;
+        public string OrderFilter { get; set; }
+        public int _ItemsOnPage { get; set; } = 8;
+        public int ItemsOnPage
+        {
+
+            get { return _ItemsOnPage; }
+            set
+            {
+                _ItemsOnPage = (value > MaxPageItems) ? MaxPageItems : value;
+            }
+        }
         public string SearchText { get; set; }
+       
+        public int CurrentPage { get; set; }
+        public string PreviousPage { get; set; }
+        public string NextPage { get; set; }
+        public List<ApplicationUserDto> Data { get; set; }
+
     }
 }

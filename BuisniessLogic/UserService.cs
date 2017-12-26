@@ -33,38 +33,58 @@ namespace BuisniessLogic
             var result = userEnitiy.ToApplicationUserDtos();
             return result;
         }
-        public IEnumerable<ApplicationUserDto> GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
+       
+        public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
             var users= GetAllUsers();
             IEnumerable<ApplicationUserDto> allUsers = users.AsQueryable();
             var usersOrderByName=(from user in users.
-                         OrderBy(a => a.UserDetailsDto.FirstName)
+                         OrderByDescending(a => a.Email)
+                        
                         select user).AsQueryable();
+           
             if (paginationParameters.SearchText != null)
             {
                 allUsers =
                from user in users
-               where (user.UserDetailsDto.FirstName.Contains(paginationParameters.SearchText) || user.UserDetailsDto.LastName.Contains(paginationParameters.SearchText) || user.UserDetailsDto.Address.Contains(paginationParameters.SearchText) )
+               where (user.Email.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText) )
                select user;
                 
             }
             int count = allUsers.Count();
-            int CurrentPage = paginationParameters.PageNumber;
+            int currentPage = paginationParameters.PageNumber;
+            int pageSize = paginationParameters.ItemsOnPage;
             int TotalPages = (int)Math.Ceiling(count / (double)paginationParameters.ItemsOnPage);
-            var usersToSend = allUsers.Skip((CurrentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
-            return usersToSend;
-            
+            var usersToSend = allUsers.Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            var totalCount = count;
+            var previousPage = currentPage > 1 ? "Yes" : "No";
+            var nextPage = currentPage < TotalPages ? "Yes" : "No";
+            ItemsPaginingParametersDto dto = new ItemsPaginingParametersDto();
+           
+            dto.MaxPageItems = totalCount;
+            dto.CurrentPage = currentPage;
+            dto.PreviousPage = previousPage;
+            dto.NextPage = nextPage;
+            dto.Data = usersToSend;
+            return dto;
+
+
+
+
+
         }
-       
+
 
         public void InitDetails(object userId)
         {
 
             var entity = userRepository.GetById(userId);
-         entity.UserDetails = new UserDetails();
-            userRepository.Save();
            
-         
+            entity.UserDetails = new UserDetails();
+           
+            userRepository.Save();
+
+
 
         }
        
@@ -80,9 +100,10 @@ namespace BuisniessLogic
             }
             else
             {
+                user.UserName = user.Email;
                 entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == user.UserName);
                 entityUser.FromApplicationUserDto(user);
-                userRepository.Insert(entityUser);
+                userRepository.Update(entityUser);
             }
 
             userRepository.Save();

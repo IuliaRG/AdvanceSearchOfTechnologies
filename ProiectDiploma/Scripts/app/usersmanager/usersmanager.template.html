@@ -1,24 +1,17 @@
 ﻿<span class="counter pull-right"></span>
-   <script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-        <h3 class="modal-title">I'm a modal!</h3>
+   <input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+<div class="col-md-4 col-sm-6">
+    <div class="products-number">
+
+        <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PaginationVM.ItemsOnPage == 12 ? 'btn-primary' :''" ng-click="$ctrl.SetItemsPerPage(12)">12</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PaginationVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.SetItemsPerPage(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.ItemsOnPage()">All</a>
+
     </div>
-    <div class="modal-body">
-        <ul>
-           
-        </ul>
-        Selected: <b>jj</b>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
-</script>
+</div>
 <table class="table table-hover table-bordered results">
     
     <thead>
         <tr>
-            <th>Nr.</th>
+           
             <th class="col-md-5 col-xs-5">FirstName</th>
             <th class="col-md-4 col-xs-4">LastName</th>
             <th class="col-md-3 col-xs-3">Adress</th>
@@ -29,11 +22,11 @@
     </thead>
     <tbody>
         <tr ng-repeat="user in $ctrl.UsersManagerVM.users" >
-            <th scope="row">1</th>
-            <td>{{user.FirstName}}</td>
-            <td>{{user.LastName}}</td>
+           
+            <td>{{user.UserDetailsDto.FirstName}}</td>
+            <td>{{user.UserDetailsDto.LastName}}</td>
             <td>{{user.UserDetailsDto.Address}}</td>
-            <!--<td>{{user.UserName}}</td>-->
+           
             <td>{{user.Email}}</td>
             <td >
                 <a href="/index.html#!/userdetails?id={{user.Id}}">Edit</a>

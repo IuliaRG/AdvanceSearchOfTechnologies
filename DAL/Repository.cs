@@ -26,7 +26,7 @@ namespace DAL
         }
         public IEnumerable<T> GetAll()
         {
-            return dbSet.ToList();
+            return dbSet;
         }
 
         public T GetById(object Id)

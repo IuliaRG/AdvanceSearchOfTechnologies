@@ -32,8 +32,8 @@ private IUserService service;
             return user;
         }
        
-        [Route("GetPage")]
-        public IEnumerable<ApplicationUserDto> GetPageItems(ItemsPaginingParametersDto pageDto)
+        [Route("Page")]
+        public ItemsPaginingParametersDto PageItems(ItemsPaginingParametersDto pageDto)
          {
              service = DIContainerST.GetInstance().Resolve<IUserService>();
              var user = service.GetUsersOnPage(pageDto);

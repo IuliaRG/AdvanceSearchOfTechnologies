@@ -4,6 +4,7 @@
     Post(url: string, entity: any, caller: any);
     LogIn(entity: any, caller: any);
     Delete(url: string, id: any, caller: any, successCallback: Function): any;
+    PostCallback(url: string, entity: any, caller: any, successCallback: Function): any;
 }
 class DataService implements IDataService {
     private _iHttpService: ng.IHttpService;
@@ -30,14 +31,26 @@ class DataService implements IDataService {
             });
     }
    
-    public Post(url: string, data: any, caller: any): any {
+    public PostCallback(url: string, data: any, caller: any, successCallback: Function): any {
+       
         this._iHttpService.post(
-            url, { data: data, }).then( (response) =>{
+            url, data).then((response) => {
                 console.log(response);
-                debugger
-               // successCallback(response.data, caller);
+                successCallback(response.data, caller);
+              
             }).catch( (err) =>{
              //  errorCallback(err);
+            });
+    }
+    public Post(url: string, data: any, caller: any): any {
+
+        this._iHttpService.post(
+            url, data).then((response) => {
+
+                console.log(response);
+
+            }).catch((err) => {
+                //  errorCallback(err);
             });
     }
     public LogIn(data: any, caller: any): any {

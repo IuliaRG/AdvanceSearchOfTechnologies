@@ -18,11 +18,17 @@ var DataService = (function () {
             console.log(err);
         });
     };
-    DataService.prototype.Post = function (url, data, caller) {
-        this._iHttpService.post(url, { data: data, }).then(function (response) {
+    DataService.prototype.PostCallback = function (url, data, caller, successCallback) {
+        this._iHttpService.post(url, data).then(function (response) {
             console.log(response);
-            debugger;
-            // successCallback(response.data, caller);
+            successCallback(response.data, caller);
+        }).catch(function (err) {
+            //  errorCallback(err);
+        });
+    };
+    DataService.prototype.Post = function (url, data, caller) {
+        this._iHttpService.post(url, data).then(function (response) {
+            console.log(response);
         }).catch(function (err) {
             //  errorCallback(err);
         });

@@ -19,7 +19,28 @@ namespace ProiectDiploma.Controllers
     public class UserManagerController : BaseAuthController
     {
         private IUserService service;
-      
+
+        [Route("RegisterAdmin")]
+        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
+            service.InitDetails(user.Id);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
         [Route("AddUser")]
         public async Task<IHttpActionResult> AddUser( ApplicationUserDto userDto)
         {
@@ -38,7 +59,7 @@ namespace ProiectDiploma.Controllers
                 return GetErrorResult(result);
             }
            
-           // service = DIContainerST.GetInstance().Resolve<IUserService>();
+           service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.AddOrUpdateUser(userDto);
 
             return Ok();

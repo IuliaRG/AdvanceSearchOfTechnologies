@@ -39,18 +39,87 @@ namespace BuisniessLogic
             var users= GetAllUsers();
             IEnumerable<ApplicationUserDto> allUsers = users.AsQueryable();
             var usersOrderByName=(from user in users.
-                         OrderByDescending(a => a.Email)
+                         OrderBy(a => a.Email)
                         
                         select user).AsQueryable();
-           
-            if (paginationParameters.SearchText != null)
+            
+            if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
-                allUsers =
-               from user in users
-               where (user.Email.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText) )
-               select user;
-                
+                switch (paginationParameters.SortField)
+                {
+                    case "Email":
+                        if (paginationParameters.SortDirection == "Descending")
+                            allUsers = (from user in users.
+                        OrderByDescending(a => a.Email)
+                                        select user).AsQueryable();
+                        
+
+                        else
+                            allUsers = (from user in users.
+                           OrderBy(a => a.Email)
+                                        select user).AsQueryable();
+                        break;
+                    case "UserName":
+                        if (paginationParameters.SortDirection == "Descending")
+                            allUsers = (from user in users.
+                         OrderByDescending(a => a.UserName)
+                                        select user).AsQueryable();
+
+
+                        else
+                            allUsers = (from user in users.
+                           OrderBy(a => a.UserName)
+                                        select user).AsQueryable();
+                        break;
+                    case "Address":
+                        if (paginationParameters.SortDirection == "Descending")
+                            allUsers = (from user in users.
+                           OrderByDescending(a => a.UserDetailsDto.Address)
+                                        select user).AsQueryable();
+
+
+                        else
+                            allUsers = (from user in users.
+                           OrderBy(a => a.UserDetailsDto.Address)
+                                        select user).AsQueryable();
+                        break;
+                    case "FirstName":
+                        if (paginationParameters.SortDirection == "Descending")
+                            allUsers = (from user in users.
+                            OrderByDescending(a => a.UserDetailsDto.FirstName)
+                                        select user).AsQueryable();
+
+
+                        else
+                            allUsers = (from user in users.
+                           OrderBy(a => a.UserDetailsDto.FirstName)
+                                        select user).AsQueryable();
+                        break;
+                       
+                    case "LastName":
+                        if (paginationParameters.SortDirection == "Descending")
+                            allUsers = (from user in users.
+                          OrderByDescending(a => a.UserDetailsDto.LastName)
+                                        select user).AsQueryable();
+
+
+                        else
+                            allUsers = (from user in users.
+                           OrderBy(a => a.UserDetailsDto.LastName)
+                                        select user).AsQueryable();
+                        break;
+                }
             }
+            if ( !string.IsNullOrEmpty(paginationParameters.SearchText))
+            {
+                // allUsers =
+                //from user in users
+                //where (user => user.Email.Contains(paginationParameters.SearchText) ||( user.UserName.Length>0 && user.UserName.Contains(paginationParameters.SearchText))|| (user.UserDetailsDto.Address.Length > 0 && user.UserDetailsDto.Address.Contains(paginationParameters.SearchText))
+                //select user;
+               allUsers = allUsers.Where(user => user.Email.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText));
+
+            }
+            
             int count = allUsers.Count();
             int currentPage = paginationParameters.PageNumber;
             int pageSize = paginationParameters.ItemsOnPage;
@@ -60,15 +129,14 @@ namespace BuisniessLogic
             var previousPage = currentPage > 1 ? "Yes" : "No";
             var nextPage = currentPage < TotalPages ? "Yes" : "No";
             ItemsPaginingParametersDto dto = new ItemsPaginingParametersDto();
-           
             dto.MaxPageItems = totalCount;
             dto.CurrentPage = currentPage;
             dto.PreviousPage = previousPage;
             dto.NextPage = nextPage;
             dto.Data = usersToSend;
+            dto.SearchText = string.IsNullOrEmpty(paginationParameters.SearchText) ?
+                      "No Parameter Passed" : paginationParameters.SearchText;
             return dto;
-
-
 
 
 
@@ -79,13 +147,8 @@ namespace BuisniessLogic
         {
 
             var entity = userRepository.GetById(userId);
-           
             entity.UserDetails = new UserDetails();
-           
             userRepository.Save();
-
-
-
         }
        
      

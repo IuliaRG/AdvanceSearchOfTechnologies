@@ -33,6 +33,13 @@ namespace DAL
         {
             return dbSet.Find(Id);
         }
+        public T getUser(string UserName)
+        {
+            var comp = dbSet.Find(UserName);
+
+
+            return dbSet.Find(UserName);
+        }
 
         public void Insert(T obj)
         {

@@ -5,6 +5,8 @@ using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,79 +38,82 @@ namespace BuisniessLogic
        
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
-            var users= GetAllUsers();
-            IEnumerable<ApplicationUserDto> allUsers = users.AsQueryable();
-            var usersOrderByName=(from user in users.
-                         OrderBy(a => a.Email)
-                        
-                        select user).AsQueryable();
-            
+
+            var allUsers = userRepository.GetAll();
+            var data = allUsers.AsEnumerable();
+
+            //if (!string.IsNullOrEmpty(paginationParameters.SortField))
+            //{
+            //    switch (paginationParameters.SortField)
+            //    {
+            //        case "Email":
+            //            if (paginationParameters.SortDirection == "Descending")
+            //                allUsers = (from user in users.
+            //            OrderByDescending(a => a.Email)
+            //                            select user).AsQueryable();
+
+
+            //            else
+            //                allUsers = (from user in users.
+            //               OrderBy(a => a.Email)
+            //                            select user).AsQueryable();
+            //            break;
+            //        case "UserName":
+            //            if (paginationParameters.SortDirection == "Descending")
+            //                allUsers = (from user in users.
+            //             OrderByDescending(a => a.UserName)
+            //                            select user).AsQueryable();
+
+
+            //            else
+            //                allUsers = (from user in users.
+            //               OrderBy(a => a.UserName)
+            //                            select user).AsQueryable();
+            //            break;
+            //        case "Address":
+            //            if (paginationParameters.SortDirection == "Descending")
+            //                allUsers = (from user in users.
+            //               OrderByDescending(a => a.UserDetailsDto.Address)
+            //                            select user).AsQueryable();
+
+
+            //            else
+            //                allUsers = (from user in users.
+            //               OrderBy(a => a.UserDetailsDto.Address)
+            //                            select user).AsQueryable();
+            //            break;
+            //        case "FirstName":
+            //            if (paginationParameters.SortDirection == "Descending")
+            //                allUsers = (from user in users.
+            //                OrderByDescending(a => a.UserDetailsDto.FirstName)
+            //                            select user).AsQueryable();
+
+
+            //            else
+            //                allUsers = (from user in users.
+            //               OrderBy(a => a.UserDetailsDto.FirstName)
+            //                            select user).AsQueryable();
+            //            break;
+
+            //        case "LastName":
+            //            if (paginationParameters.SortDirection == "Descending")
+            //                allUsers = (from user in users.
+            //              OrderByDescending(a => a.UserDetailsDto.LastName)
+            //                            select user).AsQueryable();
+
+
+            //            else
+            //                allUsers = (from user in users.
+            //               OrderBy(a => a.UserDetailsDto.LastName)
+            //                            select user).AsQueryable();
+            //            break;
+            //    }
+            //}
+           
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
-                switch (paginationParameters.SortField)
-                {
-                    case "Email":
-                        if (paginationParameters.SortDirection == "Descending")
-                            allUsers = (from user in users.
-                        OrderByDescending(a => a.Email)
-                                        select user).AsQueryable();
-                        
-
-                        else
-                            allUsers = (from user in users.
-                           OrderBy(a => a.Email)
-                                        select user).AsQueryable();
-                        break;
-                    case "UserName":
-                        if (paginationParameters.SortDirection == "Descending")
-                            allUsers = (from user in users.
-                         OrderByDescending(a => a.UserName)
-                                        select user).AsQueryable();
-
-
-                        else
-                            allUsers = (from user in users.
-                           OrderBy(a => a.UserName)
-                                        select user).AsQueryable();
-                        break;
-                    case "Address":
-                        if (paginationParameters.SortDirection == "Descending")
-                            allUsers = (from user in users.
-                           OrderByDescending(a => a.UserDetailsDto.Address)
-                                        select user).AsQueryable();
-
-
-                        else
-                            allUsers = (from user in users.
-                           OrderBy(a => a.UserDetailsDto.Address)
-                                        select user).AsQueryable();
-                        break;
-                    case "FirstName":
-                        if (paginationParameters.SortDirection == "Descending")
-                            allUsers = (from user in users.
-                            OrderByDescending(a => a.UserDetailsDto.FirstName)
-                                        select user).AsQueryable();
-
-
-                        else
-                            allUsers = (from user in users.
-                           OrderBy(a => a.UserDetailsDto.FirstName)
-                                        select user).AsQueryable();
-                        break;
-                       
-                    case "LastName":
-                        if (paginationParameters.SortDirection == "Descending")
-                            allUsers = (from user in users.
-                          OrderByDescending(a => a.UserDetailsDto.LastName)
-                                        select user).AsQueryable();
-
-
-                        else
-                            allUsers = (from user in users.
-                           OrderBy(a => a.UserDetailsDto.LastName)
-                                        select user).AsQueryable();
-                        break;
-                }
+             allUsers= data.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
+             // var  x = query.OrderByField(paginationParameters.SortField, true);
             }
             if ( !string.IsNullOrEmpty(paginationParameters.SearchText))
             {
@@ -121,10 +126,11 @@ namespace BuisniessLogic
             }
             
             int count = allUsers.Count();
+            var result = allUsers.ToApplicationUserDtos();
             int currentPage = paginationParameters.PageNumber;
             int pageSize = paginationParameters.ItemsOnPage;
             int TotalPages = (int)Math.Ceiling(count / (double)paginationParameters.ItemsOnPage);
-            var usersToSend = allUsers.Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            var usersToSend = result.Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
             var totalCount = count;
             var previousPage = currentPage > 1 ? "Yes" : "No";
             var nextPage = currentPage < TotalPages ? "Yes" : "No";
@@ -133,7 +139,7 @@ namespace BuisniessLogic
             dto.CurrentPage = currentPage;
             dto.PreviousPage = previousPage;
             dto.NextPage = nextPage;
-            dto.Data = usersToSend;
+           dto.Data = usersToSend;
             dto.SearchText = string.IsNullOrEmpty(paginationParameters.SearchText) ?
                       "No Parameter Passed" : paginationParameters.SearchText;
             return dto;
@@ -141,17 +147,24 @@ namespace BuisniessLogic
 
 
         }
-
-
-        public void InitDetails(object userId)
+       
+        public string InitDetails(object userId)
         {
 
             var entity = userRepository.GetById(userId);
+            entity.TokenGuid= Guid.NewGuid().ToString(); ;
             entity.UserDetails = new UserDetails();
             userRepository.Save();
+            return entity.TokenGuid;
         }
-       
-     
+        public string GetUserByUserName(string userName)
+        {
+
+            var entity = userRepository.getUser(userName);
+            
+            return entity.TokenGuid;
+        }
+
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;
@@ -187,5 +200,6 @@ namespace BuisniessLogic
 
 
         }
+       
     }
 }

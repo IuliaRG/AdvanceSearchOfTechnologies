@@ -21,7 +21,6 @@ namespace BusinessObjects
             }
         }
         public string SearchText { get; set; }
-        public string _SortField { get; set; }
         public string SortField { get; set; }
         public string SortDirection { get; set; }
         public int CurrentPage { get; set; }

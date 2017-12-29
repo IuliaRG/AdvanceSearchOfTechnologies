@@ -15,6 +15,7 @@ namespace BusinessObjects
         public string ConfirmPassword { get; set; }
         public Boolean IsDeleted { get; set; }
         public Boolean IsActive { get; set; }
+        public string TokenGuid { get; set; }
         public UserDetailsDto UserDetailsDto { get; set; }
     }
 }

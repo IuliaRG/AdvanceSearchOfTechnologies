@@ -20,6 +20,8 @@ using BusinessObjects;
 using Abstracts;
 using DAL;
 using System.Linq;
+using System.Net.Mail;
+using BuisniessLogic;
 
 namespace ProiectDiploma.Controllers
 {
@@ -28,18 +30,12 @@ namespace ProiectDiploma.Controllers
     public class AccountController : BaseAuthController
     {
         private const string LocalLoginProvider = "Local";
-      
+        private IUserService service;
+        private IRepository<ApplicationUser> userRepository;
 
         public AccountController()
         {
         }
-
-        public class RoleDto
-        {
-            public string Name { get; set; }
-        }
-
-        
 
 
         public AccountController(ApplicationUserManager userManager,
@@ -319,12 +315,13 @@ namespace ProiectDiploma.Controllers
 
             return logins;
         }
-        private IUserService service;
+       
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            EmailService  data = new EmailService();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -334,13 +331,30 @@ namespace ProiectDiploma.Controllers
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             service = DIContainerST.GetInstance().Resolve<IUserService>();
-            service.InitDetails(user.Id);
-
-            if (!result.Succeeded)
+           var guid= service.InitDetails(user.Id);
+            var link = Url.Link("ActionApi", new { Controller = "Account", Action = "ValidateEmail", username = model.Email, token = guid });
+            if (result.Succeeded)
             {
-                return GetErrorResult(result);
+
+                data.SendEmail(link);
             }
 
+            return Ok();
+        }
+       
+        [AllowAnonymous]
+        [HttpGet]
+        public IHttpActionResult ValidateEmail(string username,string token)
+        {
+            userRepository = DIContainerST.GetInstance().Resolve<IRepository<ApplicationUser>>();
+           // service = DIContainerST.GetInstance().Resolve<IUserService>();
+          //  var guid = service.GetUserByUserName(username);
+           var user= userRepository.GetByUserName(username);
+            if (token == user.TokenGuid)
+            {
+              user.IsValidate = true;
+            }
+           
             return Ok();
         }
 

@@ -19,8 +19,11 @@ namespace BusinessObjects
             // Add custom user claims here
             return userIdentity;
         }
+       
         public Boolean IsDeleted { get; set; }
         public Boolean IsActive { get; set; }
+        public Boolean IsValidate { get; set; }
+        public string TokenGuid { get; set; }
         public virtual UserDetails UserDetails { get; set; }
 
     }

@@ -43,6 +43,7 @@ namespace BusinessObjects.Mapper
             result.UserName = user.UserName;
             result.IsDeleted = user.IsDeleted;
             result.IsActive = user.IsActive;
+            result.TokenGuid = user.TokenGuid;
             result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
 
             return result;

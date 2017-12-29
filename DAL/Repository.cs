@@ -33,11 +33,9 @@ namespace DAL
         {
             return dbSet.Find(Id);
         }
-        public T getUser(string UserName)
+        public T GetByUserName(string UserName)
         {
-            var comp = dbSet.Find(UserName);
-
-
+           
             return dbSet.Find(UserName);
         }
 

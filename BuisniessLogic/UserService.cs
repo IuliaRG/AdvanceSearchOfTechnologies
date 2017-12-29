@@ -160,7 +160,7 @@ namespace BuisniessLogic
         public string GetUserByUserName(string userName)
         {
 
-            var entity = userRepository.getUser(userName);
+            var entity = userRepository.GetByUserName(userName);
             
             return entity.TokenGuid;
         }

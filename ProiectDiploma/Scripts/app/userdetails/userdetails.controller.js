@@ -4,7 +4,6 @@ var UserDetailsController = (function () {
         this.iDataService = iDataService;
         this.route = $routeParams;
         this.UserDetailsVM = new UserModel();
-        console.log(this.route.data);
         this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
     UserDetailsController.prototype.GetUsersCallback = function (user, self) {

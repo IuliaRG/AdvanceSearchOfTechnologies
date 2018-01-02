@@ -336,7 +336,7 @@ namespace ProiectDiploma.Controllers
             if (result.Succeeded)
             {
 
-                data.SendEmail(link);
+                data.SendEmail(link, model.Email);
             }
 
             return Ok();
@@ -347,14 +347,9 @@ namespace ProiectDiploma.Controllers
         public IHttpActionResult ValidateEmail(string username,string token)
         {
             userRepository = DIContainerST.GetInstance().Resolve<IRepository<ApplicationUser>>();
-           // service = DIContainerST.GetInstance().Resolve<IUserService>();
-          //  var guid = service.GetUserByUserName(username);
-           var user= userRepository.GetByUserName(username);
-            if (token == user.TokenGuid)
-            {
-              user.IsValidate = true;
-            }
-           
+           service = DIContainerST.GetInstance().Resolve<IUserService>();
+          service.ValidateEmail(username, token);
+          
             return Ok();
         }
 

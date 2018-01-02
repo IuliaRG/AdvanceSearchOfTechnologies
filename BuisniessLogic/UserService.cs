@@ -40,8 +40,11 @@ namespace BuisniessLogic
         {
 
             var allUsers = userRepository.GetAll();
-            var data = allUsers.AsEnumerable();
-
+            
+           var data = allUsers.AsEnumerable();
+             var userTest = from b in allUsers
+                          
+                            select b;
             //if (!string.IsNullOrEmpty(paginationParameters.SortField))
             //{
             //    switch (paginationParameters.SortField)
@@ -109,7 +112,7 @@ namespace BuisniessLogic
             //            break;
             //    }
             //}
-           
+
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
              allUsers= data.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
@@ -164,7 +167,20 @@ namespace BuisniessLogic
             
             return entity.TokenGuid;
         }
-
+        public void ValidateEmail(string userName,string token)
+        {
+          var  entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == userName);
+            if (entityUser != null && token == entityUser.TokenGuid)
+            {
+                entityUser.IsValidate = true;
+                userRepository.Update(entityUser);
+                userRepository.Save();
+            }
+            else
+            {
+                throw (new Exception("User not found"));
+            }
+        }
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;

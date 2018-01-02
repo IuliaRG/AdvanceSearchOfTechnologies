@@ -44,6 +44,7 @@ namespace BusinessObjects.Mapper
             result.IsDeleted = user.IsDeleted;
             result.IsActive = user.IsActive;
             result.TokenGuid = user.TokenGuid;
+            result.IsValidate = user.IsValidate;
             result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
 
             return result;
@@ -72,12 +73,15 @@ namespace BusinessObjects.Mapper
     }
         public static UserDetailsDto ToUserDetailsDto(this UserDetails userDetails)
         {
+           
             var dtoUser = new UserDetailsDto();
+            if (userDetails != null)
+            {
                 dtoUser.Id = userDetails.Id;
                 dtoUser.FirstName = userDetails.FirstName;
                 dtoUser.LastName = userDetails.LastName;
                 dtoUser.Address = userDetails.Address;
-
+            }
             return dtoUser;
         }
     }

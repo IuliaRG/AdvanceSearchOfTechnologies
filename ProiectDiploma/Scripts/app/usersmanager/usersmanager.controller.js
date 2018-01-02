@@ -3,13 +3,14 @@ var UsersManagerController = (function () {
         this.httpService = $http;
         this.iDataService = iDataService;
         this.UsersManagerVM = new UsersManagerModel();
+        this.PageVM = new PageModel();
         this.PaginationVM = new PaginationModel();
         //this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
         this.Pagination();
     }
     UsersManagerController.prototype.GetUsersCallback = function (users, self) {
-        self.UsersManagerVM.users = users;
-        //self.UsersManagerVM.FromUsersDto(users);
+        // self.UsersManagerVM.users = users;
+        self.PageVM.FromUsersDto(users);
     };
     UsersManagerController.prototype.Pagination = function () {
         var self = this;
@@ -31,10 +32,27 @@ var UsersManagerModel = (function () {
     }
     return UsersManagerModel;
 }());
-var UserDto = (function () {
-    function UserDto() {
+var PageModel = (function () {
+    // public UserDetailsDto: UserDetailsDto;
+    function PageModel() {
     }
-    return UserDto;
+    PageModel.prototype.FromUsersDto = function (dto) {
+        this.Id = dto.Id;
+        this.users = dto.users;
+        //this.FirstName = dto.UserDto.UserDetailsDto.FirstName;
+        //this.LastName = dto.UserDto.UserDetailsDto.LastName;
+        this.Email = dto.Email;
+        this.UserName = dto.UserName;
+        this.ItemsOnPage = dto.ItemsOnPage;
+        this.PageNumber = dto.PageNumber;
+        this.MaxPageItems = dto.MaxPageItems;
+    };
+    return PageModel;
+}());
+var PageDto = (function () {
+    function PageDto() {
+    }
+    return PageDto;
 }());
 var UserDetailsDto = (function () {
     function UserDetailsDto() {
@@ -45,5 +63,10 @@ var PaginationModel = (function () {
     function PaginationModel() {
     }
     return PaginationModel;
+}());
+var UserDto = (function () {
+    function UserDto() {
+    }
+    return UserDto;
 }());
 //# sourceMappingURL=usersmanager.controller.js.map

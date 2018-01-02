@@ -13,6 +13,7 @@
         <tr>
            
             <th class="col-md-5 col-xs-5">FirstName</th>
+            <th class="col-md-5 col-xs-5">FirstName</th>
             <th class="col-md-4 col-xs-4">LastName</th>
             <th class="col-md-3 col-xs-3">Adress</th>
             <th class="col-md-2 col-xs-2">UserName</th>
@@ -23,7 +24,8 @@
     <tbody>
         <tr ng-repeat="user in $ctrl.UsersManagerVM.users" >
            
-            <td>{{user.UserDetailsDto.FirstName}}</td>
+            <td data-sortable="'firstName'">{{user.PageVM.FirstName}}</td>
+            <td >{{PageVM.FirstName}}</td>
             <td>{{user.UserDetailsDto.LastName}}</td>
             <td>{{user.UserDetailsDto.Address}}</td>
            

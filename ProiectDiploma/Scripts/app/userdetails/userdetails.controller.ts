@@ -10,10 +10,7 @@
         this.iDataService = iDataService;
         this.route = $routeParams;
         this.UserDetailsVM = new UserModel();
-        
-        console.log(this.route.data);
         this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
-        
     }
 
     protected GetUsersCallback(user: UserDto, self: UserDetailsController): void {
@@ -23,7 +20,6 @@
     public EditUser(): void {
      
         var self = this;
-        
         var userDto = {
            "UserName": self.UserDetailsVM.UserName,
            "Email": self.UserDetailsVM.Email,
@@ -34,10 +30,6 @@
            }
         };
         this.iDataService.Post('api/User/AddOrUpdate', userDto, this);
-
-
-       
-      
     }
 }
 class UserModel {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Abstracts;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,14 @@ using System.Threading.Tasks;
 
 namespace BuisniessLogic
 {
-    public class EmailService 
+    public class EmailService : IEmailService
     {
-        public void SendEmail(string link,string emailAddress)
+        public virtual string Text { get; set; }
+        public virtual string TextSubject { get; set; }
+        public virtual string TextBody { get; set; }
+        public virtual string EmailTo { get; set; }
+        public virtual string Link { get; set; }
+        public void SendEmail()
         {
             
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -19,18 +25,22 @@ namespace BuisniessLogic
             mail.From = new MailAddress("ProiectIulia@sendgrid.com");
              mail.To.Add("rad.iulia19@gmail.com");
             // mail.To.Add(emailAddress);
-            mail.Subject = "Confirm email";
+            mail.Subject = TextSubject;
             mail.IsBodyHtml = true;
-            mail.Body = "Press link to confirm your email " + link;
-            // Init SmtpClient and send
-            SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("andonis.gaja@gmail.com", "uJXbeBna8ebk");
-           // System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
+            mail.Body = TextBody + Link;
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            smtpClient.EnableSsl = true;
+           
+             System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
             smtpClient.Credentials = credentials;
+
             smtpClient.Send(mail);
 
         }
 
-       
+        public virtual void SendEmailConfirmation(string link, string emailAddress)
+        {
+           
+        }
     }
 }

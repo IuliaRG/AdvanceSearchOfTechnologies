@@ -18,6 +18,7 @@ namespace ProiectDiploma
         {
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IUserService, UserService>();
+            unityContainer.RegisterType<IEmailService, EmailService>();
             unityContainer.RegisterType<IRepository<UserDetails>, Repository<UserDetails>>();
             unityContainer.RegisterType<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             unityContainer.RegisterType<IRepository<StudentDetails>, Repository<StudentDetails>>();

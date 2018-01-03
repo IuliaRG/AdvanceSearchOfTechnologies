@@ -32,8 +32,7 @@ namespace BuisniessLogic
             return orderByExpression;
         }
        
-        public static IOrderedEnumerable<TSource>
-        OrderBy<TSource>(this IEnumerable<TSource> source, string propertyName, string sortDirection)
+        public static IOrderedEnumerable<TSource> OrderBy<TSource>(this IEnumerable<TSource> source, string propertyName, string sortDirection)
         {
             if (!string.IsNullOrEmpty(sortDirection) && sortDirection.Equals("Descending"))
             {

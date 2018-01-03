@@ -67,8 +67,13 @@ namespace ProiectDiploma.Models
         [Display(Name = "Provider key")]
         public string ProviderKey { get; set; }
     }
-
-    public class SetPasswordBindingModel
+    public class ForgotPassworBindingModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+        public class SetPasswordBindingModel
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

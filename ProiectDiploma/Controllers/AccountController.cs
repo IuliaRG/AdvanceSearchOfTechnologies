@@ -30,7 +30,9 @@ namespace ProiectDiploma.Controllers
     public class AccountController : BaseAuthController
     {
         private const string LocalLoginProvider = "Local";
-        private IUserService service;
+        private IUserService userService;
+        private IEmailService emailService;
+
         private IRepository<ApplicationUser> userRepository;
 
         public AccountController()
@@ -110,6 +112,43 @@ namespace ProiectDiploma.Controllers
                 ExternalLoginProviders = GetExternalLogins(returnUrl, generateState)
             };
         }
+        public string SendForgotPasswordEmail(ForgotPassworBindingModel model)
+        {
+            var user = UserManager.FindByName(model.Email);
+            if (user != null)
+            {
+                // Send an email with this link
+                string code = UserManager.GeneratePasswordResetToken(user.Id);
+                var callbackUrl = string.Format("http://www.google.com?userId={0}&code={1}", user.Id, code);
+                UserManager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return callbackUrl;
+            }
+
+            return null;
+        }
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPassworBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user!= null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var link = Url.Link("ActionApi", new { Controller = "Account", Action = "ForgotPassword", username = model.Email, token = code });
+               
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+                
+            }
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                
+            
+            // If we got this far, something failed, redisplay form
+            return Ok();
+        }
 
         // POST api/Account/ChangePassword
         [Route("ChangePassword")]
@@ -127,6 +166,7 @@ namespace ProiectDiploma.Controllers
             {
                 return GetErrorResult(result);
             }
+
 
             return Ok();
         }
@@ -321,7 +361,7 @@ namespace ProiectDiploma.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            EmailService  data = new EmailService();
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -330,15 +370,19 @@ namespace ProiectDiploma.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-            service = DIContainerST.GetInstance().Resolve<IUserService>();
-           var guid= service.InitDetails(user.Id);
-            var link = Url.Link("ActionApi", new { Controller = "Account", Action = "ValidateEmail", username = model.Email, token = guid });
+            userService = DIContainerST.GetInstance().Resolve<IUserService>();
+           var guid= userService.InitDetails(user.Id);
+            string link = Url.Link("ActionApi", new { Controller = "Account", Action = "ValidateEmail", username = model.Email, token = guid });
+           emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
             if (result.Succeeded)
             {
-
-                data.SendEmail(link, model.Email);
+                emailService.SendEmailConfirmation(link, model.Email);
             }
-
+            else
+            {
+                return GetErrorResult(result);
+            }
+           
             return Ok();
         }
        
@@ -347,8 +391,8 @@ namespace ProiectDiploma.Controllers
         public IHttpActionResult ValidateEmail(string username,string token)
         {
             userRepository = DIContainerST.GetInstance().Resolve<IRepository<ApplicationUser>>();
-           service = DIContainerST.GetInstance().Resolve<IUserService>();
-          service.ValidateEmail(username, token);
+            userService = DIContainerST.GetInstance().Resolve<IUserService>();
+            userService.ValidateEmail(username, token);
           
             return Ok();
         }

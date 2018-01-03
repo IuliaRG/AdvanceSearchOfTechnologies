@@ -20,10 +20,11 @@
     }
     protected GetUsersCallback(users: PageDto, self: UsersManagerController): void {
         
-       // self.UsersManagerVM.users = users;
+        // self.UsersManagerVM.users = users;
        
-        
+        console.log(users.ItemsOnPage);
         self.PageVM.FromUsersDto(users);
+        console.log(self.PageVM.users);
         
     }
     protected Pagination()
@@ -90,8 +91,8 @@ class PageModel {
         
         //this.FirstName = dto.UserDto.UserDetailsDto.FirstName;
         //this.LastName = dto.UserDto.UserDetailsDto.LastName;
-        this.Email = dto.Email;
-        this.UserName = dto.UserName;
+        //this.Email = dto.Email;
+        //this.UserName = dto.UserName;
         this.ItemsOnPage = dto.ItemsOnPage;
         this.PageNumber = dto.PageNumber;
         this.MaxPageItems = dto.MaxPageItems;

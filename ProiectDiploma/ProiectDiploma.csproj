@@ -398,7 +398,6 @@
     <TypeScriptCompile Include="Scripts\app\changepassword\changepassword.module.ts" />
     <TypeScriptCompile Include="Scripts\app\core\core.module.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\localstorageservice\storage.service.ts" />
-    <TypeScriptCompile Include="Scripts\app\core\services\localstorageservice\storage.module.ts" />
     <TypeScriptCompile Include="Scripts\app\forgotpassword\forgotpassword.component.ts" />
     <TypeScriptCompile Include="Scripts\app\forgotpassword\forgotpassword.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\forgotpassword\forgotpassword.module.ts" />

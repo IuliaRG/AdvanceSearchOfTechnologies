@@ -35,99 +35,21 @@ namespace BuisniessLogic
             var result = userEnitiy.ToApplicationUserDtos();
             return result;
         }
-       
+
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
-
             var allUsers = userRepository.GetAll();
-            
-           var data = allUsers.AsEnumerable();
-             var userTest = from b in allUsers
-                          
-                            select b;
-            //if (!string.IsNullOrEmpty(paginationParameters.SortField))
-            //{
-            //    switch (paginationParameters.SortField)
-            //    {
-            //        case "Email":
-            //            if (paginationParameters.SortDirection == "Descending")
-            //                allUsers = (from user in users.
-            //            OrderByDescending(a => a.Email)
-            //                            select user).AsQueryable();
-
-
-            //            else
-            //                allUsers = (from user in users.
-            //               OrderBy(a => a.Email)
-            //                            select user).AsQueryable();
-            //            break;
-            //        case "UserName":
-            //            if (paginationParameters.SortDirection == "Descending")
-            //                allUsers = (from user in users.
-            //             OrderByDescending(a => a.UserName)
-            //                            select user).AsQueryable();
-
-
-            //            else
-            //                allUsers = (from user in users.
-            //               OrderBy(a => a.UserName)
-            //                            select user).AsQueryable();
-            //            break;
-            //        case "Address":
-            //            if (paginationParameters.SortDirection == "Descending")
-            //                allUsers = (from user in users.
-            //               OrderByDescending(a => a.UserDetailsDto.Address)
-            //                            select user).AsQueryable();
-
-
-            //            else
-            //                allUsers = (from user in users.
-            //               OrderBy(a => a.UserDetailsDto.Address)
-            //                            select user).AsQueryable();
-            //            break;
-            //        case "FirstName":
-            //            if (paginationParameters.SortDirection == "Descending")
-            //                allUsers = (from user in users.
-            //                OrderByDescending(a => a.UserDetailsDto.FirstName)
-            //                            select user).AsQueryable();
-
-
-            //            else
-            //                allUsers = (from user in users.
-            //               OrderBy(a => a.UserDetailsDto.FirstName)
-            //                            select user).AsQueryable();
-            //            break;
-
-            //        case "LastName":
-            //            if (paginationParameters.SortDirection == "Descending")
-            //                allUsers = (from user in users.
-            //              OrderByDescending(a => a.UserDetailsDto.LastName)
-            //                            select user).AsQueryable();
-
-
-            //            else
-            //                allUsers = (from user in users.
-            //               OrderBy(a => a.UserDetailsDto.LastName)
-            //                            select user).AsQueryable();
-            //            break;
-            //    }
-            //}
-
+            var data = allUsers.AsQueryable();
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
-             allUsers= data.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
-             // var  x = query.OrderByField(paginationParameters.SortField, true);
+                allUsers = data.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
             }
-            if ( !string.IsNullOrEmpty(paginationParameters.SearchText))
+            if (!string.IsNullOrEmpty(paginationParameters.SearchText))
             {
-                // allUsers =
-                //from user in users
-                //where (user => user.Email.Contains(paginationParameters.SearchText) ||( user.UserName.Length>0 && user.UserName.Contains(paginationParameters.SearchText))|| (user.UserDetailsDto.Address.Length > 0 && user.UserDetailsDto.Address.Contains(paginationParameters.SearchText))
-                //select user;
-               allUsers = allUsers.Where(user => user.Email.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText));
-
+                allUsers = (from user in data.Where( user => user.UserDetails.Address.Contains(paginationParameters.SearchText)|| user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText)||  user.Email.Contains(paginationParameters.SearchText))
+                                      select user).AsQueryable();
             }
-            
+
             int count = allUsers.Count();
             var result = allUsers.ToApplicationUserDtos();
             int currentPage = paginationParameters.PageNumber;
@@ -146,9 +68,6 @@ namespace BuisniessLogic
             dto.SearchText = string.IsNullOrEmpty(paginationParameters.SearchText) ?
                       "No Parameter Passed" : paginationParameters.SearchText;
             return dto;
-
-
-
         }
        
         public string InitDetails(object userId)
@@ -160,13 +79,7 @@ namespace BuisniessLogic
             userRepository.Save();
             return entity.TokenGuid;
         }
-        public string GetUserByUserName(string userName)
-        {
-
-            var entity = userRepository.GetByUserName(userName);
-            
-            return entity.TokenGuid;
-        }
+       
         public void ValidateEmail(string userName,string token)
         {
           var  entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == userName);
@@ -181,6 +94,7 @@ namespace BuisniessLogic
                 throw (new Exception("User not found"));
             }
         }
+      
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;

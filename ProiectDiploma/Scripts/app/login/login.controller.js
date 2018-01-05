@@ -1,6 +1,9 @@
 var LogInController = (function () {
-    function LogInController(iDataService, $window) {
+    function LogInController(iLocalStorageService, iDataService, $window, $http) {
         this.iDataService = iDataService;
+        this.iLocalStorageService = iLocalStorageService;
+        this.iWindowService = $window;
+        this.httpService = $http;
         this.LoginVM = new LogInModel();
     }
     LogInController.prototype.LogInClick = function () {
@@ -31,13 +34,15 @@ var LogInController = (function () {
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         };
-        self.iDataService.LogIn(req, self);
+        self.iDataService.LogIn(req, self, this.GetUsersCallback);
     };
-    LogInController.prototype.PostUsersCallback = function (users, self) {
+    LogInController.prototype.GetUsersCallback = function (data, self) {
         var user = new UserLogInModel();
-        user.token = users.access_token;
-        user.email = users.userName;
-        user.tokenType = users.token_type;
+        user.token = data.access_token;
+        user.email = data.userName;
+        user.tokenType = data.token_type;
+        var userJson = JSON.stringify(user);
+        self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
     };
     LogInController.prototype.ErrorCallback = function (error) {
         var response = JSON.parse(error.responseText);

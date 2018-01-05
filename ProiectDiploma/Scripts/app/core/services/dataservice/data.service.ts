@@ -2,14 +2,16 @@
     Get(url: string, caller: any, successCallback: Function): any;
     GetById(url: string, id: any, caller: any, successCallback: Function): any;
     Post(url: string, entity: any, caller: any);
-    LogIn(entity: any, caller: any);
+    LogIn(entity: any, caller: any, successCallback: Function):any;
     Delete(url: string, id: any, caller: any, successCallback: Function): any;
     PostCallback(url: string, entity: any, caller: any, successCallback: Function): any;
 }
 class DataService implements IDataService {
     private _iHttpService: ng.IHttpService;
-    constructor($http: ng.IHttpService) {
+    private iWindowService: ng.IWindowService;
+    constructor($http: ng.IHttpService, $window: ng.IWindowService) {
         this._iHttpService = $http;
+        this.iWindowService = $window;
     }
 
     public Get(url: string, caller: any, successCallback: Function): any {
@@ -32,18 +34,14 @@ class DataService implements IDataService {
     }
    
     public PostCallback(url: string, data: any, caller: any, successCallback: Function): any {
-       
         this._iHttpService.post(
             url, data).then((response) => {
                 console.log(response);
                 successCallback(response.data, caller);
-              
             }).catch( (err) =>{
-             //  errorCallback(err);
             });
     }
     public Post(url: string, data: any, caller: any): any {
-
         this._iHttpService.post(
             url, data).then((response) => {
 
@@ -53,11 +51,12 @@ class DataService implements IDataService {
                 //  errorCallback(err);
             });
     }
-    public LogIn(data: any, caller: any): any {
+    public LogIn(data: any, caller: any, successCallback: Function): any {
         this._iHttpService(data).then((response) => {
-                console.log(response);
-               
-                 //successCallback(response.data, caller);
+            console.log(response);
+            successCallback(response.data, caller);
+                
+
             }).catch((err) => {
                 //  errorCallback(err);
             });

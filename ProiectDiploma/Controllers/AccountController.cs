@@ -22,6 +22,7 @@ using DAL;
 using System.Linq;
 using System.Net.Mail;
 using BuisniessLogic;
+using System.Net.Http.Headers;
 
 namespace ProiectDiploma.Controllers
 {
@@ -112,21 +113,10 @@ namespace ProiectDiploma.Controllers
                 ExternalLoginProviders = GetExternalLogins(returnUrl, generateState)
             };
         }
-        public string SendForgotPasswordEmail(ForgotPassworBindingModel model)
-        {
-            var user = UserManager.FindByName(model.Email);
-            if (user != null)
-            {
-                // Send an email with this link
-                string code = UserManager.GeneratePasswordResetToken(user.Id);
-                var callbackUrl = string.Format("http://www.google.com?userId={0}&code={1}", user.Id, code);
-                UserManager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return callbackUrl;
-            }
-
-            return null;
-        }
-        public async Task<IHttpActionResult> ForgotPassword(ForgotPassworBindingModel model)
+      
+        [AllowAnonymous]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -134,23 +124,38 @@ namespace ProiectDiploma.Controllers
             }
 
             var user = await UserManager.FindByEmailAsync(model.Email);
-                if (user!= null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var link = Url.Link("ActionApi", new { Controller = "Account", Action = "ForgotPassword", username = model.Email, token = code });
-               
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
-                
+            emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
+            if (user!= null )
+            {
+                string link = string.Format("http://localhost:6251/index.html#!/resetpassword?username={0}", model.Email);
+                emailService.SendEmail(model.Email, Const.EmailForgotPasswordSubject, string.Format(Const.EmailForgotPasswordBody, link));
             }
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                
-            
-            // If we got this far, something failed, redisplay form
+              
             return Ok();
         }
 
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel model)
+        {
+            emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            IdentityResult result =  await  UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
+            if (result.Succeeded)
+            {
+                emailService.SendEmail(model.Email, Const.EmailChangePasswordSubject, Const.EmailResetPasswordBody);
+            }
+            else
+            {
+                return GetErrorResult(result);
+            }
+            return Ok();
+
+        }
+
         // POST api/Account/ChangePassword
+        [Authorize]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -158,15 +163,18 @@ namespace ProiectDiploma.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                model.NewPassword);
-            
-            if (!result.Succeeded)
+            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,model.NewPassword);
+            emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
+            var id = RequestContext.Principal.Identity.GetUserId();
+            string email =  UserManager.GetEmail(id);
+            if (result.Succeeded)
+            {
+                emailService.SendEmail(email, Const.EmailChangePasswordSubject, Const.EmailChangePasswordBody);
+            }
+            else
             {
                 return GetErrorResult(result);
             }
-
 
             return Ok();
         }
@@ -361,22 +369,19 @@ namespace ProiectDiploma.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             userService = DIContainerST.GetInstance().Resolve<IUserService>();
-           var guid= userService.InitDetails(user.Id);
+            var guid= userService.InitDetails(user.Id);
             string link = Url.Link("ActionApi", new { Controller = "Account", Action = "ValidateEmail", username = model.Email, token = guid });
-           emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
+            emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
             if (result.Succeeded)
             {
-                emailService.SendEmailConfirmation(link, model.Email);
+                emailService.SendEmail(model.Email, Const.EmailConfirmationSubject, string.Format(Const.EmailConfirmationBody, link));
             }
             else
             {
@@ -388,13 +393,27 @@ namespace ProiectDiploma.Controllers
        
         [AllowAnonymous]
         [HttpGet]
-        public IHttpActionResult ValidateEmail(string username,string token)
+        public HttpResponseMessage ValidateEmail(string username,string token)
         {
             userRepository = DIContainerST.GetInstance().Resolve<IRepository<ApplicationUser>>();
             userService = DIContainerST.GetInstance().Resolve<IUserService>();
             userService.ValidateEmail(username, token);
-          
-            return Ok();
+            var response = new HttpResponseMessage();
+            response.Content = new StringContent("<html>" +
+                "<body>" +
+               "<h1>"+
+               "Confirm Email "+
+               "<p>"+
+               Const.EmailConfirmation +
+               "<a href='http://localhost:6251/index.html#!/login'> "+
+              " click here to Log In"+
+              "</a>"+
+               "</p>" +
+               "</h1>" +
+                "</body>" +
+                "</html>");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
         }
 
         // POST api/Account/RegisterExternal

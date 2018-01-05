@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangePasswordEmail.cs" />
-    <Compile Include="SendEmailConfirmation.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

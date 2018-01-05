@@ -8,7 +8,7 @@ namespace Abstracts
 {
     public interface IEmailService
     {
-        void SendEmail();
-        void SendEmailConfirmation(string link, string emailAddress);
+        void SendEmail(string email, string subject, string body);
+        
     }
 }

@@ -1,12 +1,18 @@
 ﻿class LogInController {
     protected iDataService: IDataService;
+    protected iWindowService: ng.IWindowService;
+    protected iLocalStorageService: ILocalStorageService;
     public req: any;
     public LoginVM: LogInModel;
-    constructor(iDataService: IDataService, $window: ng.IWindowService) {
+    protected httpService: ng.IHttpService;
+    constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
         this.iDataService = iDataService;
+        this.iLocalStorageService = iLocalStorageService;
+        this.iWindowService = $window;
+        this.httpService = $http;
         this.LoginVM = new LogInModel();
     }
-  
+
     public LogInClick(): void {
         var self = this;
         self.LoginVM.ShowError = false;
@@ -36,16 +42,25 @@
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         }
-        self.iDataService.LogIn( req, self);
+            
+            
+        self.iDataService.LogIn(req, self, this.GetUsersCallback);
+
+
+
 
     }
 
-    protected PostUsersCallback(users: any, self: LogInController): void {
+    protected GetUsersCallback(data: any, self: LogInController): void {
         var user: UserLogInModel = new UserLogInModel();
-        user.token = users.access_token;
-        user.email = users.userName;
-        user.tokenType = users.token_type;
+        user.token = data.access_token;
+        user.email = data.userName;
+        user.tokenType = data.token_type;
+        var userJson = JSON.stringify(user);
+        self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
 
+        
+  
     }
     protected ErrorCallback(error): void {
         var response = JSON.parse(error.responseText);

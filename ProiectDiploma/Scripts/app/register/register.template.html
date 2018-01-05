@@ -1,0 +1,24 @@
+﻿<div class="col-md-12">
+    <h3>Register</h3>
+
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Email" ng-model="$ctrl.RegisterVM.Email " />
+        </div>
+
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" ng-model="$ctrl.RegisterVM.Password" />
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="ConfirmPassword" ng-model="$ctrl.RegisterVM.ConfirmPassword" />
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-success" ng-click="$ctrl.RegisterClick()">Reset Password</button>
+            <br /><br />
+            <span ng-show="$ctrl.RegisterVM.ShowError" class="error-message">{{$ctrl.RegisterVM.ErrorMessage}}</span>
+        </div>
+
+    </div>
+
+</div>

@@ -84,6 +84,7 @@
     <Compile Include="Entity\StudentDetails.cs" />
     <Compile Include="Entity\TeacherDetails.cs" />
     <Compile Include="Entity\UserDetails.cs" />
+    <Compile Include="Mapper\PaginationMapper.cs" />
     <Compile Include="Mapper\SchoolMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

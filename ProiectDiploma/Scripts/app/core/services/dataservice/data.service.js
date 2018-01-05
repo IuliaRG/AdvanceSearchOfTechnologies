@@ -1,6 +1,7 @@
 var DataService = (function () {
-    function DataService($http) {
+    function DataService($http, $window) {
         this._iHttpService = $http;
+        this.iWindowService = $window;
     }
     DataService.prototype.Get = function (url, caller, successCallback) {
         this._iHttpService.get(url, {}).then(function (response) {
@@ -23,7 +24,6 @@ var DataService = (function () {
             console.log(response);
             successCallback(response.data, caller);
         }).catch(function (err) {
-            //  errorCallback(err);
         });
     };
     DataService.prototype.Post = function (url, data, caller) {
@@ -33,10 +33,10 @@ var DataService = (function () {
             //  errorCallback(err);
         });
     };
-    DataService.prototype.LogIn = function (data, caller) {
+    DataService.prototype.LogIn = function (data, caller, successCallback) {
         this._iHttpService(data).then(function (response) {
             console.log(response);
-            //successCallback(response.data, caller);
+            successCallback(response.data, caller);
         }).catch(function (err) {
             //  errorCallback(err);
         });

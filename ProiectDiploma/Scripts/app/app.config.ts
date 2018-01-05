@@ -18,7 +18,19 @@ angular.
                 when('/userdetails', {
                     template: '<userdetails></userdetails>'
                 }).
-               
+                when('/forgotpassword', {
+                    template: '<forgotpassword></forgotpassword>'
+                }).
+                when('/register', {
+                    template: '<register></register>'
+                }).
+                when('/resetpassword', {
+                    template: '<resetpassword></resetpassword>'
+                }).
+                when('/changepassword', {
+                    template: '<changepassword></changepassword>'
+                }).
+              
                 otherwise('/home');
         }
-    ]);
+    ]); 

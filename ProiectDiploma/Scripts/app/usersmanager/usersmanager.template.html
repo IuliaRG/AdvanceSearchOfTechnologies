@@ -13,6 +13,7 @@
         <tr>
            
             <th class="col-md-5 col-xs-5">FirstName</th>
+
             <th class="col-md-5 col-xs-5">FirstName</th>
             <th class="col-md-4 col-xs-4">LastName</th>
             <th class="col-md-3 col-xs-3">Adress</th>
@@ -22,19 +23,27 @@
 
     </thead>
     <tbody>
-        <tr ng-repeat="user in $ctrl.UsersManagerVM.users" >
-           
-            <td data-sortable="'firstName'">{{user.PageVM.FirstName}}</td>
+        <!--<tr ng-repeat="user in $ctrl.UsersManagerVM.users" >-->
+          
+            <!--<td data-sortable="'firstName'">{{user.PageVM.FirstName}}</td>
             <td >{{PageVM.FirstName}}</td>
             <td>{{user.UserDetailsDto.LastName}}</td>
             <td>{{user.UserDetailsDto.Address}}</td>
            
-            <td>{{user.Email}}</td>
-            <td >
-                <a href="/index.html#!/userdetails?id={{user.Id}}">Edit</a>
-                <button >Detele</button>
+            <td>{{user.Email}}</td>-->
+        <tr>
+            <td data-sortable="'firstName'">Ana</td>
+            <td>Ana</td>
+                
+            <td>Pop</td>
+            <td>Fodora</td>
+            <td>Ana</td>
+            <td>ana@mail.com</td>
+            <td>
+                <a href="/index.html#!/userdetails?id={{user.Id}}" >Edit</a>
+                <button>Detele</button>
             </td>
-            
+
         </tr>
        
     </tbody>

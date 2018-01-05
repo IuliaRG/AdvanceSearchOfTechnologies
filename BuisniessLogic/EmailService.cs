@@ -17,7 +17,7 @@ namespace BuisniessLogic
         public virtual string TextBody { get; set; }
         public virtual string EmailTo { get; set; }
         public virtual string Link { get; set; }
-        public void SendEmail()
+        public void SendEmail(string email,string subject,string body)
         {
             
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -25,22 +25,18 @@ namespace BuisniessLogic
             mail.From = new MailAddress("ProiectIulia@sendgrid.com");
              mail.To.Add("rad.iulia19@gmail.com");
             // mail.To.Add(emailAddress);
-            mail.Subject = TextSubject;
+            mail.Subject = subject;
             mail.IsBodyHtml = true;
-            mail.Body = TextBody + Link;
+            mail.Body = body;
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
             smtpClient.EnableSsl = true;
-           
-             System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
+        
+           System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
             smtpClient.Credentials = credentials;
-
             smtpClient.Send(mail);
 
         }
 
-        public virtual void SendEmailConfirmation(string link, string emailAddress)
-        {
-           
-        }
+       
     }
 }

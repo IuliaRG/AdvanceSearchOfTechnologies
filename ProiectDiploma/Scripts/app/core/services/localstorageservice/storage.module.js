@@ -1,5 +1,4 @@
 'use strict';
-angular.module('login', [
-    'ngRoute', 'core.data'
-]);
+// Define the `core` module
+angular.module('core', ['core.data']);
 //# sourceMappingURL=storage.module.js.map

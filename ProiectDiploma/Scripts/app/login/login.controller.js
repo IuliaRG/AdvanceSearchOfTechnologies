@@ -37,12 +37,28 @@ var LogInController = (function () {
         self.iDataService.LogIn(req, self, this.GetUsersCallback);
     };
     LogInController.prototype.GetUsersCallback = function (data, self) {
-        var user = new UserLogInModel();
+        var user = new CurrentUserModel();
         user.token = data.access_token;
         user.email = data.userName;
         user.tokenType = data.token_type;
         var userJson = JSON.stringify(user);
         self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
+        var config = {
+            headers: {
+                "Authorization": 'Bearer ' + data.access_token,
+            }
+        };
+        self.httpService.get('api/User/GetRole', config).then(function (response) {
+            user.role = response.data.Roles;
+            debugger;
+            if (user.role.indexOf("Admin") > -1) {
+                self.iWindowService.location.href = '/index.html#!/usersmanager';
+            }
+            else {
+                self.iWindowService.location.href = '/index.html#!/home';
+            }
+        }).catch(function (response) {
+        });
     };
     LogInController.prototype.ErrorCallback = function (error) {
         var response = JSON.parse(error.responseText);

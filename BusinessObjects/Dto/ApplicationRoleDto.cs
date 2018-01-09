@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.Dto
 {
-   public  class RoleDto
+   public  class ApplicationRoleDto
     {
+        public string Id { get; set; }
         public string Name { get; set; }
+
     }
 }

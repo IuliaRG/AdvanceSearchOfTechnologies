@@ -2,15 +2,18 @@
     protected iDataService: IDataService;
     protected iWindowService: ng.IWindowService;
     protected iLocalStorageService: ILocalStorageService;
+
     public req: any;
     public LoginVM: LogInModel;
     protected httpService: ng.IHttpService;
+   
     constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
         this.iDataService = iDataService;
         this.iLocalStorageService = iLocalStorageService;
         this.iWindowService = $window;
         this.httpService = $http;
         this.LoginVM = new LogInModel();
+        
     }
 
     public LogInClick(): void {
@@ -46,19 +49,39 @@
             
         self.iDataService.LogIn(req, self, this.GetUsersCallback);
 
-
+       
 
 
     }
 
     protected GetUsersCallback(data: any, self: LogInController): void {
-        var user: UserLogInModel = new UserLogInModel();
+       
+        var user: CurrentUserModel = new CurrentUserModel();
         user.token = data.access_token;
         user.email = data.userName;
         user.tokenType = data.token_type;
         var userJson = JSON.stringify(user);
         self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
+        var config: angular.IRequestShortcutConfig = {
+            headers: {
+                "Authorization": 'Bearer ' + data.access_token,
+            }
+        }
+         
+        self.httpService.get('api/User/GetRole', config).then(function (response: any) {
+            user.role = response.data.Roles;
+      debugger
+            if (user.role.indexOf("Admin") > -1) {
+                self.iWindowService.location.href = '/index.html#!/usersmanager';
+            }
+            else {
+                self.iWindowService.location.href = '/index.html#!/home';
+            }
 
+
+        }).catch(function (response) {
+
+        });
         
   
     }

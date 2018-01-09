@@ -8,6 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
+using BusinessObjects.Dto;
+using Microsoft.AspNet.Identity;
+
 namespace ProiectDiploma.Controllers
 {
     [RoutePrefix("api/User")]
@@ -15,7 +18,7 @@ namespace ProiectDiploma.Controllers
     {
         
 private IUserService service;
-
+        private IUserRoleService roleService;
 
         [Route("GetAll")]
         public IEnumerable<ApplicationUserDto> GetAll()
@@ -24,6 +27,16 @@ private IUserService service;
               var user = service.GetAllUsers();
               return user;
           }
+        [Authorize]
+        [Route("GetRole")]
+        public ApplicationUserDto GetRole()
+        {
+            var id = RequestContext.Principal.Identity.GetUserId();
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
+            var user = service.GetUserRolesById(id);
+         
+            return user;
+        }
         [Route("")]
         public ApplicationUserDto GetUserByID(string id)
         {

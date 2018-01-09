@@ -12,6 +12,7 @@ var ChangePasswordController = (function (_super) {
     __extends(ChangePasswordController, _super);
     function ChangePasswordController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
         var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
+        _this.iDataService = null;
         _this.httpService = $http;
         _this.route = $routeParams;
         _this.ChangePassworVM = new ChangePasswordModel();
@@ -30,17 +31,17 @@ var ChangePasswordController = (function (_super) {
             self.ChangePassworVM.ShowError = true;
             return;
         }
+        this.currentUser = this.iLocalStorageService.GetCurrentUser();
         var config = {
             headers: {
-                "dataType": "json",
-                "contentType": "application/json"
+                "Authorization": 'Bearer ' + this.currentUser.token,
             }
         };
         this.httpService.post('api/Account/ChangePassword', {
-            "Password": self.ChangePassworVM.Password,
+            "OldPassword": self.ChangePassworVM.OldPassword,
             "NewPassword": self.ChangePassworVM.NewPassword,
             "ConfirmPassword": self.ChangePassworVM.ConfirmPassword,
-        }).then(function (response) {
+        }, config).then(function (response) {
             self.ChangePassworVM.ErrorMessage = "Your password has been successfully change";
         }).catch(function (response) {
             self.ChangePassworVM.ErrorMessage = response.data.Message;

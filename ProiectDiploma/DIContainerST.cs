@@ -1,6 +1,7 @@
 ﻿using Abstracts;
 using BuisniessLogic;
 using BusinessObjects;
+using BusinessObjects.Entity;
 using DAL;
 using Microsoft.Practices.Unity;
 using System;
@@ -18,9 +19,11 @@ namespace ProiectDiploma
         {
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IUserService, UserService>();
+            unityContainer.RegisterType<IUserRoleService, UserRoleService>();
             unityContainer.RegisterType<IEmailService, EmailService>();
             unityContainer.RegisterType<IRepository<UserDetails>, Repository<UserDetails>>();
             unityContainer.RegisterType<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
+            unityContainer.RegisterType<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
             unityContainer.RegisterType<IRepository<StudentDetails>, Repository<StudentDetails>>();
             unityContainer.RegisterType<IRepository<TeacherDetails>, Repository<TeacherDetails>>();
         }

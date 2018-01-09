@@ -65,7 +65,7 @@ namespace ProiectDiploma.Controllers
             return Ok();
         }
         [Route("AddNewRole")]
-        public async Task<IHttpActionResult> AddNewRole(RoleDto model)
+        public async Task<IHttpActionResult> AddNewRole(ApplicationRoleDto model)
         {
             var id = RequestContext.Principal.Identity.GetUserId();
             await AdminAuthorization(id);

@@ -1,11 +1,13 @@
 var UsersManagerController = (function () {
-    function UsersManagerController(iDataService, $window, $http) {
+    function UsersManagerController(iLocalStorageService, iUserRoleService, iDataService, $window, $http) {
         this.httpService = $http;
         this.iDataService = iDataService;
+        this.iUserRoleService = iUserRoleService;
         this.UsersManagerVM = new UsersManagerModel();
         this.PageVM = new PageModel();
         this.PaginationVM = new PaginationModel();
-        //this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.iUserRoleService.CheckUser("Admin", '/index.html#!/usermanager');
         this.Pagination();
     }
     UsersManagerController.prototype.GetUsersCallback = function (users, self) {

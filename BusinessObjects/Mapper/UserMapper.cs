@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessObjects.Dto;
+using BusinessObjects.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +31,9 @@ namespace BusinessObjects.Mapper
                 UserName = it.UserName,
                 IsDeleted = it.IsDeleted,
                 IsActive = it.IsActive,
-               UserDetailsDto = it.UserDetails.ToUserDetailsDto()
+               // UserRoleId= it.Roles.Select(a => a.RoleId),
+          //   Roles= it.Roles.Select(a => a.)
+                UserDetailsDto = it.UserDetails.ToUserDetailsDto()
 
             });
 
@@ -45,10 +49,27 @@ namespace BusinessObjects.Mapper
             result.IsActive = user.IsActive;
             result.TokenGuid = user.TokenGuid;
             result.IsValidate = user.IsValidate;
+       //  result.Roles = user.Select(r => r.Name).ToList()
             result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
 
             return result;
         }
+        public static ApplicationUserDto ToApplicationUserWithRoleDto(this ApplicationUser user, List<string> role)
+        {
+            var result = new ApplicationUserDto();
+            result.Id = user.Id;
+            result.Email = user.Email;
+            result.UserName = user.UserName;
+            result.IsDeleted = user.IsDeleted;
+            result.IsActive = user.IsActive;
+            result.TokenGuid = user.TokenGuid;
+            result.IsValidate = user.IsValidate;
+            result.Roles = role;
+            result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
+
+            return result;
+        }
+        
         public static ApplicationUser FromApplicationUserDto(this ApplicationUser entityApplicationDetails, ApplicationUserDto applicationDetailsDto)
         {
        

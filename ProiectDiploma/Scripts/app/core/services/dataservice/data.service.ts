@@ -53,9 +53,9 @@ class DataService implements IDataService {
     }
     public LogIn(data: any, caller: any, successCallback: Function): any {
         this._iHttpService(data).then((response) => {
-            console.log(response);
+            console.log(response.data);
             successCallback(response.data, caller);
-                
+           
 
             }).catch((err) => {
                 //  errorCallback(err);

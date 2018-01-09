@@ -1,5 +1,5 @@
 'use strict';
 angular.module('resetpassword', [
-    'ngRoute', 'core.data'
+    'ngRoute', 'core.data', 'core.storage'
 ]);
 //# sourceMappingURL=resetpassword.module.js.map

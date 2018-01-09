@@ -1,5 +1,7 @@
 ﻿using Abstracts;
 using BusinessObjects;
+using BusinessObjects.Dto;
+using BusinessObjects.Entity;
 using BusinessObjects.Mapper;
 using DAL;
 using System;
@@ -16,16 +18,15 @@ namespace BuisniessLogic
     {
         IRepository<UserDetails> userDetailsRepository;
         IRepository<ApplicationUser> userRepository;
-        IRepository<StudentDetails> studentDetailsRepository;
-        IRepository<TeacherDetails> teacherDetailsRepository;
-        
+     
+        IRepository<ApplicationRole> roleRepository;
 
-        public UserService(IRepository<UserDetails> userDetailsRepository, IRepository<ApplicationUser> userRepository, IRepository<TeacherDetails> teacherDetailsRepository, IRepository<StudentDetails> studentDetailsRepository)
+
+        public UserService(IRepository<UserDetails> userDetailsRepository, IRepository<ApplicationUser> userRepository, IRepository<ApplicationRole> roleRepository)
         {
             this.userDetailsRepository = userDetailsRepository;
             this.userRepository = userRepository;
-            this.studentDetailsRepository = studentDetailsRepository;
-            this.teacherDetailsRepository = teacherDetailsRepository;
+            this.roleRepository = roleRepository;
         }
 
       
@@ -94,7 +95,7 @@ namespace BuisniessLogic
                 throw (new Exception("User not found"));
             }
         }
-      
+        
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
             ApplicationUser entityUser = null;
@@ -102,6 +103,7 @@ namespace BuisniessLogic
             {
                 entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == user.UserName);
                entityUser.FromApplicationUserDto(user);
+               
                 userRepository.Update(entityUser);
             }
             else
@@ -130,6 +132,17 @@ namespace BuisniessLogic
 
 
         }
+
+        public ApplicationUserDto GetUserRolesById(object id)
+        {
+            var allRoles = roleRepository.GetAll();
+            var userRoleIds = userRepository.GetById(id).Roles.Select(r => r.RoleId).ToList();
+            var userRoles = allRoles.Where(it => userRoleIds.Contains(it.Id)).Select(r => r.Name).ToList();
+            var entity = userRepository.GetById(id).ToApplicationUserWithRoleDto(userRoles);
+            return entity;
+
+        }
+
        
     }
 }

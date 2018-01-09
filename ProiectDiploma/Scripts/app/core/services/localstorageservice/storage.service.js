@@ -3,10 +3,15 @@ var LocalStorageService = (function () {
     }
     LocalStorageService.prototype.SetCurrentUser = function (name, data) {
         localStorage.setItem(name, data);
-        if (localStorage.getItem(name) != null) {
-            localStorage.currentUser = JSON.parse(localStorage.getItem(name));
-        }
+    };
+    LocalStorageService.prototype.GetCurrentUser = function () {
+        return JSON.parse(localStorage.currentUser);
     };
     return LocalStorageService;
+}());
+var CurrentUserModel = (function () {
+    function CurrentUserModel() {
+    }
+    return CurrentUserModel;
 }());
 //# sourceMappingURL=storage.service.js.map

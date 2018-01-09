@@ -1,4 +1,5 @@
 'use strict';
 // Define the `core` module
-angular.module('core', ['core.data']);
+angular.module('core.storage', ['core.data']).
+    service('ILocalStorageService', [LocalStorageService]);
 //# sourceMappingURL=storage.module.js.map

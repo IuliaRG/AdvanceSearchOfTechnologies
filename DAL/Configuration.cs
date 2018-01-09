@@ -23,7 +23,7 @@ namespace DAL
            
             if (!(context.Roles.Any(it => it.Name == UserRole.Admin.ToString())))
             {
-                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.Admin.ToString() });
+                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.Admin.ToString()});
             }
             if (!(context.Roles.Any(it => it.Name == UserRole.NormalUser.ToString())))
             {

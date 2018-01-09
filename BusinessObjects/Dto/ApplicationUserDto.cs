@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
+using BusinessObjects.Dto;
 
 namespace BusinessObjects
 {
@@ -17,6 +19,9 @@ namespace BusinessObjects
         public Boolean IsActive { get; set; }
         public Boolean IsValidate { get; set; }
         public string TokenGuid { get; set; }
+        public IEnumerable<string> UserRoleId { get; set; }
+        public List<string> Roles { get; set; }
+      
         public UserDetailsDto UserDetailsDto { get; set; }
     }
 }

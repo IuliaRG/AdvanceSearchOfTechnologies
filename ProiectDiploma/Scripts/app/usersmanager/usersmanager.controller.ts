@@ -3,17 +3,19 @@
     protected PageVM: PageModel;
     protected httpService: ng.IHttpService;
     protected iDataService: IDataService;
+    protected iUserRoleService: IUserRoleService;
     protected PaginationVM: PaginationModel;
     public UserData: Array<UserDto>
-    constructor(iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
+    constructor(iLocalStorageService: ILocalStorageService,iUserRoleService:IUserRoleService,iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
        
         this.httpService = $http;
         this.iDataService = iDataService;
+        this.iUserRoleService = iUserRoleService;
         this.UsersManagerVM = new UsersManagerModel();
         this.PageVM = new PageModel();
         this.PaginationVM = new PaginationModel();
-        //this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
-       
+       this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+       this.iUserRoleService.CheckUser("Admin",'/index.html#!/usermanager');
         this.Pagination();
 
 
@@ -136,6 +138,7 @@ class UserDto {
     public IsDeleted: boolean;
     public Email: string;
     public UserName: string;
+    public Roles: any;
     public UserDetailsDto: UserDetailsDto;
 
 }

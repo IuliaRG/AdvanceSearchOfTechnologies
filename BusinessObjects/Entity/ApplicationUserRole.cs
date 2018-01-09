@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.Entity
 {
-    public class ApplicationUserRole : IdentityUserRole { }
+    public class ApplicationUserRole : IdentityUserRole {
+     
+
+    }
 }

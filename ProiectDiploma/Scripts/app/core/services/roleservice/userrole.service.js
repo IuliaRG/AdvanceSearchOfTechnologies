@@ -4,7 +4,7 @@ var UserRoleService = (function () {
         this.iWindowService = $window;
         this.iLocalStorageService = iLocalStorageService;
     }
-    UserRoleService.prototype.CheckUser = function (name, url) {
+    UserRoleService.prototype.CheckUser = function (name, urlName) {
         var self = this;
         self.currentUser = this.iLocalStorageService.GetCurrentUser();
         var config = {
@@ -15,7 +15,7 @@ var UserRoleService = (function () {
         this.iHttpService.get('api/User/GetRole', config).then(function (response) {
             self.currentUser.role = response.data.Roles;
             if (self.currentUser.role.indexOf(name) == -1) {
-                self.iWindowService.location.href = url;
+                self.iWindowService.location.href = '/index.html#!/' + urlName;
             }
         }).catch(function (response) {
         });

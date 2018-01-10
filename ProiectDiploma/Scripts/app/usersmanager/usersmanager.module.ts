@@ -1,4 +1,4 @@
 ﻿'use strict';
 
 angular.module('usersmanager', [
-    'ngRoute', 'core.data']);
+    'ngRoute', 'core.data','core.role']);

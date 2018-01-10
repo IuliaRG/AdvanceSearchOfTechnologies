@@ -6,15 +6,13 @@ var UsersManagerController = (function () {
         this.UsersManagerVM = new UsersManagerModel();
         this.PageVM = new PageModel();
         this.PaginationVM = new PaginationModel();
-        this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
-        this.iUserRoleService.CheckUser("Admin", '/index.html#!/usermanager');
+        //    this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.iUserRoleService.CheckUser("Admin", "usermanager");
         this.Pagination();
     }
-    UsersManagerController.prototype.GetUsersCallback = function (users, self) {
+    UsersManagerController.prototype.GetUsersCallback = function (data, self) {
         // self.UsersManagerVM.users = users;
-        console.log(users.ItemsOnPage);
-        self.PageVM.FromUsersDto(users);
-        console.log(self.PageVM.users);
+        self.PageVM.FromUsersDto(data);
     };
     UsersManagerController.prototype.Pagination = function () {
         var self = this;
@@ -39,17 +37,18 @@ var UsersManagerModel = (function () {
 var PageModel = (function () {
     // public UserDetailsDto: UserDetailsDto;
     function PageModel() {
+        this.users = new Array();
     }
-    PageModel.prototype.FromUsersDto = function (dto) {
-        this.Id = dto.Id;
-        this.users = dto.users;
-        //this.FirstName = dto.UserDto.UserDetailsDto.FirstName;
-        //this.LastName = dto.UserDto.UserDetailsDto.LastName;
-        //this.Email = dto.Email;
-        //this.UserName = dto.UserName;
-        this.ItemsOnPage = dto.ItemsOnPage;
-        this.PageNumber = dto.PageNumber;
-        this.MaxPageItems = dto.MaxPageItems;
+    PageModel.prototype.FromUsersDto = function (data) {
+        debugger;
+        this.PageNumber = data.PageNumber;
+        this.ItemsOnPage = data.ItemsOnPage;
+        this.SearchText = data.SearchText;
+        this.MaxPageItems = data.MaxPageItems;
+        this.NextPage = data.NextPage;
+        this.PreviousPage = data.PreviousPage;
+        var models = data.Data.map(function (dto) { return ((new UserModel()).FromUserDto(dto)); });
+        this.SortField = data.SortField;
     };
     return PageModel;
 }());

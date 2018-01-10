@@ -4,8 +4,8 @@
     constructor( $http: ng.IHttpService) {
 
         this._httpService = $http;
-        alert("ggsdgsg");
-        this.a = "hey";
+      
+      
     }
 }
 

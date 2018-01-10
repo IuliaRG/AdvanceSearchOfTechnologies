@@ -50,7 +50,6 @@ var LogInController = (function () {
         };
         self.httpService.get('api/User/GetRole', config).then(function (response) {
             user.role = response.data.Roles;
-            debugger;
             if (user.role.indexOf("Admin") > -1) {
                 self.iWindowService.location.href = '/index.html#!/usersmanager';
             }

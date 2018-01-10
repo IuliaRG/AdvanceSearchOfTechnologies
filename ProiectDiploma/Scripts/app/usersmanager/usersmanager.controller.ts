@@ -6,6 +6,7 @@
     protected iUserRoleService: IUserRoleService;
     protected PaginationVM: PaginationModel;
     public UserData: Array<UserDto>
+  
     constructor(iLocalStorageService: ILocalStorageService,iUserRoleService:IUserRoleService,iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
        
         this.httpService = $http;
@@ -14,19 +15,19 @@
         this.UsersManagerVM = new UsersManagerModel();
         this.PageVM = new PageModel();
         this.PaginationVM = new PaginationModel();
-       this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
-       this.iUserRoleService.CheckUser("Admin",'/index.html#!/usermanager');
+   //    this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+       this.iUserRoleService.CheckUser("Admin","usermanager");
         this.Pagination();
 
 
     }
-    protected GetUsersCallback(users: PageDto, self: UsersManagerController): void {
+    protected GetUsersCallback(data: any, self: UsersManagerController): void {
         
         // self.UsersManagerVM.users = users;
        
-        console.log(users.ItemsOnPage);
-        self.PageVM.FromUsersDto(users);
-        console.log(self.PageVM.users);
+        self.PageVM.FromUsersDto(data);
+       
+        
         
     }
     protected Pagination()
@@ -81,24 +82,26 @@ class PageModel {
     public PreviousPage: string;
     public SortDirection: string;
     public SortField: string;
-    public users: Array<UserDto>;
+    public users: Array<any>;
    // public UserDetailsDto: UserDetailsDto;
  
     constructor() {
-        
+        this.users = new Array<UserDto>();
     }
-    public FromUsersDto(dto: PageDto): void {
-        this.Id = dto.Id;
-        this.users = dto.users;
+    public FromUsersDto(data: any): void {
+        debugger
+        this.PageNumber = data.PageNumber;
+        this.ItemsOnPage = data.ItemsOnPage;
+        this.SearchText = data.SearchText;
+        this.MaxPageItems = data.MaxPageItems;
+        this.NextPage = data.NextPage;
+        this.PreviousPage = data.PreviousPage;
         
-        //this.FirstName = dto.UserDto.UserDetailsDto.FirstName;
-        //this.LastName = dto.UserDto.UserDetailsDto.LastName;
-        //this.Email = dto.Email;
-        //this.UserName = dto.UserName;
-        this.ItemsOnPage = dto.ItemsOnPage;
-        this.PageNumber = dto.PageNumber;
-        this.MaxPageItems = dto.MaxPageItems;
+     
+        var models: any = data.Data.map(dto => ((new UserModel()).FromUserDto(dto)));
+        this.SortField = data.SortField;
     }
+    
     
 }
 class PageDto{

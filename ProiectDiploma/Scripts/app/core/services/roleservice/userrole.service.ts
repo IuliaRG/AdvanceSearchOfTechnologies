@@ -13,9 +13,10 @@ class UserRoleService implements IUserRoleService {
         this.iWindowService = $window;
         this.iLocalStorageService = iLocalStorageService;
     }
-    public CheckUser( name:string,url:string):any
+    public CheckUser( name:string,urlName:string):any
     {
         var self = this;
+
         self.currentUser = this.iLocalStorageService.GetCurrentUser();
         var config: angular.IRequestShortcutConfig = {
             headers: {
@@ -26,7 +27,7 @@ class UserRoleService implements IUserRoleService {
         this.iHttpService .get('api/User/GetRole', config).then(function (response: any) {
            self.currentUser.role = response.data.Roles;
            if (self.currentUser.role.indexOf(name) == -1) {
-              self.iWindowService.location.href = url;
+               self.iWindowService.location.href = '/index.html#!/' + urlName;
             }
 
         }).catch(function (response) {

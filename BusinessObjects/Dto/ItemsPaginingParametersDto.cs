@@ -8,9 +8,11 @@ namespace BusinessObjects
 {
  public   class ItemsPaginingParametersDto
     {
-        public int MaxPageItems { get; set; } = 50;
+        
         public int PageNumber { get; set; } = 1;
         public int _ItemsOnPage { get; set; } = 8;
+        public int MaxPageItems { get; set; }
+
         public int ItemsOnPage
         {
 

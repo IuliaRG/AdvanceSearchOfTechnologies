@@ -39,7 +39,7 @@ namespace BuisniessLogic
 
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
-            var allUsers = userRepository.GetAll();
+            var allUsers = userRepository.GetAll().Where(x => x.IsDeleted == false);
             var data = allUsers.AsQueryable();
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
@@ -66,8 +66,7 @@ namespace BuisniessLogic
             dto.PreviousPage = previousPage;
             dto.NextPage = nextPage;
            dto.Data = usersToSend;
-            dto.SearchText = string.IsNullOrEmpty(paginationParameters.SearchText) ?
-                      "No Parameter Passed" : paginationParameters.SearchText;
+            dto.SearchText = paginationParameters.SearchText;
             return dto;
         }
        
@@ -120,8 +119,10 @@ namespace BuisniessLogic
 
         public void DeleteUser(object id)
         {
-            var entity=userRepository.GetById(id).ToApplicationUserDto();
+            //  var entity=userRepository.GetById(id).ToApplicationUserDto();
+            var entity = userRepository.GetById(id);
             entity.IsDeleted = true;
+            userRepository.Update(entity);
             userRepository.Save();
         }
 

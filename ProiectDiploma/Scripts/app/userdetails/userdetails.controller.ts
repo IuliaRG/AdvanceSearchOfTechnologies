@@ -2,6 +2,7 @@
     protected UserDetailsVM: UserModel;
     protected httpService: ng.IHttpService;
     protected iDataService: IDataService;
+    protected iWindowService: ng.IWindowService;
     protected route: any;
 
     constructor(iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
@@ -9,12 +10,14 @@
         this.httpService = $http;
         this.iDataService = iDataService;
         this.route = $routeParams;
+        this.iWindowService = $window;
         this.UserDetailsVM = new UserModel();
         this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
 
     protected GetUsersCallback(user: UserDto, self: UserDetailsController): void {
         self.UserDetailsVM.FromUserDto(user);
+        
     }
 
     public EditUser(): void {
@@ -30,6 +33,7 @@
            }
         };
         this.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        this.iWindowService.location.href = '/index.html#!/usersmanager';
     }
 }
 class UserModel {
@@ -44,13 +48,14 @@ class UserModel {
 
     }
 
-    public FromUserDto(dto: UserDto): void {
+    public FromUserDto(dto: any): UserModel  {
         this.Id = dto.Id;
         this.Address = dto.UserDetailsDto.Address;
         this.Email = dto.Email;
         this.UserName = dto.UserName;
         this.FirstName = dto.UserDetailsDto.FirstName;
         this.LastName = dto.UserDetailsDto.LastName;
+        return this;
     }
     
 }

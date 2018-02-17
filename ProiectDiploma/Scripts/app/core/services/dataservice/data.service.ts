@@ -9,6 +9,7 @@
 class DataService implements IDataService {
     private _iHttpService: ng.IHttpService;
     private iWindowService: ng.IWindowService;
+    
     constructor($http: ng.IHttpService, $window: ng.IWindowService) {
         this._iHttpService = $http;
         this.iWindowService = $window;
@@ -62,6 +63,8 @@ class DataService implements IDataService {
             });
     }
     public Delete(url: string, id: any, caller: any, successCallback: Function): any {
+       
+        
         this._iHttpService.delete(
             url + id, {}).then( (response)=> {
                 console.log(response);

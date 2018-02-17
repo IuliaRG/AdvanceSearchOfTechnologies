@@ -3,6 +3,7 @@ var UserDetailsController = (function () {
         this.httpService = $http;
         this.iDataService = iDataService;
         this.route = $routeParams;
+        this.iWindowService = $window;
         this.UserDetailsVM = new UserModel();
         this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
@@ -21,6 +22,7 @@ var UserDetailsController = (function () {
             }
         };
         this.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        this.iWindowService.location.href = '/index.html#!/usersmanager';
     };
     return UserDetailsController;
 }());
@@ -34,6 +36,7 @@ var UserModel = (function () {
         this.UserName = dto.UserName;
         this.FirstName = dto.UserDetailsDto.FirstName;
         this.LastName = dto.UserDetailsDto.LastName;
+        return this;
     };
     return UserModel;
 }());

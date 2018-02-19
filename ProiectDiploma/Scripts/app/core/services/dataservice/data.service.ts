@@ -3,7 +3,7 @@
     GetById(url: string, id: any, caller: any, successCallback: Function): any;
     Post(url: string, entity: any, caller: any);
     LogIn(entity: any, caller: any, successCallback: Function):any;
-    Delete(url: string, id: any, caller: any, successCallback: Function): any;
+    Delete(url: string, id: any, caller: any);
     PostCallback(url: string, entity: any, caller: any, successCallback: Function): any;
 }
 class DataService implements IDataService {
@@ -62,13 +62,13 @@ class DataService implements IDataService {
                 //  errorCallback(err);
             });
     }
-    public Delete(url: string, id: any, caller: any, successCallback: Function): any {
+    public Delete(url: string, id: any, caller: any): any {
        
         
         this._iHttpService.delete(
             url + id, {}).then( (response)=> {
                 console.log(response);
-                successCallback(response.data, caller);
+               
             }).catch((err) =>{
                 console.log(err);
             });

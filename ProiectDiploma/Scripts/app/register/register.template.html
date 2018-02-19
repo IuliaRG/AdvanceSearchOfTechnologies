@@ -14,9 +14,9 @@
             <input type="password" class="form-control" placeholder="ConfirmPassword" ng-model="$ctrl.RegisterVM.ConfirmPassword" />
         </div>
         <div class="form-group">
-            <button type="button" class="btn btn-success" ng-click="$ctrl.RegisterClick()">Reset Password</button>
+            <button type="button" class="btn btn-success" ng-click="$ctrl.UserRegister()">Register</button>
             <br /><br />
-            <span ng-show="$ctrl.RegisterVM.ShowError" class="error-message">{{$ctrl.RegisterVM.ErrorMessage}}</span>
+            <span ng-show="$ctrl.RegisterVM.ShowError"  class="error-message">{{$ctrl.RegisterVM.ErrorMessage}}</span>
         </div>
 
     </div>

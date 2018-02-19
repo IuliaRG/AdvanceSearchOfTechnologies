@@ -1,19 +1,16 @@
 ﻿class ResetPasswordController extends LogInController{
-    public ResetPassworVM: ResetPasswordModel;
+    protected ResetPassworVM: ResetPasswordModel;
     protected httpService: ng.IHttpService;
     protected iDataService: IDataService;
     protected route: any;
     constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
         super(iLocalStorageService,iDataService, $window, $http);
-        this.httpService = $http;
-       
         this.route = $routeParams;
+        this.httpService = $http;
         this.ResetPassworVM = new ResetPasswordModel();
         this.ResetPassworVM.Email = this.route.username;
-       // this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
-
-    public ResetPasswordClick(): void {
+    protected ResetPassword(): void {
         var self = this;
         self.ResetPassworVM.ShowError = false;
         if (self.ResetPassworVM.Email == null) {
@@ -38,15 +35,13 @@
             self.ResetPassworVM.ShowError = true;
             return;
         }
-
         var config: angular.IRequestShortcutConfig = {
             headers: {
                 "dataType": "json",
                 "contentType": "application/json"
             }
         };
-
-        this.httpService.post('api/Account/ResetPassword', {
+        self.httpService.post('api/Account/ResetPassword', {
             "Email": self.route.username,
             "NewPassword": self.ResetPassworVM.NewPassword,
             "ConfirmPassword": self.ResetPassworVM.ConfirmPassword,
@@ -57,10 +52,7 @@
         }).catch(function (response) {
             self.ResetPassworVM.ErrorMessage = response.data.Message;
         });
-     
     }
-
-   
 }
 
 class ResetPasswordModel {
@@ -69,5 +61,4 @@ class ResetPasswordModel {
     public ConfirmPassword: string;
     public ErrorMessage: string;
     public ShowError: boolean;
-   
 }

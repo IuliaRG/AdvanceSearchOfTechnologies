@@ -6,7 +6,7 @@ var LogInController = (function () {
         this.httpService = $http;
         this.LoginVM = new LogInModel();
     }
-    LogInController.prototype.LogInClick = function () {
+    LogInController.prototype.LogIn = function () {
         var self = this;
         self.LoginVM.ShowError = false;
         if (self.LoginVM.Email == null) {
@@ -26,7 +26,7 @@ var LogInController = (function () {
         }
         console.log(self.LoginVM.Email);
         var dto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var req = {
+        var requestToken = {
             method: 'POST',
             url: '/token',
             headers: {
@@ -34,7 +34,7 @@ var LogInController = (function () {
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         };
-        self.iDataService.LogIn(req, self, this.GetUsersCallback);
+        self.iDataService.LogIn(requestToken, self, this.GetUsersCallback);
     };
     LogInController.prototype.GetUsersCallback = function (data, self) {
         var user = new CurrentUserModel();
@@ -75,11 +75,6 @@ var LogInController = (function () {
         return passwordValidation.test(password);
     };
     return LogInController;
-}());
-var UserLogInModel = (function () {
-    function UserLogInModel() {
-    }
-    return UserLogInModel;
 }());
 var LogInModel = (function () {
     function LogInModel() {

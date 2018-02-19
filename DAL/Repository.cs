@@ -13,12 +13,10 @@ namespace DAL
     {
         protected ApplicationDbContext db;
         private DbSet<T> dbSet;
-
         public Repository()
         {
             db = new ApplicationDbContext();
             dbSet = db.Set<T>();
-            
         }
         public  void Create(T entity)
         {
@@ -28,17 +26,14 @@ namespace DAL
         {
             return dbSet;
         }
-
         public T GetById(object Id)
         {
             return dbSet.Find(Id);
         }
         public T GetByUserName(string UserName)
         {
-           
             return dbSet.Find(UserName);
         }
-
         public void Insert(T obj)
         {
             dbSet.Add(obj);
@@ -67,7 +62,6 @@ namespace DAL
                 }
             }
         }
-
     }
 }
 

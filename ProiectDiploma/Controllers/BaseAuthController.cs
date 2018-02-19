@@ -16,12 +16,12 @@ namespace ProiectDiploma.Controllers
         protected ApplicationUserManager _userManager;
         public async Task<IHttpActionResult> AdminAuthorization(string id)
         {
-           
             var isAdmin = await UserManager.IsInRoleAsync(id, "Admin");
             if (!isAdmin)
             {
                 return Unauthorized();
             }
+
             return Ok();
         }
         public ApplicationUserManager UserManager

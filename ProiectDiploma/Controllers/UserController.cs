@@ -18,8 +18,6 @@ namespace ProiectDiploma.Controllers
     {
         
 private IUserService service;
-        private IUserRoleService roleService;
-
         [Route("GetAll")]
         public IEnumerable<ApplicationUserDto> GetAll()
           {
@@ -27,6 +25,7 @@ private IUserService service;
               var user = service.GetAllUsers();
               return user;
           }
+
         [Authorize]
         [Route("GetRole")]
         public ApplicationUserDto GetRole()
@@ -37,6 +36,7 @@ private IUserService service;
          
             return user;
         }
+
         [Route("")]
         public ApplicationUserDto GetUserByID(string id)
         {
@@ -52,24 +52,21 @@ private IUserService service;
              var user = service.GetUsersOnPage(pageDto);
              return user;
          }
+
         [Route("AddOrUpdate")]
-        
          public IHttpActionResult AddOrUpdate(ApplicationUserDto user)
          {
-
                  service = DIContainerST.GetInstance().Resolve<IUserService>();
                  service.AddOrUpdateUser(user);
-                  return Ok();
+                 return Ok();
          }
         
         [Route("Delete/{id}")]
-
         public IHttpActionResult Delete(string id)
         {
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.DeleteUser(id);
             return Ok();
         }
-
     }
 }

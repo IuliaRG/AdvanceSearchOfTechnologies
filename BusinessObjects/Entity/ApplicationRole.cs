@@ -8,6 +8,5 @@ using System.Threading.Tasks;
 namespace BusinessObjects.Entity
 {
     public class ApplicationRole : IdentityRole {
-
     }
 }

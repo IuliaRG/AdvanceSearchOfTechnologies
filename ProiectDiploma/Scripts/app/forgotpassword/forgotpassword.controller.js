@@ -17,7 +17,7 @@ var ForgotPasswordController = (function (_super) {
         _this.ForgotPassworVM = new ForgotPasswordModel();
         return _this;
     }
-    ForgotPasswordController.prototype.SendLink = function () {
+    ForgotPasswordController.prototype.SendLinkForPassword = function () {
         var self = this;
         self.ForgotPassworVM.ShowError = false;
         if (self.ForgotPassworVM.Email == null) {
@@ -40,6 +40,7 @@ var ForgotPasswordController = (function (_super) {
             "Email": self.ForgotPassworVM.Email,
         }).then(function (response) {
             self.ForgotPassworVM.ErrorMessage = "Check your email address";
+            self.ForgotPassworVM.ShowError = true;
         }).catch(function (response) {
             self.ForgotPassworVM.ErrorMessage = response.data.Message;
         });

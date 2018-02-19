@@ -26,7 +26,7 @@ using System.Net.Http.Headers;
 
 namespace ProiectDiploma.Controllers
 {
-    [Authorize]
+    
     [RoutePrefix("api/Account")]
     public class AccountController : BaseAuthController
     {
@@ -125,10 +125,11 @@ namespace ProiectDiploma.Controllers
 
             var user = await UserManager.FindByEmailAsync(model.Email);
             emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
+            string email1 = "iulia.rad19@gmail.com";
             if (user!= null )
             {
                 string link = string.Format("http://localhost:6251/index.html#!/resetpassword?username={0}", model.Email);
-                emailService.SendEmail(model.Email, Const.EmailForgotPasswordSubject, string.Format(Const.EmailForgotPasswordBody, link));
+                emailService.SendEmail(/*model.Email*/ email1, Const.EmailForgotPasswordSubject, string.Format(Const.EmailForgotPasswordBody, link));
             }
               
             return Ok();
@@ -188,14 +189,11 @@ namespace ProiectDiploma.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
-
             return Ok();
         }
 
@@ -387,10 +385,8 @@ namespace ProiectDiploma.Controllers
             {
                 return GetErrorResult(result);
             }
-           
             return Ok();
         }
-       
         [AllowAnonymous]
         [HttpGet]
         public HttpResponseMessage ValidateEmail(string username,string token)

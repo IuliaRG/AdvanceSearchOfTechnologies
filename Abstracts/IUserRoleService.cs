@@ -10,7 +10,6 @@ namespace Abstracts
     public interface IUserRoleService
     {
         IEnumerable<ApplicationRoleDto> GetAllRoles();
-
         IEnumerable<ApplicationRoleDto> GetUserRoleById(IEnumerable<string> userRoleId);
        
     }

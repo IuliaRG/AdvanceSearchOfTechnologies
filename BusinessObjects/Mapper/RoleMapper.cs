@@ -16,7 +16,6 @@ namespace BusinessObjects.Mapper
             {
                 Id=it.Id,
                 Name = it.Name
-
             });
 
             return result;
@@ -26,6 +25,7 @@ namespace BusinessObjects.Mapper
             var result = new ApplicationRoleDto();
             result.Id = user.Id;
             result.Name = user.Name;
+
             return result;
         }
         public static IEnumerable<ApplicationUserRoleDto> ToApplicationUserRolesDtos(this IEnumerable<ApplicationUserRole> user)
@@ -43,6 +43,7 @@ namespace BusinessObjects.Mapper
             var result = new ApplicationUserRoleDto();
             result.RoleId = user.RoleId;
             result.UserId = user.UserId;
+
             return result;
         }
     }

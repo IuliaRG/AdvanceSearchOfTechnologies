@@ -12,14 +12,13 @@ var ResetPasswordController = (function (_super) {
     __extends(ResetPasswordController, _super);
     function ResetPasswordController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
         var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
-        _this.httpService = $http;
         _this.route = $routeParams;
+        _this.httpService = $http;
         _this.ResetPassworVM = new ResetPasswordModel();
         _this.ResetPassworVM.Email = _this.route.username;
         return _this;
-        // this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
-    ResetPasswordController.prototype.ResetPasswordClick = function () {
+    ResetPasswordController.prototype.ResetPassword = function () {
         var self = this;
         self.ResetPassworVM.ShowError = false;
         if (self.ResetPassworVM.Email == null) {
@@ -48,7 +47,7 @@ var ResetPasswordController = (function (_super) {
                 "contentType": "application/json"
             }
         };
-        this.httpService.post('api/Account/ResetPassword', {
+        self.httpService.post('api/Account/ResetPassword', {
             "Email": self.route.username,
             "NewPassword": self.ResetPassworVM.NewPassword,
             "ConfirmPassword": self.ResetPassworVM.ConfirmPassword,

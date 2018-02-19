@@ -12,7 +12,7 @@
        
     }
 
-    public SendLink(): void {
+    public SendLinkForPassword(): void {
         var self = this;
         self.ForgotPassworVM.ShowError = false;
         if (self.ForgotPassworVM.Email == null) {
@@ -27,31 +27,25 @@
             self.ForgotPassworVM.ShowError = true;
             return;
         }
-       
-
         var config: angular.IRequestShortcutConfig = {
             headers: {
                 "dataType": "json",
                 "contentType": "application/json"
             }
         };
-
         this.httpService.post('api/Account/ForgotPassword', {
             "Email": self.ForgotPassworVM.Email,
         }).then(function (response) {
             self.ForgotPassworVM.ErrorMessage = "Check your email address";
+            self.ForgotPassworVM.ShowError = true;
         }).catch(function (response) {
             self.ForgotPassworVM.ErrorMessage = response.data.Message;
         });
 
     }
-
-
 }
-
 class ForgotPasswordModel {
     public Email: string;
     public ErrorMessage: string;
     public ShowError: boolean;
-
 }

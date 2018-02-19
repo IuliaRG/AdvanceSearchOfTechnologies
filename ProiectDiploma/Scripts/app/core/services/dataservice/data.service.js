@@ -41,10 +41,9 @@ var DataService = (function () {
             //  errorCallback(err);
         });
     };
-    DataService.prototype.Delete = function (url, id, caller, successCallback) {
+    DataService.prototype.Delete = function (url, id, caller) {
         this._iHttpService.delete(url + id, {}).then(function (response) {
             console.log(response);
-            successCallback(response.data, caller);
         }).catch(function (err) {
             console.log(err);
         });

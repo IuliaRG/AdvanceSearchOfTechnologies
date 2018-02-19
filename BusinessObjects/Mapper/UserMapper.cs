@@ -31,10 +31,7 @@ namespace BusinessObjects.Mapper
                 UserName = it.UserName,
                 IsDeleted = it.IsDeleted,
                 IsActive = it.IsActive,
-               // UserRoleId= it.Roles.Select(a => a.RoleId),
-          //   Roles= it.Roles.Select(a => a.)
                 UserDetailsDto = it.UserDetails.ToUserDetailsDto()
-
             });
 
             return result;
@@ -49,7 +46,6 @@ namespace BusinessObjects.Mapper
             result.IsActive = user.IsActive;
             result.TokenGuid = user.TokenGuid;
             result.IsValidate = user.IsValidate;
-       //  result.Roles = user.Select(r => r.Name).ToList()
             result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
 
             return result;
@@ -72,7 +68,6 @@ namespace BusinessObjects.Mapper
         
         public static ApplicationUser FromApplicationUserDto(this ApplicationUser entityApplicationDetails, ApplicationUserDto applicationDetailsDto)
         {
-       
             entityApplicationDetails.Email = applicationDetailsDto.Email;
             entityApplicationDetails.UserName = applicationDetailsDto.UserName;
             entityApplicationDetails.IsDeleted = applicationDetailsDto.IsDeleted;
@@ -81,20 +76,16 @@ namespace BusinessObjects.Mapper
 
             return entityApplicationDetails;
         }
-       
-
         public static UserDetails FromUserDetailsDtos(this UserDetails userDetails, UserDetailsDto userDetailsDto)
-    {
-
+        {
             userDetails.FirstName = userDetailsDto.FirstName;
             userDetails.LastName = userDetailsDto.LastName;
             userDetails.Address = userDetailsDto.Address;
 
-        return userDetails;
+            return userDetails;
     }
         public static UserDetailsDto ToUserDetailsDto(this UserDetails userDetails)
         {
-           
             var dtoUser = new UserDetailsDto();
             if (userDetails != null)
             {
@@ -103,6 +94,7 @@ namespace BusinessObjects.Mapper
                 dtoUser.LastName = userDetails.LastName;
                 dtoUser.Address = userDetails.Address;
             }
+
             return dtoUser;
         }
     }

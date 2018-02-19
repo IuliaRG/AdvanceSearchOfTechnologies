@@ -21,7 +21,6 @@ namespace BusinessObjects
         public string TokenGuid { get; set; }
         public IEnumerable<string> UserRoleId { get; set; }
         public List<string> Roles { get; set; }
-      
         public UserDetailsDto UserDetailsDto { get; set; }
     }
 }

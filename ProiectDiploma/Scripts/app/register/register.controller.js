@@ -13,11 +13,10 @@ var RegisterController = (function (_super) {
     function RegisterController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
         var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
         _this.httpService = $http;
-        _this.route = $routeParams;
-        _this.RegisterVM = new RegisterdModel();
+        _this.RegisterVM = new RegisterModel();
         return _this;
     }
-    RegisterController.prototype.RegisterClick = function () {
+    RegisterController.prototype.UserRegister = function () {
         var self = this;
         self.RegisterVM.ShowError = false;
         if (self.RegisterVM.Email == null) {
@@ -46,21 +45,22 @@ var RegisterController = (function (_super) {
                 "contentType": "application/json"
             }
         };
-        this.httpService.post('api/Account/Register', {
+        self.httpService.post('api/Account/Register', {
             "Email": self.RegisterVM.Email,
             "Password": self.RegisterVM.Password,
             "ConfirmPassword": self.RegisterVM.ConfirmPassword,
         }).then(function (response) {
             self.RegisterVM.ErrorMessage = "Your has been successfully register.Plese check your email address and confirm your email";
+            self.RegisterVM.ShowError = true;
         }).catch(function (response) {
             self.RegisterVM.ErrorMessage = response.data.Message;
         });
     };
     return RegisterController;
 }(LogInController));
-var RegisterdModel = (function () {
-    function RegisterdModel() {
+var RegisterModel = (function () {
+    function RegisterModel() {
     }
-    return RegisterdModel;
+    return RegisterModel;
 }());
 //# sourceMappingURL=register.controller.js.map

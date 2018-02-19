@@ -19,7 +19,6 @@ namespace ProiectDiploma.Controllers
     public class UserManagerController : BaseAuthController
     {
         private IUserService service;
-
         [Route("RegisterAdmin")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -27,13 +26,10 @@ namespace ProiectDiploma.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.InitDetails(user.Id);
-
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -46,20 +42,15 @@ namespace ProiectDiploma.Controllers
         {
             var id = RequestContext.Principal.Identity.GetUserId();
             await AdminAuthorization(id);
-           
-
             var user = new ApplicationUser() { UserName = userDto.Email, Email = userDto.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, userDto.Password);
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.InitDetails(user.Id);
-
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
-           
-           service = DIContainerST.GetInstance().Resolve<IUserService>();
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.AddOrUpdateUser(userDto);
 
             return Ok();
@@ -80,12 +71,10 @@ namespace ProiectDiploma.Controllers
 
             return Ok();
         }
-
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             throw new NotImplementedException();
         }
-
         //[Authorize(Roles = "Admin")]
         [Route("AssignToRole")]
         public async Task<IHttpActionResult> AssignToRole(RegisterBindingModel model, string RoleName)
@@ -109,6 +98,7 @@ namespace ProiectDiploma.Controllers
             await AdminAuthorization(id);
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.AddOrUpdateUser(user);
+
             return Ok();
         }
     }

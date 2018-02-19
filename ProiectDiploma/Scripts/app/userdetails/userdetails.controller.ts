@@ -1,27 +1,19 @@
 ﻿class UserDetailsController {
-    protected UserDetailsVM: UserModel;
-    protected httpService: ng.IHttpService;
-    protected iDataService: IDataService;
-    protected iWindowService: ng.IWindowService;
-    protected route: any;
-
+    private UserDetailsVM: UserModel;
+    private iDataService: IDataService;
+    private iWindowService: ng.IWindowService;
+    private route: any;
     constructor(iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
-
-        this.httpService = $http;
         this.iDataService = iDataService;
         this.route = $routeParams;
         this.iWindowService = $window;
         this.UserDetailsVM = new UserModel();
         this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
-
     protected GetUsersCallback(user: UserDto, self: UserDetailsController): void {
         self.UserDetailsVM.FromUserDto(user);
-        
     }
-
-    public EditUser(): void {
-     
+    protected EditUser(): void {
         var self = this;
         var userDto = {
            "UserName": self.UserDetailsVM.UserName,
@@ -32,8 +24,8 @@
                "Address": self.UserDetailsVM.Address
            }
         };
-        this.iDataService.Post('api/User/AddOrUpdate', userDto, this);
-        this.iWindowService.location.href = '/index.html#!/usersmanager';
+        self.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        self.iWindowService.location.href = '/index.html#!/usersmanager';
     }
 }
 class UserModel {
@@ -45,10 +37,8 @@ class UserModel {
     public Address: string;
     public users: UserDto;
     constructor() {
-
     }
-
-    public FromUserDto(dto: any): UserModel  {
+    public FromUserDto(dto: any): UserModel {
         this.Id = dto.Id;
         this.Address = dto.UserDetailsDto.Address;
         this.Email = dto.Email;
@@ -57,5 +47,20 @@ class UserModel {
         this.LastName = dto.UserDetailsDto.LastName;
         return this;
     }
-    
+}
+
+class UserDetailsDto {
+    public Id: number;
+    public FirstName: string;
+    public LastName: string;
+    public Address: string;
+}
+class UserDto {
+    public Id: number;
+    public IsActive: boolean;
+    public IsDeleted: boolean;
+    public Email: string;
+    public UserName: string;
+    public Roles: any;
+    public UserDetailsDto: UserDetailsDto;
 }

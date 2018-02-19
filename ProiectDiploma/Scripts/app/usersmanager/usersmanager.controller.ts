@@ -1,23 +1,24 @@
 ﻿class UsersManagerController {
-   // protected UsersManagerVM: UsersManagerModel;
+    // protected UsersManagerVM: UsersManagerModel;
     protected PageVM: PageModel;
     protected httpService: ng.IHttpService;
     protected iDataService: IDataService;
+    protected users: Array<any>;
     protected iUserRoleService: IUserRoleService;
-    protected PaginationVM: PaginationModel;
+   
     public UserData: Array<UserDto>
     protected iWindowService: ng.IWindowService;
-    constructor(iLocalStorageService: ILocalStorageService,iUserRoleService:IUserRoleService,iDataService: IDataService,$window: ng.IWindowService, $http: ng.IHttpService) {
-       
+    constructor(iLocalStorageService: ILocalStorageService, iUserRoleService: IUserRoleService, iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
+
         this.httpService = $http;
         this.iDataService = iDataService;
         this.iWindowService = $window;
         this.iUserRoleService = iUserRoleService;
-       // this.UsersManagerVM = new UsersManagerModel();
+        // this.UsersManagerVM = new UsersManagerModel();
         this.PageVM = new PageModel();
-        this.PaginationVM = new PaginationModel();
-     // this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
-       this.iUserRoleService.CheckUser("Admin","usermanager");
+     
+        // this.iDataService.Get("api/User/GetAll", this, this.GetUsersCallback);
+        this.iUserRoleService.CheckUser("Admin", "usermanager");
         this.Pagination();
 
 
@@ -26,9 +27,36 @@
         self.PageVM.FromUsersDto(data);
     }
 
-    protected Pagination(itemsNumber?: number)
-    {
-        
+
+
+    protected DeleteUser(id: string) {
+        var self = this;
+        if (confirm("Are you sure to delete ")) {
+            self.Pagination();
+           
+            //this.PageVM.users = this.PageVM.users.filter(function (UserModel) {
+            //    return UserModel.Id !== id;
+            //});
+            for (var i = 0; i < this.PageVM.users.length; i++) {
+             
+                if (self.PageVM.users[i].Id == id) {
+                    
+                    var pageDto = {
+                        "PageNumber": self.PageVM.PageNumber,
+                        "ItemsOnPage": self.PageVM.ItemsOnPage,
+                        
+                    };
+                    self.iDataService.Delete('api/User/Delete/', id, this);
+                    self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
+                    self.PageVM.users.splice(i, 1);
+                    break;
+                }
+            }
+
+        }
+    }
+    protected Pagination(itemsNumber?: number) {
+
         var self = this;
         this.PageVM.ItemsOnPage = itemsNumber;
         var pageDto = {
@@ -39,22 +67,11 @@
             "SortField": self.PageVM.SortField,
         };
         self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
-
     }
-    
-    protected DeleteUser(id: number) {
-        if (confirm("Are you sure to delete ")) {
-           // this.iWindowService.location.href = '/index.html#!/usersmanager';
-                this.iDataService.Delete('api/User/Delete/', id, this, this.GetUsersCallback);
-                
-            }
-        }
-        
-    
-    
+
 }
 class PageModel {
-    public Id: number;
+    public Id: string;
     public IsActive: boolean;
     public IsDeleted: boolean;
     public Email: string;
@@ -72,66 +89,21 @@ class PageModel {
     public SortDirection: string;
     public SortField: string;
     public users: Array<any>;
-   // public UserDetailsDto: UserDetailsDto;
- 
     constructor() {
         this.users = new Array<UserDto>();
     }
-    public FromUsersDto(data: any): void {
-    
-        this.PageNumber = data.PageNumber;
+    public FromUsersDto(data: any): any {
+        this.Id = data.Id;
         this.ItemsOnPage = data.ItemsOnPage;
         this.SearchText = data.SearchText;
-       
         this.MaxPageItems = data.MaxPageItems;
         this.NextPage = data.NextPage;
         this.CurrentPage = data.CurrentPage;
         this.PreviousPage = data.PreviousPage;
-        this.users = data.Data.map( dto => ((new UserModel()).FromUserDto(dto)));
+        this.users = data.Data.map(dto => ((new UserModel()).FromUserDto(dto)));
         this.SortField = data.SortField;
-       
+        return this;
     }
-    
-    
 }
-class PageDto{
-    public Id: number;
-    public IsActive: boolean;
-    public IsDeleted: boolean;
-    public Email: string;
-    public UserName: string;
-    public FirstName: string;
-    public LastName: string;
-    public Address: string;
-    public PageNumber: number;
-    public ItemsOnPage: number;
-    public SearchText: string;
-    public MaxPageItems: number;
-    public NextPage: string;
-    public PreviousPage: string;
-    public SortDirection: string;
-    public SortField: string;
-   
-    public users: Array< UserDto>;
-}
-class UserDetailsDto {
-    public Id: number;
-    public FirstName: string;
-    public LastName: string;
-    public Address: string;
-}
-class PaginationModel{
-    public PageNumber: number;
-    public ItemsOnPage: number;
-    public SearchText: string;
-}
-class UserDto {
-    public Id: number;
-    public IsActive: boolean;
-    public IsDeleted: boolean;
-    public Email: string;
-    public UserName: string;
-    public Roles: any;
-    public UserDetailsDto: UserDetailsDto;
 
-}
+

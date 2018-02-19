@@ -13,14 +13,12 @@ namespace DAL
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+           AutomaticMigrationsEnabled = true;
+          AutomaticMigrationDataLossAllowed = true;
             ContextKey = "DAL.ApplicationDbContext";
         }
-
         protected override void Seed(ApplicationDbContext context)
         {
-           
             if (!(context.Roles.Any(it => it.Name == UserRole.Admin.ToString())))
             {
                 context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.Admin.ToString()});
@@ -33,7 +31,6 @@ namespace DAL
             {
                 context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.UserTest2.ToString() });
             }
-     
             context.SaveChanges();
             base.Seed(context);
         }

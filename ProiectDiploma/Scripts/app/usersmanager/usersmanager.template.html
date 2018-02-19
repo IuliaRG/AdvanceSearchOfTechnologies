@@ -60,3 +60,26 @@
           </td>
     </tbody>
 </table>
+<ul class="pagination">
+    <li>
+        <a href="" title="previous page" ng-hide="$ctrl.PageVM.CurrentPage==1" >&laquo;</a>
+    </li>
+    <li>
+        <a href="" title="previous page "  >&lt;</a>
+    </li>
+    <li>
+        <a href="#" >{{$ctrl.PageVM.CurrentPage}}</a>
+    </li>
+    <li >
+        <a href="#">{{$ctrl.PageVM.CurrentPage}}</a>
+    </li>
+    <li>
+        <a href=""  >{{$ctrl.PageVM.CurrentPage+1}}</a>
+    </li>
+    <li>
+        <a href="" ng-click="$ctrl.MoveToNextPage()" ng-hide="$ctrl.CurrentPage==$ctrl.LastPage">&gt;</a>
+    </li>
+    <li>
+        <a href="" >&raquo;</a>
+    </li>
+</ul>

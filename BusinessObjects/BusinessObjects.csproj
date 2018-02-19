@@ -76,18 +76,12 @@
     <Compile Include="Dto\ItemsPaginingParametersDto.cs" />
     <Compile Include="Dto\PageItemsToSendDto.cs" />
     <Compile Include="Dto\ApplicationRoleDto.cs" />
-    <Compile Include="Dto\StudentDetailsDto.cs" />
-    <Compile Include="Dto\TeacherDetailsDto.cs" />
     <Compile Include="Dto\UserDetailsDto.cs" />
     <Compile Include="Entity\ApplicationRole.cs" />
     <Compile Include="Entity\ApplicationUser.cs" />
     <Compile Include="Entity\ApplicationUserRole.cs" />
-    <Compile Include="Entity\StudentDetails.cs" />
-    <Compile Include="Entity\TeacherDetails.cs" />
     <Compile Include="Entity\UserDetails.cs" />
-    <Compile Include="Mapper\PaginationMapper.cs" />
     <Compile Include="Mapper\RoleMapper.cs" />
-    <Compile Include="Mapper\SchoolMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

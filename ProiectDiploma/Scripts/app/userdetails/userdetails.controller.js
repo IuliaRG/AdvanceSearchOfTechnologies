@@ -1,6 +1,5 @@
 var UserDetailsController = (function () {
     function UserDetailsController(iDataService, $window, $routeParams, $http) {
-        this.httpService = $http;
         this.iDataService = iDataService;
         this.route = $routeParams;
         this.iWindowService = $window;
@@ -21,8 +20,8 @@ var UserDetailsController = (function () {
                 "Address": self.UserDetailsVM.Address
             }
         };
-        this.iDataService.Post('api/User/AddOrUpdate', userDto, this);
-        this.iWindowService.location.href = '/index.html#!/usersmanager';
+        self.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        self.iWindowService.location.href = '/index.html#!/usersmanager';
     };
     return UserDetailsController;
 }());
@@ -39,5 +38,15 @@ var UserModel = (function () {
         return this;
     };
     return UserModel;
+}());
+var UserDetailsDto = (function () {
+    function UserDetailsDto() {
+    }
+    return UserDetailsDto;
+}());
+var UserDto = (function () {
+    function UserDto() {
+    }
+    return UserDto;
 }());
 //# sourceMappingURL=userdetails.controller.js.map

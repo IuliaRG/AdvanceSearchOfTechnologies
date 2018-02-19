@@ -295,7 +295,6 @@
     <Content Include="Scripts\app\resetpassword\resetpassword.template.html" />
     <Content Include="Scripts\app\home\home.template.html" />
     <Content Include="Scripts\app\login\login.template.html" />
-    <Content Include="Scripts\app\simpleuser\simpleusers.template.html" />
     <Content Include="Scripts\app\userdetails\userdetails.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
     <Content Include="Scripts\bootstrap.js" />

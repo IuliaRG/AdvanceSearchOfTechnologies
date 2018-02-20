@@ -44,24 +44,18 @@ namespace BuisniessLogic
                 allUsers = (from user in data.Where( user => user.UserDetails.Address.Contains(paginationParameters.SearchText)|| user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText)||  user.Email.Contains(paginationParameters.SearchText))
                                       select user).AsQueryable();
             }
-            int count = allUsers.Count();
-            var result = allUsers.ToApplicationUserDtos();
+            int totalNrUsers = allUsers.Count();
             int currentPage = paginationParameters.PageNumber;
-            int pageSize = paginationParameters.ItemsOnPage;
-            int LastPage = (int)Math.Ceiling(count / (double)paginationParameters.ItemsOnPage);
-            var usersToSend = result.Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
-            var totalCount = count;
-            var previousPage = currentPage > 1 ? "Yes" : "No";
-            var nextPage = currentPage < LastPage ? "Yes" : "No";
-            ItemsPaginingParametersDto dto = new ItemsPaginingParametersDto();
-            dto.MaxPageItems = totalCount;
-            dto.CurrentPage = currentPage;
-            dto.PreviousPage = previousPage;
-            dto.NextPage = nextPage;
-            dto.Data = usersToSend;
-            dto.SearchText = paginationParameters.SearchText;
+            int lastPage = (int)Math.Ceiling(totalNrUsers / (double)paginationParameters.ItemsOnPage);
+            var usersToSend = allUsers.ToApplicationUserDtos().Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            ItemsPaginingParametersDto pageDto = new ItemsPaginingParametersDto();
+            pageDto.MaxPageItems = totalNrUsers;
+            pageDto.CurrentPage = currentPage;
+            pageDto.LastPage = lastPage;
+            pageDto.Data = usersToSend;
+            pageDto.SearchText = paginationParameters.SearchText;
 
-            return dto;
+            return pageDto;
         }
        
         public string InitDetails(object userId)

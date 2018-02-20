@@ -24,8 +24,6 @@ namespace BusinessObjects
         public string SortDirection { get; set; }
         public int CurrentPage { get; set; }
         public int LastPage { get; set; }
-        public string PreviousPage { get; set; }
-        public string NextPage { get; set; }
         public List<ApplicationUserDto> Data { get; set; }
 
     }

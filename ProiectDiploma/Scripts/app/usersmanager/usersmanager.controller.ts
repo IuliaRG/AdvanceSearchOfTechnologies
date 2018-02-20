@@ -1,11 +1,8 @@
 ﻿class UsersManagerController {
-    // protected UsersManagerVM: UsersManagerModel;
     protected PageVM: PageModel;
     protected httpService: ng.IHttpService;
     protected iDataService: IDataService;
-    protected users: Array<any>;
     protected iUserRoleService: IUserRoleService;
-    public UserData: Array<UserDto>
     protected iWindowService: ng.IWindowService;
     constructor(iLocalStorageService: ILocalStorageService, iUserRoleService: IUserRoleService, iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
         this.httpService = $http;
@@ -19,7 +16,6 @@
     protected GetUsersCallback(data: any, self: UsersManagerController): void {
         self.PageVM.FromUsersDto(data);
     }
-
     protected Pagination(itemsNumber?: number, pageNumber?:number) {
         var self = this;
         this.PageVM.ItemsOnPage = itemsNumber;
@@ -34,28 +30,24 @@
         };
         self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
     }
-
     protected DeleteUser(id: string) {
         var self = this;
         if (confirm("Are you sure to delete ")) {
             self.Pagination();
-            for (var i = 0; i < this.PageVM.users.length; i++) {
+            for (var i = 0; i < self.PageVM.users.length; i++) {
              
                 if (self.PageVM.users[i].Id == id) {
-                    
                     var pageDto = {
                         "PageNumber": self.PageVM.PageNumber,
                         "ItemsOnPage": self.PageVM.ItemsOnPage,
                         
                     };
-                    self.PageVM.users.splice(i, 1);
                     self.iDataService.Delete('api/User/Delete/', id, this);
+                    self.PageVM.users.splice(i, 1);
                     self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
-                   
                     break;
                 }
             }
-
         }
     }
 }

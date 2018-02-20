@@ -34,20 +34,21 @@ namespace BuisniessLogic
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
             var allUsers = userRepository.GetAll();
-            var data = allUsers.AsQueryable().Where(x => x.IsDeleted == false);
+            var activeUsers = allUsers.AsQueryable().Where(x => x.IsDeleted == false);
+            var users = activeUsers;
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
-                allUsers = data.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
+                users = activeUsers.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
             }
             if (!string.IsNullOrEmpty(paginationParameters.SearchText))
             {
-                allUsers = (from user in data.Where( user => user.UserDetails.Address.Contains(paginationParameters.SearchText)|| user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText)||  user.Email.Contains(paginationParameters.SearchText))
+                users = (from user in activeUsers.Where( user => user.UserDetails.Address.Contains(paginationParameters.SearchText)|| user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText)||  user.Email.Contains(paginationParameters.SearchText))
                                       select user).AsQueryable();
             }
-            int totalNrUsers = allUsers.Count();
+            int totalNrUsers = users.Count();
             int currentPage = paginationParameters.PageNumber;
             int lastPage = (int)Math.Ceiling(totalNrUsers / (double)paginationParameters.ItemsOnPage);
-            var usersToSend = allUsers.ToApplicationUserDtos().Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            var usersToSend = users.ToApplicationUserDtos().Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
             ItemsPaginingParametersDto pageDto = new ItemsPaginingParametersDto();
             pageDto.MaxPageItems = totalNrUsers;
             pageDto.CurrentPage = currentPage;

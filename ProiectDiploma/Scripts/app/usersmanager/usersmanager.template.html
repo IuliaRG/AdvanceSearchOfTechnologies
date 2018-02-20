@@ -62,11 +62,11 @@
 </table>
 <ul id="pagination">
     <li>
-        <a href="" title="previous page" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1" >&laquo;</a>
+        <a href=""  ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1" >&laquo;</a>
     </li>
    
     <li>
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-2)">{{$ctrl.PageVM.CurrentPage-2}}</a>
+        <a href="" ng-hide="$ctrl.PageVM.CurrentPage-2<1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-2)">{{$ctrl.PageVM.CurrentPage-2}}</a>
     </li>
     <li>
         <a href="" ng-hide="$ctrl.PageVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-1)">{{$ctrl.PageVM.CurrentPage-1}}</a>
@@ -78,7 +78,7 @@
         <a href="" ng-hide="$ctrl.PageVM.CurrentPage==$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+1)">{{$ctrl.PageVM.CurrentPage+1}}</a>
     </li>
     <li>
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage==$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+2)" >{{$ctrl.PageVM.CurrentPage+2}}</a>
+        <a href="" ng-hide="$ctrl.PageVM.CurrentPage+2>$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+2)" >{{$ctrl.PageVM.CurrentPage+2}}</a>
     </li>
    
     <li>

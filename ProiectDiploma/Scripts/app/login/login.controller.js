@@ -1,10 +1,12 @@
 var LogInController = (function () {
-    function LogInController(iLocalStorageService, iDataService, $window, $http) {
-        this.iDataService = iDataService;
+    function LogInController(iLocalStorageService, iAccountService, iUserService, $window, $http) {
+        this.iAccountService = iAccountService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
         this.httpService = $http;
         this.LoginVM = new LogInModel();
+        this.CurrentUserVM = new CurrentUserModel();
     }
     LogInController.prototype.LogIn = function () {
         var self = this;
@@ -26,7 +28,7 @@ var LogInController = (function () {
         }
         console.log(self.LoginVM.Email);
         var dto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var requestToken = {
+        var tokenRequest = {
             method: 'POST',
             url: '/token',
             headers: {
@@ -34,30 +36,29 @@ var LogInController = (function () {
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         };
-        self.iDataService.LogIn(requestToken, self, this.GetUsersCallback);
+        self.iAccountService.LogIn(tokenRequest, self, this.GetUsersCallback);
     };
     LogInController.prototype.GetUsersCallback = function (data, self) {
-        var user = new CurrentUserModel();
-        user.token = data.access_token;
-        user.email = data.userName;
-        user.tokenType = data.token_type;
-        var userJson = JSON.stringify(user);
+        self.CurrentUserVM.token = data.access_token;
+        self.CurrentUserVM.email = data.userName;
+        self.CurrentUserVM.tokenType = data.token_type;
+        var userJson = JSON.stringify(self.CurrentUserVM);
         self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
         var config = {
             headers: {
                 "Authorization": 'Bearer ' + data.access_token,
             }
         };
-        self.httpService.get('api/User/GetRole', config).then(function (response) {
-            user.role = response.data.Roles;
-            if (user.role.indexOf("Admin") > -1) {
-                self.iWindowService.location.href = '/index.html#!/usersmanager';
-            }
-            else {
-                self.iWindowService.location.href = '/index.html#!/home';
-            }
-        }).catch(function (response) {
-        });
+        self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetUserRoleCallback);
+    };
+    LogInController.prototype.GetUserRoleCallback = function (user, self) {
+        self.CurrentUserVM.role = user.Roles;
+        if (self.CurrentUserVM.role.indexOf("Admin") > -1) {
+            self.iWindowService.location.href = '/index.html#!/usersmanager';
+        }
+        else {
+            self.iWindowService.location.href = '/index.html#!/home';
+        }
     };
     LogInController.prototype.ErrorCallback = function (error) {
         var response = JSON.parse(error.responseText);

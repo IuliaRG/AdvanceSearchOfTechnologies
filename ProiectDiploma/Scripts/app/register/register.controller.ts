@@ -1,13 +1,12 @@
-﻿class RegisterController extends LogInController{
+﻿class RegisterController extends LogInController {
     public RegisterVM: RegisterModel;
     protected httpService: ng.IHttpService;
-    protected iDataService: IDataService;
-    constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
-        super(iLocalStorageService,iDataService, $window, $http);
+    protected iAccountService: IAccountService;
+    constructor(iLocalStorageService: ILocalStorageService, iAccountService: IAccountService, iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
+        super(iLocalStorageService, iAccountService, iUserService, $window, $http);
         this.httpService = $http;
         this.RegisterVM = new RegisterModel();
     }
-
     public UserRegister(): void {
         var self = this;
         self.RegisterVM.ShowError = false;
@@ -35,23 +34,21 @@
         }
         var config: angular.IRequestShortcutConfig = {
             headers: {
-                "dataType": "json",
                 "contentType": "application/json"
             }
         };
-        self.httpService.post('api/Account/Register', {
+        var userDto = {
             "Email": self.RegisterVM.Email,
             "Password": self.RegisterVM.Password,
-            "ConfirmPassword": self.RegisterVM.ConfirmPassword,
-        }).then(function (response) {
-            self.RegisterVM.ErrorMessage = "Your has been successfully register.Plese check your email address and confirm your email";
-            self.RegisterVM.ShowError = true;
-            }).catch(function (response) {
-            self.RegisterVM.ErrorMessage = response.data.Message;
-        });
+            "ConfirmPassword": self.RegisterVM.ConfirmPassword
+        };
+        self.iAccountService.UserRegister('api/Account/Register', config, userDto, this, this.SuccessCallback, this.ErrorCallback);
+    }
+    protected SuccessCallback(user: RegisterModel, self: RegisterController): void {
+        self.RegisterVM.ErrorMessage = "Your has been successfully register.Plese check your email address and confirm your email";
+        self.RegisterVM.ShowError = true;
     }
 }
-
 class RegisterModel {
     public Email: string;
     public Password: string;

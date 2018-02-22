@@ -11,6 +11,7 @@ var LocalStorageService = (function () {
 }());
 var CurrentUserModel = (function () {
     function CurrentUserModel() {
+        this.role = new Array();
     }
     return CurrentUserModel;
 }());

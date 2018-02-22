@@ -11,6 +11,5 @@ namespace Abstracts
     {
         IEnumerable<ApplicationRoleDto> GetAllRoles();
         IEnumerable<ApplicationRoleDto> GetUserRoleById(IEnumerable<string> userRoleId);
-       
     }
 }

@@ -10,9 +10,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var ChangePasswordController = (function (_super) {
     __extends(ChangePasswordController, _super);
-    function ChangePasswordController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
-        var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
-        _this.iDataService = null;
+    function ChangePasswordController(iLocalStorageService, iAccountService, iUserService, $window, $routeParams, $http) {
+        var _this = _super.call(this, iLocalStorageService, iAccountService, iUserService, $window, $http) || this;
+        _this.iAccountService = null;
         _this.httpService = $http;
         _this.route = $routeParams;
         _this.ChangePassworVM = new ChangePasswordModel();

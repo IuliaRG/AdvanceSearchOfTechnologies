@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var RegisterController = (function (_super) {
     __extends(RegisterController, _super);
-    function RegisterController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
-        var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
+    function RegisterController(iLocalStorageService, iAccountService, iUserService, $window, $routeParams, $http) {
+        var _this = _super.call(this, iLocalStorageService, iAccountService, iUserService, $window, $http) || this;
         _this.httpService = $http;
         _this.RegisterVM = new RegisterModel();
         return _this;
@@ -41,20 +41,19 @@ var RegisterController = (function (_super) {
         }
         var config = {
             headers: {
-                "dataType": "json",
                 "contentType": "application/json"
             }
         };
-        self.httpService.post('api/Account/Register', {
+        var userDto = {
             "Email": self.RegisterVM.Email,
             "Password": self.RegisterVM.Password,
-            "ConfirmPassword": self.RegisterVM.ConfirmPassword,
-        }).then(function (response) {
-            self.RegisterVM.ErrorMessage = "Your has been successfully register.Plese check your email address and confirm your email";
-            self.RegisterVM.ShowError = true;
-        }).catch(function (response) {
-            self.RegisterVM.ErrorMessage = response.data.Message;
-        });
+            "ConfirmPassword": self.RegisterVM.ConfirmPassword
+        };
+        self.iAccountService.UserRegister('api/Account/Register', config, userDto, this, this.SuccessCallback, this.ErrorCallback);
+    };
+    RegisterController.prototype.SuccessCallback = function (user, self) {
+        self.RegisterVM.ErrorMessage = "Your has been successfully register.Plese check your email address and confirm your email";
+        self.RegisterVM.ShowError = true;
     };
     return RegisterController;
 }(LogInController));

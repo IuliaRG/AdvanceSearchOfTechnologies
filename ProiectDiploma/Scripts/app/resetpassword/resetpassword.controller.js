@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var ResetPasswordController = (function (_super) {
     __extends(ResetPasswordController, _super);
-    function ResetPasswordController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
-        var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
+    function ResetPasswordController(iLocalStorageService, iAccountService, iUserService, $window, $routeParams, $http) {
+        var _this = _super.call(this, iLocalStorageService, iAccountService, iUserService, $window, $http) || this;
         _this.route = $routeParams;
         _this.httpService = $http;
         _this.ResetPassworVM = new ResetPasswordModel();
@@ -43,20 +43,20 @@ var ResetPasswordController = (function (_super) {
         }
         var config = {
             headers: {
-                "dataType": "json",
                 "contentType": "application/json"
             }
         };
-        self.httpService.post('api/Account/ResetPassword', {
+        var userDto = {
             "Email": self.route.username,
             "NewPassword": self.ResetPassworVM.NewPassword,
             "ConfirmPassword": self.ResetPassworVM.ConfirmPassword,
-        }).then(function (response) {
-            self.iWindowService.location.href = '/index.html#!/login';
-            self.ResetPassworVM.ErrorMessage = "Your password has been successfully reset";
-        }).catch(function (response) {
-            self.ResetPassworVM.ErrorMessage = response.data.Message;
-        });
+        };
+        self.iAccountService.ResetPassword('api/Account/ResetPassword', config, userDto, this, this.SuccessCallback);
+    };
+    ResetPasswordController.prototype.SuccessCallback = function (user, self) {
+        self.iWindowService.location.href = '/index.html#!/login';
+        self.ResetPassworVM.ErrorMessage = "Your password has been successfully reset";
+        self.ResetPassworVM.ShowError = true;
     };
     return ResetPasswordController;
 }(LogInController));

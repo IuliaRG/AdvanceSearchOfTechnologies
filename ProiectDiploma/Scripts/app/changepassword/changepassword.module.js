@@ -1,5 +1,5 @@
 'use strict';
 angular.module('changepassword', [
-    'ngRoute', 'core.data'
+    'ngRoute', 'core.account'
 ]);
 //# sourceMappingURL=changepassword.module.js.map

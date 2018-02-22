@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var ForgotPasswordController = (function (_super) {
     __extends(ForgotPasswordController, _super);
-    function ForgotPasswordController(iLocalStorageService, iDataService, $window, $routeParams, $http) {
-        var _this = _super.call(this, iLocalStorageService, iDataService, $window, $http) || this;
+    function ForgotPasswordController(iLocalStorageService, iAccountService, iUserService, $window, $routeParams, $http) {
+        var _this = _super.call(this, iLocalStorageService, iAccountService, iUserService, $window, $http) || this;
         _this.httpService = $http;
         _this.route = $routeParams;
         _this.ForgotPassworVM = new ForgotPasswordModel();
@@ -32,18 +32,17 @@ var ForgotPasswordController = (function (_super) {
         }
         var config = {
             headers: {
-                "dataType": "json",
                 "contentType": "application/json"
             }
         };
-        this.httpService.post('api/Account/ForgotPassword', {
-            "Email": self.ForgotPassworVM.Email,
-        }).then(function (response) {
-            self.ForgotPassworVM.ErrorMessage = "Check your email address";
-            self.ForgotPassworVM.ShowError = true;
-        }).catch(function (response) {
-            self.ForgotPassworVM.ErrorMessage = response.data.Message;
-        });
+        var userDto = {
+            "Email": self.ForgotPassworVM.Email
+        };
+        self.iAccountService.ForgotPassword('api/Account/ForgotPassword', config, userDto, this, this.SuccessCallback);
+    };
+    ForgotPasswordController.prototype.SuccessCallback = function (user, self) {
+        self.ForgotPassworVM.ErrorMessage = "Check your email address!";
+        self.ForgotPassworVM.ShowError = true;
     };
     return ForgotPasswordController;
 }(LogInController));

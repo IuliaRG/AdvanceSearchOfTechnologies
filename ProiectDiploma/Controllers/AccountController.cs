@@ -145,7 +145,7 @@ namespace ProiectDiploma.Controllers
             IdentityResult result =  await  UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
             if (result.Succeeded)
             {
-                emailService.SendEmail(model.Email, Const.EmailChangePasswordSubject, Const.EmailResetPasswordBody);
+                emailService.SendEmail(/*model.Email*/"rad.iulia19@gamil.com", Const.EmailChangePasswordSubject, Const.EmailResetPasswordBody);
             }
             else
             {
@@ -379,7 +379,7 @@ namespace ProiectDiploma.Controllers
             emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
             if (result.Succeeded)
             {
-                emailService.SendEmail(model.Email, Const.EmailConfirmationSubject, string.Format(Const.EmailConfirmationBody, link));
+                emailService.SendEmail(/*model.Email*/ "rad.iulia19@mail.com", Const.EmailConfirmationSubject, string.Format(Const.EmailConfirmationBody, link));
             }
             else
             {

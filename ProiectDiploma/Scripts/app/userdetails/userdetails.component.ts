@@ -4,5 +4,5 @@ angular.
     module('userdetails').
     component('userdetails', {
         templateUrl: 'scripts/app/userdetails/userdetails.template.html',
-        controller: ['IDataService', '$window', '$routeParams', '$http', UserDetailsController]
+        controller: ['IUserService', '$window', '$routeParams', '$http', UserDetailsController]
     });

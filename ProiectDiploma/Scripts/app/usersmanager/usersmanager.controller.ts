@@ -1,20 +1,23 @@
 ﻿class UsersManagerController {
     protected PageVM: PageModel;
     protected httpService: ng.IHttpService;
-    protected iDataService: IDataService;
+    protected iUserService: IUserService;
     protected iUserRoleService: IUserRoleService;
     protected iWindowService: ng.IWindowService;
-    constructor(iLocalStorageService: ILocalStorageService, iUserRoleService: IUserRoleService, iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
+    protected users: Array<any>;
+    constructor(iLocalStorageService: ILocalStorageService, iUserRoleService: IUserRoleService, iUserService: IUserService, $window: ng.IWindowService, $http: ng.IHttpService) {
         this.httpService = $http;
-        this.iDataService = iDataService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
         this.iUserRoleService = iUserRoleService;
         this.PageVM = new PageModel();
         this.iUserRoleService.CheckUser("Admin", "usermanager");
+        this.users = null;
         this.Pagination();
     }
     protected GetUsersCallback(data: any, self: UsersManagerController): void {
         self.PageVM.FromUsersDto(data);
+        self.users = self.PageVM.users;
     }
     protected Pagination(itemsNumber?: number, pageNumber?:number) {
         var self = this;
@@ -28,27 +31,16 @@
             "SortField": self.PageVM.SortField,
             "CurrentPage": self.PageVM.CurrentPage,
         };
-        self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
+        self.iUserService.GetPageItems('api/User/Page', pageDto, this, this.GetUsersCallback);
     }
     protected DeleteUser(id: string) {
         var self = this;
         if (confirm("Are you sure to delete ")) {
-            self.Pagination();
-            for (var i = 0; i < self.PageVM.users.length; i++) {
-             
-                if (self.PageVM.users[i].Id == id) {
-                    var pageDto = {
-                        "PageNumber": self.PageVM.PageNumber,
-                        "ItemsOnPage": self.PageVM.ItemsOnPage,
-                        
-                    };
-                    self.iDataService.Delete('api/User/Delete/', id, this);
-                    self.PageVM.users.splice(i, 1);
-                    self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
-                    break;
-                }
-            }
+            self.iUserService.DeleteUser('api/User/Delete/', id, this, this.DeleteUserCallback);
         }
+    }
+    protected DeleteUserCallback( self: UsersManagerController): void {
+        self.Pagination();
     }
 }
 class PageModel {

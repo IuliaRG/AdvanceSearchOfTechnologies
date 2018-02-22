@@ -1,8 +1,9 @@
 var UserRoleService = (function () {
-    function UserRoleService($http, $window, iLocalStorageService) {
+    function UserRoleService($http, $window, iLocalStorageService, iUserService) {
         this.iHttpService = $http;
         this.iWindowService = $window;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
     }
     UserRoleService.prototype.CheckUser = function (name, urlName) {
         var self = this;

@@ -30,15 +30,6 @@ var DataService = (function () {
         this._iHttpService.post(url, data).then(function (response) {
             console.log(response);
         }).catch(function (err) {
-            //  errorCallback(err);
-        });
-    };
-    DataService.prototype.LogIn = function (data, caller, successCallback) {
-        this._iHttpService(data).then(function (response) {
-            console.log(response.data);
-            successCallback(response.data, caller);
-        }).catch(function (err) {
-            //  errorCallback(err);
         });
     };
     DataService.prototype.Delete = function (url, id, caller) {

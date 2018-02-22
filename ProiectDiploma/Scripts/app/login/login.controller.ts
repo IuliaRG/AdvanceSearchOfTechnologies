@@ -1,18 +1,20 @@
 ﻿class LogInController {
-    protected iDataService: IDataService;
+    protected iAccountService: IAccountService;
     protected iWindowService: ng.IWindowService;
     protected iLocalStorageService: ILocalStorageService;
+    protected iUserService: IUserService;
     protected LoginVM: LogInModel;
+    protected CurrentUserVM: CurrentUserModel;
     protected httpService: ng.IHttpService;
-    constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $http: ng.IHttpService) {
-        this.iDataService = iDataService;
+    constructor(iLocalStorageService: ILocalStorageService, iAccountService: IAccountService, iUserService: IUserService, $window: ng.IWindowService, $http: ng.IHttpService) {
+        this.iAccountService = iAccountService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
         this.httpService = $http;
         this.LoginVM = new LogInModel();
-        
+        this.CurrentUserVM = new CurrentUserModel();
     }
-
     protected LogIn(): void {
         var self = this;
         self.LoginVM.ShowError = false;
@@ -34,7 +36,7 @@
         }
         console.log(self.LoginVM.Email);
         var dto: LogInDto = new LogInDto(this.LoginVM.Email, this.LoginVM.Password);
-        var requestToken = {
+        var tokenRequest = {
             method: 'POST',
             url: '/token',
             headers: {
@@ -42,30 +44,29 @@
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         }
-        self.iDataService.LogIn(requestToken, self, this.GetUsersCallback);
+        self.iAccountService.LogIn(tokenRequest, self, this.GetUsersCallback);
     }
     protected GetUsersCallback(data: any, self: LogInController): void {
-        var user: CurrentUserModel = new CurrentUserModel();
-        user.token = data.access_token;
-        user.email = data.userName;
-        user.tokenType = data.token_type;
-        var userJson = JSON.stringify(user);
+        self.CurrentUserVM.token = data.access_token;
+        self.CurrentUserVM.email = data.userName;
+        self.CurrentUserVM.tokenType = data.token_type;
+        var userJson = JSON.stringify(self.CurrentUserVM);
         self.iLocalStorageService.SetCurrentUser("currentUser", userJson);
         var config: angular.IRequestShortcutConfig = {
             headers: {
                 "Authorization": 'Bearer ' + data.access_token,
             }
         }
-        self.httpService.get('api/User/GetRole', config).then(function (response: any) {
-            user.role = response.data.Roles;
-            if (user.role.indexOf("Admin") > -1) {
-                self.iWindowService.location.href = '/index.html#!/usersmanager';
-            }
-            else {
-                self.iWindowService.location.href = '/index.html#!/home';
-            }
-        }).catch(function (response) {
-        });
+        self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetUserRoleCallback);
+    }
+    protected GetUserRoleCallback(user: any, self: any): void {
+       self.CurrentUserVM.role = user.Roles;
+       if (self.CurrentUserVM.role.indexOf("Admin") > -1) {
+            self.iWindowService.location.href = '/index.html#!/usersmanager';
+        }
+        else {
+            self.iWindowService.location.href = '/index.html#!/home';
+        }
     }
     protected ErrorCallback(error): void {
         var response = JSON.parse(error.responseText);
@@ -83,7 +84,6 @@
         return passwordValidation.test(password);
     }
 }
-
 class LogInModel {
     public Email: string;
     public Password: string;

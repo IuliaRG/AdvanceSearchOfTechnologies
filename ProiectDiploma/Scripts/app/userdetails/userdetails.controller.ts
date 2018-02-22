@@ -1,14 +1,14 @@
 ﻿class UserDetailsController {
     private UserDetailsVM: UserModel;
-    private iDataService: IDataService;
+    private iUserService: IUserService;
     private iWindowService: ng.IWindowService;
     private route: any;
-    constructor(iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
-        this.iDataService = iDataService;
+    constructor(iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
+        this.iUserService = iUserService;
         this.route = $routeParams;
         this.iWindowService = $window;
         this.UserDetailsVM = new UserModel();
-        this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
+        this.iUserService.GetUser("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
     protected GetUsersCallback(user: UserDto, self: UserDetailsController): void {
         self.UserDetailsVM.FromUserDto(user);
@@ -24,7 +24,7 @@
                "Address": self.UserDetailsVM.Address
            }
         };
-        self.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        self.iUserService.UserUpdate('api/User/AddOrUpdate', userDto, this);
         self.iWindowService.location.href = '/index.html#!/usersmanager';
     }
 }

@@ -1,10 +1,9 @@
 ﻿interface IDataService {
     Get(url: string, caller: any, successCallback: Function): any;
     GetById(url: string, id: any, caller: any, successCallback: Function): any;
-    Post(url: string, entity: any, caller: any);
-    LogIn(entity: any, caller: any, successCallback: Function):any;
+    Post(url: string, data: any, caller: any);
     Delete(url: string, id: any, caller: any);
-    PostCallback(url: string, entity: any, caller: any, successCallback: Function): any;
+    PostCallback(url: string, data: any, caller: any, successCallback: Function): any;
 }
 class DataService implements IDataService {
     private _iHttpService: ng.IHttpService;
@@ -14,7 +13,6 @@ class DataService implements IDataService {
         this._iHttpService = $http;
         this.iWindowService = $window;
     }
-
     public Get(url: string, caller: any, successCallback: Function): any {
         this._iHttpService.get(
             url, {}).then( (response)=> {
@@ -33,7 +31,6 @@ class DataService implements IDataService {
                 console.log(err);
             });
     }
-   
     public PostCallback(url: string, data: any, caller: any, successCallback: Function): any {
         this._iHttpService.post(
             url, data).then((response) => {
@@ -45,26 +42,13 @@ class DataService implements IDataService {
     public Post(url: string, data: any, caller: any): any {
         this._iHttpService.post(
             url, data).then((response) => {
-
                 console.log(response);
 
             }).catch((err) => {
-                //  errorCallback(err);
-            });
-    }
-    public LogIn(data: any, caller: any, successCallback: Function): any {
-        this._iHttpService(data).then((response) => {
-            console.log(response.data);
-            successCallback(response.data, caller);
-           
-
-            }).catch((err) => {
-                //  errorCallback(err);
+               
             });
     }
     public Delete(url: string, id: any, caller: any): any {
-       
-        
         this._iHttpService.delete(
             url + id, {}).then( (response)=> {
                 console.log(response);

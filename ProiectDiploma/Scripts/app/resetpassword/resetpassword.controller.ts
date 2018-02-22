@@ -1,10 +1,10 @@
 ﻿class ResetPasswordController extends LogInController{
     protected ResetPassworVM: ResetPasswordModel;
     protected httpService: ng.IHttpService;
-    protected iDataService: IDataService;
+    protected iAccountService: IAccountService;
     protected route: any;
-    constructor(iLocalStorageService:ILocalStorageService,iDataService: IDataService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
-        super(iLocalStorageService,iDataService, $window, $http);
+    constructor(iLocalStorageService: ILocalStorageService, iAccountService: IAccountService, iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
+        super(iLocalStorageService, iAccountService, iUserService, $window, $http);
         this.route = $routeParams;
         this.httpService = $http;
         this.ResetPassworVM = new ResetPasswordModel();
@@ -37,21 +37,20 @@
         }
         var config: angular.IRequestShortcutConfig = {
             headers: {
-                "dataType": "json",
                 "contentType": "application/json"
             }
         };
-        self.httpService.post('api/Account/ResetPassword', {
+        var userDto = {
             "Email": self.route.username,
             "NewPassword": self.ResetPassworVM.NewPassword,
             "ConfirmPassword": self.ResetPassworVM.ConfirmPassword,
-        }).then(function (response) {
-            self.iWindowService.location.href = '/index.html#!/login';
-            self.ResetPassworVM.ErrorMessage = "Your password has been successfully reset";
-
-        }).catch(function (response) {
-            self.ResetPassworVM.ErrorMessage = response.data.Message;
-        });
+        };
+        self.iAccountService.ResetPassword('api/Account/ResetPassword', config, userDto, this, this.SuccessCallback);
+    }
+    protected SuccessCallback(user: ResetPasswordModel, self: ResetPasswordController): void {
+        self.iWindowService.location.href = '/index.html#!/login';
+        self.ResetPassworVM.ErrorMessage = "Your password has been successfully reset";
+        self.ResetPassworVM.ShowError = true;
     }
 }
 

@@ -14,11 +14,15 @@ class LocalStorageService implements ILocalStorageService {
         return <CurrentUserModel>JSON.parse(localStorage.currentUser);
     }
 }
-class CurrentUserModel {
+
+    class CurrentUserModel {
     public email: string;
     public name: string;
     public isAdmin: boolean;
     public token: string;
     public tokenType: string;
-    public role:Array<string>;
+    public role: Array<string>;
+    constructor() {
+        this.role = new Array< string>();
+    }
 }

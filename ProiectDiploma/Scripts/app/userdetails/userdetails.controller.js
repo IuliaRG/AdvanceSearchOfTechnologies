@@ -1,10 +1,10 @@
 var UserDetailsController = (function () {
-    function UserDetailsController(iDataService, $window, $routeParams, $http) {
-        this.iDataService = iDataService;
+    function UserDetailsController(iUserService, $window, $routeParams, $http) {
+        this.iUserService = iUserService;
         this.route = $routeParams;
         this.iWindowService = $window;
         this.UserDetailsVM = new UserModel();
-        this.iDataService.Get("api/User?id=" + this.route.id, this, this.GetUsersCallback);
+        this.iUserService.GetUser("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
     UserDetailsController.prototype.GetUsersCallback = function (user, self) {
         self.UserDetailsVM.FromUserDto(user);
@@ -20,7 +20,7 @@ var UserDetailsController = (function () {
                 "Address": self.UserDetailsVM.Address
             }
         };
-        self.iDataService.Post('api/User/AddOrUpdate', userDto, this);
+        self.iUserService.UserUpdate('api/User/AddOrUpdate', userDto, this);
         self.iWindowService.location.href = '/index.html#!/usersmanager';
     };
     return UserDetailsController;

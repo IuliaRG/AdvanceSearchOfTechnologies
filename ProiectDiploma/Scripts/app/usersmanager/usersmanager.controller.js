@@ -1,15 +1,17 @@
 var UsersManagerController = (function () {
-    function UsersManagerController(iLocalStorageService, iUserRoleService, iDataService, $window, $http) {
+    function UsersManagerController(iLocalStorageService, iUserRoleService, iUserService, $window, $http) {
         this.httpService = $http;
-        this.iDataService = iDataService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
         this.iUserRoleService = iUserRoleService;
         this.PageVM = new PageModel();
         this.iUserRoleService.CheckUser("Admin", "usermanager");
+        this.users = null;
         this.Pagination();
     }
     UsersManagerController.prototype.GetUsersCallback = function (data, self) {
         self.PageVM.FromUsersDto(data);
+        self.users = self.PageVM.users;
     };
     UsersManagerController.prototype.Pagination = function (itemsNumber, pageNumber) {
         var self = this;
@@ -23,25 +25,16 @@ var UsersManagerController = (function () {
             "SortField": self.PageVM.SortField,
             "CurrentPage": self.PageVM.CurrentPage,
         };
-        self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
+        self.iUserService.GetPageItems('api/User/Page', pageDto, this, this.GetUsersCallback);
     };
     UsersManagerController.prototype.DeleteUser = function (id) {
         var self = this;
         if (confirm("Are you sure to delete ")) {
-            self.Pagination();
-            for (var i = 0; i < self.PageVM.users.length; i++) {
-                if (self.PageVM.users[i].Id == id) {
-                    var pageDto = {
-                        "PageNumber": self.PageVM.PageNumber,
-                        "ItemsOnPage": self.PageVM.ItemsOnPage,
-                    };
-                    self.iDataService.Delete('api/User/Delete/', id, this);
-                    self.PageVM.users.splice(i, 1);
-                    self.iDataService.PostCallback('api/User/Page', pageDto, this, this.GetUsersCallback);
-                    break;
-                }
-            }
+            self.iUserService.DeleteUser('api/User/Delete/', id, this, this.DeleteUserCallback);
         }
+    };
+    UsersManagerController.prototype.DeleteUserCallback = function (self) {
+        self.Pagination();
     };
     return UsersManagerController;
 }());

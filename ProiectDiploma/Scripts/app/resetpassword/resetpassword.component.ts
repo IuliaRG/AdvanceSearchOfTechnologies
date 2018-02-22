@@ -4,5 +4,5 @@ angular.
     module('resetpassword').
     component('resetpassword', {
         templateUrl: 'scripts/app/resetpassword/resetpassword.template.html',
-        controller: ['ILocalStorageService','IDataService', '$window', '$routeParams', '$http', ResetPasswordController]
+        controller: ['ILocalStorageService', 'IAccountService','IUserService', '$window', '$routeParams', '$http', ResetPasswordController]
     });

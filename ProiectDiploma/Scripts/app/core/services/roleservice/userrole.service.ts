@@ -3,28 +3,27 @@
    
 }
 class UserRoleService implements IUserRoleService {
-
     private iHttpService: ng.IHttpService;
     private iWindowService: ng.IWindowService;
     private iLocalStorageService: ILocalStorageService;
+    private iUserService: IUserService;
     private currentUser: CurrentUserModel;
-    constructor($http: ng.IHttpService, $window: ng.IWindowService, iLocalStorageService: ILocalStorageService) {
+    constructor($http: ng.IHttpService, $window: ng.IWindowService, iLocalStorageService: ILocalStorageService, iUserService: IUserService) {
         this.iHttpService = $http;
         this.iWindowService = $window;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
     }
     public CheckUser( name:string,urlName:string):any
     {
         var self = this;
-
         self.currentUser = this.iLocalStorageService.GetCurrentUser();
         var config: angular.IRequestShortcutConfig = {
             headers: {
                 "Authorization": 'Bearer ' + this.currentUser.token,
             }
         }
-
-        this.iHttpService .get('api/User/GetRole', config).then(function (response: any) {
+        this.iHttpService.get('api/User/GetRole', config).then(function (response: any) {
            self.currentUser.role = response.data.Roles;
            if (self.currentUser.role.indexOf(name) == -1) {
                self.iWindowService.location.href = '/index.html#!/' + urlName;

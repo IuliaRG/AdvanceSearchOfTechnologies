@@ -47,6 +47,7 @@ class UserService implements IUserService {
     public DeleteUser(url: string, id: any, caller: any, successCallback: Function): any {
         this._iHttpService.delete(
             url + id, {}).then((response) => {
+                console.log(response);
                 successCallback(caller);
             }).catch((err) => {
             });

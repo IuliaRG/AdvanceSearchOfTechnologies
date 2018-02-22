@@ -32,6 +32,7 @@ var UserService = (function () {
     };
     UserService.prototype.DeleteUser = function (url, id, caller, successCallback) {
         this._iHttpService.delete(url + id, {}).then(function (response) {
+            console.log(response);
             successCallback(caller);
         }).catch(function (err) {
         });

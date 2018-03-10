@@ -92,6 +92,8 @@
   <ItemGroup>
     <Compile Include="ChangePasswordEmail.cs" />
     <Compile Include="EmailService.cs" />
+    <Compile Include="ReviewService.cs" />
+    <Compile Include="TextAnalyticsService.cs" />
     <Compile Include="UserRoleService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

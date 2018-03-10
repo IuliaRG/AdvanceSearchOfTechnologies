@@ -31,6 +31,7 @@ namespace BuisniessLogic
 
             return result;
         }
+
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
             var allUsers = userRepository.GetAll();
@@ -85,7 +86,7 @@ namespace BuisniessLogic
         }
         public void AddOrUpdateUser(ApplicationUserDto user)
         {
-            ApplicationUser entityUser = null;
+            ApplicationUser entityUser =null;
             if (user.UserName != null)
             {
                 entityUser = userRepository.GetAll().FirstOrDefault(it => it.UserName == user.UserName);

@@ -22,5 +22,8 @@ namespace BusinessObjects
         public IEnumerable<string> UserRoleId { get; set; }
         public List<string> Roles { get; set; }
         public UserDetailsDto UserDetailsDto { get; set; }
+        public UserReviewDto UserReviewDto { get; set; }
+
+
     }
 }

@@ -25,6 +25,7 @@ namespace BusinessObjects
         public Boolean IsValidate { get; set; }
         public string TokenGuid { get; set; }
         public virtual UserDetails UserDetails { get; set; }
+        public virtual ICollection<UserReview> UserReview { get; set; }
 
     }
 }

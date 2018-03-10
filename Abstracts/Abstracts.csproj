@@ -69,6 +69,8 @@
     <Compile Include="DataToCheck.cs" />
     <Compile Include="IEmailService.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IReviewService.cs" />
+    <Compile Include="ITextAnalyticsService.cs" />
     <Compile Include="IUserRoleService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

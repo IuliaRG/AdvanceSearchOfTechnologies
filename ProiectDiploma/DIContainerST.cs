@@ -20,8 +20,10 @@ namespace ProiectDiploma
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IUserService, UserService>();
             unityContainer.RegisterType<IUserRoleService, UserRoleService>();
+            unityContainer.RegisterType<IReviewService, ReviewService>();
             unityContainer.RegisterType<IEmailService, EmailService>();
             unityContainer.RegisterType<IRepository<UserDetails>, Repository<UserDetails>>();
+            unityContainer.RegisterType<IRepository<UserReview>, Repository<UserReview>>();
             unityContainer.RegisterType<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             unityContainer.RegisterType<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
         }

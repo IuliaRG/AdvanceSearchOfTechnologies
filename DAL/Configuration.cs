@@ -15,6 +15,7 @@ namespace DAL
         {
            AutomaticMigrationsEnabled = true;
           AutomaticMigrationDataLossAllowed = true;
+           
             ContextKey = "DAL.ApplicationDbContext";
         }
         protected override void Seed(ApplicationDbContext context)

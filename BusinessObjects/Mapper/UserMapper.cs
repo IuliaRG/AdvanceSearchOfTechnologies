@@ -22,6 +22,7 @@ namespace BusinessObjects.Mapper
 
             return result;
         }
+       
         public static IEnumerable<ApplicationUserDto> ToApplicationUserDtos(this IEnumerable<ApplicationUser> user)
         {
             var result = user.Select(it => new ApplicationUserDto()
@@ -97,5 +98,6 @@ namespace BusinessObjects.Mapper
 
             return dtoUser;
         }
+      
     }
 }

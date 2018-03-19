@@ -1,8 +1,11 @@
 ﻿using Abstracts;
 using BusinessObjects;
+using BusinessObjects.Dto;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,16 +15,21 @@ namespace BuisniessLogic
     {
         IRepository<UserReview> userReviewRepository;
         IRepository<ApplicationUser> userRepository;
-
-        public ReviewService(IRepository<UserReview> userReviewRepository, IRepository<ApplicationUser>  userRepository)
+        private const string apiKey = "40950a4c555";
+        private const string sentimentUri = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
+        private  WebClient client;
+        public ReviewService(IRepository<UserReview> userReviewRepository, IRepository<ApplicationUser>  userRepository, WebClient client)
         {
             this.userReviewRepository = userReviewRepository;
             this.userRepository = userRepository;
-
+            this.client = client;
+            client.Headers.Add("Ocp-Apim-Subscription-Key", apiKey);
         }
         public void AddOrUpdateReview(UserReviewDto user)
         {
             var entity = new UserReview();
+            var document = user.ToTextAnalyticsDocuments();
+            user.TextAnalyticRespons = GetTextAnalyticsSentiment(document);
             entity.FromUserReviewDto(user);
             userReviewRepository.Insert(entity);
             userReviewRepository.Save();
@@ -37,13 +45,19 @@ namespace BuisniessLogic
         {
             var allReviews = userReviewRepository.GetAll();
             var reviews = allReviews.Where(it => id.Equals(it.ApplicationUserId)).Select(r => r.Content).ToList();
-         //   string userReviews = string.Join("", reviews);
-            var entity = new UserReview();
+
             return reviews;
+        }
+        public TextAnalyticResponsDto GetTextAnalyticsSentiment(TextAnalyticsDto documentDto)
+        {
+            var sentimentResponse = client.UploadString(sentimentUri, JsonConvert.SerializeObject(documentDto));
+           var sentiment=JsonConvert.DeserializeObject<TextAnalyticResponsDto>(sentimentResponse);
+            return sentiment;
         }
         public void DeleteReview(object id)
         {
             throw new NotImplementedException();
         }
+        
     }
 }

@@ -45,8 +45,8 @@ private IUserService service;
             return user;
         }
        
-        [Route("Page")]
-        public ItemsPaginingParametersDto PageItems(ItemsPaginingParametersDto pageDto)
+        [Route("UsersPage")]
+        public ItemsPaginingParametersDto UsersPage(ItemsPaginingParametersDto pageDto)
          {
              service = DIContainerST.GetInstance().Resolve<IUserService>();
              var user = service.GetUsersOnPage(pageDto);

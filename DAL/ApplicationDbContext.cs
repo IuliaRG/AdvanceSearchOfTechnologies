@@ -26,6 +26,7 @@ namespace DAL
 
         }
         public DbSet<UserDetails> User { get; set; }
+        public DbSet<ProductDetails> Product { get; set; }
         public DbSet<UserReview> Review { get; set; }
         public static ApplicationDbContext Create()
         {

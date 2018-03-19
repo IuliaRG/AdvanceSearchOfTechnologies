@@ -1,4 +1,4 @@
 ﻿'use strict';
 
 angular.module('home', [
-    'ngRoute',]);
+    'ngRoute', 'core.product']);

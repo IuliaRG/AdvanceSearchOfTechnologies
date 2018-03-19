@@ -9,6 +9,9 @@ angular.
                 when('/home', {
                     template: '<home></home>'
                 }).
+                when('/productdetails', {
+                    template: '<productdetails></productdetails>'
+                }).
                 when('/login', {
                     template: '<login></login>'
                 }).

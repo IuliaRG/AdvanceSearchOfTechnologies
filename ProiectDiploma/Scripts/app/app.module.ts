@@ -4,6 +4,7 @@
 angular.module('AdvanceSearchTechnologies', [
     'ngRoute',
     'home',
+    'productdetails',
     'login',
     'register',
     'usersmanager',

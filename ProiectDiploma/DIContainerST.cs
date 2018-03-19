@@ -21,9 +21,11 @@ namespace ProiectDiploma
             unityContainer.RegisterType<IUserService, UserService>();
             unityContainer.RegisterType<IUserRoleService, UserRoleService>();
             unityContainer.RegisterType<IReviewService, ReviewService>();
+            unityContainer.RegisterType<IProductService, ProductService>();
             unityContainer.RegisterType<IEmailService, EmailService>();
             unityContainer.RegisterType<IRepository<UserDetails>, Repository<UserDetails>>();
             unityContainer.RegisterType<IRepository<UserReview>, Repository<UserReview>>();
+            unityContainer.RegisterType<IRepository<ProductDetails>, Repository<ProductDetails>>();
             unityContainer.RegisterType<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             unityContainer.RegisterType<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
         }

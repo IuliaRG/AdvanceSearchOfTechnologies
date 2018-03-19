@@ -68,6 +68,7 @@
     <Compile Include="Const.cs" />
     <Compile Include="DataToCheck.cs" />
     <Compile Include="IEmailService.cs" />
+    <Compile Include="IProductService.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IReviewService.cs" />
     <Compile Include="ITextAnalyticsService.cs" />

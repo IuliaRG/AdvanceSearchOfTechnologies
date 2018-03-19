@@ -60,6 +60,9 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -76,15 +79,20 @@
     <Compile Include="Dto\ItemsPaginingParametersDto.cs" />
     <Compile Include="Dto\PageItemsToSendDto.cs" />
     <Compile Include="Dto\ApplicationRoleDto.cs" />
-    <Compile Include="Dto\TextAnalyticsDetailsDto.cs" />
+    <Compile Include="Dto\ProductDetailsDto.cs" />
+    <Compile Include="Dto\TextAnalyticResponsDto.cs" />
+    <Compile Include="Dto\TextAnalyticsDocumentsDto.cs" />
+    <Compile Include="Dto\TextAnalyticsDto.cs" />
+    <Compile Include="Dto\TextAnalyticsSentimentDto.cs" />
     <Compile Include="Dto\UserReviewDto.cs" />
     <Compile Include="Dto\UserDetailsDto.cs" />
     <Compile Include="Entity\ApplicationRole.cs" />
     <Compile Include="Entity\ApplicationUser.cs" />
     <Compile Include="Entity\ApplicationUserRole.cs" />
-    <Compile Include="Entity\TextAnalytics.cs" />
+    <Compile Include="Entity\ProductDetails.cs" />
     <Compile Include="Entity\UserDetails.cs" />
     <Compile Include="Entity\UserReview.cs" />
+    <Compile Include="Mapper\ProductMapper.cs" />
     <Compile Include="Mapper\RoleMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Mapper\UserReviewMapper.cs" />

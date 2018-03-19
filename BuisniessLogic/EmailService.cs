@@ -19,9 +19,9 @@ namespace BuisniessLogic
         public virtual string Link { get; set; }
         public void SendEmail(string email,string subject,string body)
         {
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+           SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("ProiectIulia@sendgrid.com");
+            mail.From = new MailAddress("iulia.rad19@gmail.com");
              mail.To.Add("rad.iulia19@gmail.com");
             // mail.To.Add(emailAddress);
             mail.Subject = subject;
@@ -29,10 +29,11 @@ namespace BuisniessLogic
             mail.Body = body;
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
             smtpClient.EnableSsl = true;
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("iulia.rad19@gmail.com", "Pluto12345");
-          //  System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
+           
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("fKg9p53xSKevfplc4EKe6g", "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");
             smtpClient.Credentials = credentials;
             smtpClient.Send(mail);
+           
         }
     }
 }

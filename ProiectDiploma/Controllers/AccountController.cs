@@ -379,7 +379,7 @@ namespace ProiectDiploma.Controllers
             emailService = DIContainerST.GetInstance().Resolve<IEmailService>();
             if (result.Succeeded)
             {
-                emailService.SendEmail(/*model.Email*/ "rad.iulia19@mail.com", Const.EmailConfirmationSubject, string.Format(Const.EmailConfirmationBody, link));
+                emailService.SendEmail( "rad.iulia19@gmail.com", Const.EmailConfirmationSubject, string.Format(Const.EmailConfirmationBody, link));
             }
             else
             {

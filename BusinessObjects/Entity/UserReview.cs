@@ -12,6 +12,9 @@ namespace BusinessObjects
         [Key]
         public int ReviewId { get; set; }
         public string Content { get; set; }
+        public string ProductName { get; set; }
+        public double? Sentiment { get; set; }
+      //  public List<UserSentiment> Documents { get; set; }
         public string ApplicationUserId { get; set; }
        public ApplicationUser ApplicationUser { get; set; }
 

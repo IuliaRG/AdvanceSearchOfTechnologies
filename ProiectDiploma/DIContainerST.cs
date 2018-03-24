@@ -28,6 +28,7 @@ namespace ProiectDiploma
             unityContainer.RegisterType<IRepository<ProductDetails>, Repository<ProductDetails>>();
             unityContainer.RegisterType<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             unityContainer.RegisterType<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
+            unityContainer.RegisterType < IConfigurationService, ConfigurationService>();
         }
         public static DIContainerST GetInstance()
         {

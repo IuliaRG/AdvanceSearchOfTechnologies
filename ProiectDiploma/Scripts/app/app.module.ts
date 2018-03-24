@@ -9,6 +9,7 @@ angular.module('AdvanceSearchTechnologies', [
     'register',
     'usersmanager',
     'userdetails',
+    'currentuserdetails',
     'forgotpassword',
     'changepassword',
     'resetpassword',

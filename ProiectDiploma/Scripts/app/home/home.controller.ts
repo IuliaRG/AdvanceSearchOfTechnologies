@@ -2,11 +2,16 @@
     protected _httpService: ng.IHttpService;
     protected ProductVM: ProductPageModel;
     protected iProductService: IProductService;
-    constructor(iProductService: IProductService, $http: ng.IHttpService) {
+    protected iLocalStorageService: ILocalStorageService;
+    protected currentUser: CurrentUserModel;
+    constructor(iLocalStorageService: ILocalStorageService,iProductService: IProductService, $http: ng.IHttpService) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
+        this.iLocalStorageService = iLocalStorageService;
+        this.currentUser = iLocalStorageService.GetCurrentUser();
+        console.log(this.currentUser.email);
         this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
     }
     protected GetProductsCallback(data: any, self: HomeController): void {

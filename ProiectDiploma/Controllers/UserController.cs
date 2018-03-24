@@ -44,7 +44,17 @@ private IUserService service;
             var user = service.GetUserById(id);
             return user;
         }
-       
+
+        [Authorize]
+        [Route("CurrentUser")]
+        public ApplicationUserDto GetUserByUserName()
+        {
+            var id = RequestContext.Principal.Identity.GetUserId();
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
+            var user = service.GetUserById(id);
+            return user;
+        }
+
         [Route("UsersPage")]
         public ItemsPaginingParametersDto UsersPage(ItemsPaginingParametersDto pageDto)
          {

@@ -18,12 +18,15 @@ namespace BuisniessLogic
         private const string apiKey = "40950a4c555";
         private const string sentimentUri = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
         private  WebClient client;
-        public ReviewService(IRepository<UserReview> userReviewRepository, IRepository<ApplicationUser>  userRepository, WebClient client)
+        IConfigurationService configurationService;
+        public ReviewService(IConfigurationService configurationService, IRepository<UserReview> userReviewRepository, IRepository<ApplicationUser>  userRepository, WebClient client)
         {
+            this.configurationService = configurationService;
             this.userReviewRepository = userReviewRepository;
             this.userRepository = userRepository;
             this.client = client;
-            client.Headers.Add("Ocp-Apim-Subscription-Key", apiKey);
+            var apiConfiguration = configurationService.GetConfiguration().TextAnalyticsConfiguration;
+            client.Headers.Add("Ocp-Apim-Subscription-Key", apiConfiguration.ApiKey);
         }
         public void AddOrUpdateReview(UserReviewDto user)
         {

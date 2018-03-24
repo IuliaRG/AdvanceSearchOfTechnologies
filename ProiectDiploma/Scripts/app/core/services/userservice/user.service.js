@@ -11,6 +11,14 @@ var UserService = (function () {
             console.log(err);
         });
     };
+    UserService.prototype.GetCurrentUser = function (url, data, caller, successCallback) {
+        this._iHttpService.get(url, data).then(function (response) {
+            console.log(response);
+            successCallback(response.data, caller);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
     UserService.prototype.GetUserRole = function (url, data, caller, successCallback) {
         this._iHttpService.get(url, data).then(function (response) {
             successCallback(response.data, caller);

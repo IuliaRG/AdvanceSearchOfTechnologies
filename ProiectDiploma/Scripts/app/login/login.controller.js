@@ -36,11 +36,9 @@ var LogInController = (function () {
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         };
-        debugger;
         self.iAccountService.LogIn(tokenRequest, self, this.GetUsersCallback);
     };
     LogInController.prototype.GetUsersCallback = function (data, self) {
-        debugger;
         self.CurrentUserVM.token = data.access_token;
         self.CurrentUserVM.email = data.userName;
         self.CurrentUserVM.tokenType = data.token_type;
@@ -54,7 +52,6 @@ var LogInController = (function () {
         self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetUserRoleCallback);
     };
     LogInController.prototype.GetUserRoleCallback = function (user, self) {
-        debugger;
         self.CurrentUserVM.role = user.Roles;
         if (self.CurrentUserVM.role.indexOf("Admin") > -1) {
             self.iWindowService.location.href = '/index.html#!/usersmanager';

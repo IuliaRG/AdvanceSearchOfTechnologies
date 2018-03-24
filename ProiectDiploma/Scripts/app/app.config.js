@@ -20,6 +20,9 @@ angular.
             when('/userdetails', {
             template: '<userdetails></userdetails>'
         }).
+            when('/currentuserdetails', {
+            template: '<currentuserdetails></currentuserdetails>'
+        }).
             when('/forgotpassword', {
             template: '<forgotpassword></forgotpassword>'
         }).

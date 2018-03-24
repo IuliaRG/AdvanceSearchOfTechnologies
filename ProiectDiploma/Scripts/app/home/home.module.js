@@ -1,5 +1,5 @@
 'use strict';
 angular.module('home', [
-    'ngRoute', 'core.product'
+    'ngRoute', 'core.storage', 'core.product'
 ]);
 //# sourceMappingURL=home.module.js.map

@@ -23,9 +23,10 @@ class UserRoleService implements IUserRoleService {
                 "Authorization": 'Bearer ' + this.currentUser.token,
             }
         }
+       
         this.iHttpService.get('api/User/GetRole', config).then(function (response: any) {
-           self.currentUser.role = response.data.Roles;
-           if (self.currentUser.role.indexOf(name) == -1) {
+            self.currentUser.role = response.data.Roles;
+           if (self.currentUser.role.indexOf(name) ==-1) {
                self.iWindowService.location.href = '/index.html#!/' + urlName;
             }
 

@@ -32,7 +32,7 @@
                         <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                     </form>
                     <ul id="topMenu" class="nav pull-right">
-                        <li class=""><a href="special_offer.html">Specials Offer</a></li>
+                        <li class="" ng-hide="$ctrl.currentUser==null"><a href="/index.html#!/currentuserdetails">User Details</a></li>
                         <li class=""><a href="normal.html">Delivery</a></li>
                         <li class=""><a href="contact.html">Contact</a></li>
                         <li class="">
@@ -381,6 +381,45 @@
             </div>
         </div>
     </div>
+<ul id="paginationPage">
+    <li>
+        <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1">&laquo;</a>
+    </li>
+
+    <li>
+        <a href=""  >1</a>
+    </li>
+    <li>
+        <a href="" >2</a>
+    </li>
+    <li>
+        <a href="" >3</a>
+    </li>
+    <li>
+        <a href="" >4</a>
+    </li>
+    <li>
+        <a href="">5</a>
+    </li>
+
+    <li>
+        <a href="" >&raquo;</a>
+    </li>
+</ul>
+<ul id="paginationPage1" class="pagination pagination-lg">
+    <li><a href="#">&laquo;</a></li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
+<style>
+    ul#paginationPage1 li {
+        display: inline;
+    }
+</style>
     <!-- Footer ================================================================== -->
     <div id="footerSection">
         <div class="container">

@@ -4,6 +4,7 @@
     DeleteUser(url: string, id: any, caller: any, successCallback: Function);
     UserUpdate(url: string, data: any, caller: any);
     GetPageItems(url: string, data: any, caller: any, successCallback: Function): any;
+    GetCurrentUser(url: string, data: any, caller: any, successCallback: Function): any;
 }
 class UserService implements IUserService {
     private _iHttpService: ng.IHttpService;
@@ -16,6 +17,15 @@ class UserService implements IUserService {
     public GetUser(url: string, caller: any, successCallback: Function): any {
         this._iHttpService.get(
             url, {}).then((response) => {
+                console.log(response);
+                successCallback(response.data, caller);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+    public GetCurrentUser(url: string,data:any, caller: any, successCallback: Function): any {
+        this._iHttpService.get(
+            url, data).then((response) => {
                 console.log(response);
                 successCallback(response.data, caller);
             }).catch((err) => {

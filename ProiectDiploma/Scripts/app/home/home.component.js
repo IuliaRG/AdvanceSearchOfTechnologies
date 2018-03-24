@@ -3,6 +3,6 @@ angular.
     module('home').
     component('home', {
     templateUrl: 'scripts/app/home/home.template.html',
-    controller: ['IProductService', '$http', HomeController]
+    controller: ['ILocalStorageService', 'IProductService', '$http', HomeController]
 });
 //# sourceMappingURL=home.component.js.map

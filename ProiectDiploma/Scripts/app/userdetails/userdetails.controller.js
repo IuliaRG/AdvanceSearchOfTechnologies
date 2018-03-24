@@ -1,8 +1,10 @@
 var UserDetailsController = (function () {
-    function UserDetailsController(iUserService, $window, $routeParams, $http) {
+    function UserDetailsController(iUserService, $window, $routeParams, $http, iUserRoleService) {
         this.iUserService = iUserService;
         this.route = $routeParams;
         this.iWindowService = $window;
+        this.iUserRoleService = iUserRoleService;
+        this.iUserService = iUserService;
         this.UserDetailsVM = new UserModel();
         this.iUserService.GetUser("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }

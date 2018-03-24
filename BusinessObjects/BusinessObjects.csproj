@@ -76,11 +76,14 @@
   <ItemGroup>
     <Compile Include="Dto\ApplicationUserDto.cs" />
     <Compile Include="Dto\ApplicationUserRoleDto.cs" />
+    <Compile Include="Dto\Configuration.cs" />
+    <Compile Include="Dto\EmailConfiguration.cs" />
     <Compile Include="Dto\ItemsPaginingParametersDto.cs" />
     <Compile Include="Dto\PageItemsToSendDto.cs" />
     <Compile Include="Dto\ApplicationRoleDto.cs" />
     <Compile Include="Dto\ProductDetailsDto.cs" />
     <Compile Include="Dto\TextAnalyticResponsDto.cs" />
+    <Compile Include="Dto\TextAnalyticsConfiguration.cs" />
     <Compile Include="Dto\TextAnalyticsDocumentsDto.cs" />
     <Compile Include="Dto\TextAnalyticsDto.cs" />
     <Compile Include="Dto\TextAnalyticsSentimentDto.cs" />

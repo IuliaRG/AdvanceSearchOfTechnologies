@@ -25,7 +25,7 @@ var UsersManagerController = (function () {
             "SortField": self.PageVM.SortField,
             "CurrentPage": self.PageVM.CurrentPage,
         };
-        self.iUserService.GetPageItems('api/User/Page', pageDto, this, this.GetUsersCallback);
+        self.iUserService.GetPageItems('api/User/UsersPage', pageDto, this, this.GetUsersCallback);
     };
     UsersManagerController.prototype.DeleteUser = function (id) {
         var self = this;

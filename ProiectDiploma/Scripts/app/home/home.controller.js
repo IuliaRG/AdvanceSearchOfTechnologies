@@ -1,9 +1,12 @@
 var HomeController = (function () {
-    function HomeController(iProductService, $http) {
+    function HomeController(iLocalStorageService, iProductService, $http) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
+        this.iLocalStorageService = iLocalStorageService;
+        this.currentUser = iLocalStorageService.GetCurrentUser();
+        console.log(this.currentUser.email);
         this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
     }
     HomeController.prototype.GetProductsCallback = function (data, self) {

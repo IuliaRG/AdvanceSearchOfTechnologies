@@ -31,7 +31,7 @@ namespace BuisniessLogic
 
             return result;
         }
-
+      
         public ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto paginationParameters)
         {
             var allUsers = userRepository.GetAll();
@@ -43,6 +43,7 @@ namespace BuisniessLogic
             }
             if (!string.IsNullOrEmpty(paginationParameters.SearchText))
             {
+                users = activeUsers.Filter("Email", paginationParameters.SearchText);
                 users = (from user in activeUsers.Where( user => user.UserDetails.Address.Contains(paginationParameters.SearchText)|| user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText)||  user.Email.Contains(paginationParameters.SearchText))
                                       select user).AsQueryable();
                 if (!string.IsNullOrEmpty(paginationParameters.SortField))
@@ -64,7 +65,7 @@ namespace BuisniessLogic
             return pageDto;
         }
        
-        public string InitDetails(object userId)
+         public string InitDetails(object userId)
         {
             var entity = userRepository.GetById(userId);
             entity.TokenGuid= Guid.NewGuid().ToString(); 

@@ -1,12 +1,15 @@
 ﻿class UserDetailsController {
     private UserDetailsVM: UserModel;
     private iUserService: IUserService;
+    protected iUserRoleService: IUserRoleService;
     private iWindowService: ng.IWindowService;
     private route: any;
-    constructor(iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService) {
+    constructor(iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService, iUserRoleService: IUserRoleService) {
         this.iUserService = iUserService;
         this.route = $routeParams;
         this.iWindowService = $window;
+        this.iUserRoleService = iUserRoleService;
+        this.iUserService = iUserService;
         this.UserDetailsVM = new UserModel();
         this.iUserService.GetUser("api/User?id=" + this.route.id, this, this.GetUsersCallback);
     }
@@ -25,7 +28,7 @@
            }
         };
         self.iUserService.UserUpdate('api/User/AddOrUpdate', userDto, this);
-        self.iWindowService.location.href = '/index.html#!/usersmanager';
+            self.iWindowService.location.href = '/index.html#!/usersmanager';
     }
 }
 class UserModel {

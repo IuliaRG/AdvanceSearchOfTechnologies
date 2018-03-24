@@ -44,11 +44,9 @@
             },
             data: 'grant_type=password' + '&' + 'username=' + this.LoginVM.Email + '&' + 'password=' + this.LoginVM.Password
         }
-        debugger
         self.iAccountService.LogIn(tokenRequest, self, this.GetUsersCallback);
     }
     protected GetUsersCallback(data: any, self: LogInController): void {
-        debugger
         self.CurrentUserVM.token = data.access_token;
         self.CurrentUserVM.email = data.userName;
         self.CurrentUserVM.tokenType = data.token_type;
@@ -62,7 +60,6 @@
         self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetUserRoleCallback);
     }
     protected GetUserRoleCallback(user: any, self: any): void {
-        debugger
        self.CurrentUserVM.role = user.Roles;
        if (self.CurrentUserVM.role.indexOf("Admin") > -1) {
             self.iWindowService.location.href = '/index.html#!/usersmanager';

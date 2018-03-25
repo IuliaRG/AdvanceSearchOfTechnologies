@@ -15,7 +15,7 @@ namespace BuisniessLogic
     {
         IRepository<UserReview> userReviewRepository;
         IRepository<ApplicationUser> userRepository;
-        private const string apiKey = "40950a4c555";
+        private const string apiKey = "40950a4c555"; // api key
         private const string sentimentUri = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
         private  WebClient client;
         IConfigurationService configurationService;

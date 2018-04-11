@@ -1,4 +1,6 @@
-﻿
+﻿<script src="Scripts/jquery.signalR-2.2.3.min.js"></script>
+<script src="signalr/hubs"></script>
+Andi
     <div id="header">
         <div class="container">
             <div id="welcomeLine" class="row">
@@ -381,7 +383,7 @@
             </div>
         </div>
     </div>
-<ul id="paginationPage">
+<!--<ul id="paginationPage">
     <li>
         <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1">&laquo;</a>
     </li>
@@ -405,8 +407,8 @@
     <li>
         <a href="" >&raquo;</a>
     </li>
-</ul>
-<ul id="paginationPage1" class="pagination pagination-lg">
+</ul>-->
+<!--<ul id="paginationPage1" class="pagination pagination-lg">
     <li><a href="#">&laquo;</a></li>
     <li><a href="#">1</a></li>
     <li><a href="#">2</a></li>
@@ -414,12 +416,141 @@
     <li><a href="#">4</a></li>
     <li><a href="#">5</a></li>
     <li><a href="#">&raquo;</a></li>
-</ul>
-<style>
+</ul>-->
+<!--<style>
     ul#paginationPage1 li {
         display: inline;
     }
+</style>-->
+
+<div class="container">
+    <input type="hidden" id="displayname" />
+</div>
+
+
+
+<style>
 </style>
+<div class="main-section">
+    <div class="row border-chat">
+        <div class="col-md-12 col-sm-12 col-xs-12 first-section">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-6 left-first-section">
+                    <p>Chat</p>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6 right-first-section">
+                    <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-chat">
+        <div class="col-md-12 col-sm-12 col-xs-12 second-section">
+            <div class="chat-section">
+                <ul id="discussion">
+                    <!--<li>
+                        <div class="left-chat">
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="right-chat">
+
+                        </div>
+                    </li>-->
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row border-chat">
+        <div class="col-md-12 col-sm-12 col-xs-12 third-section">
+            <div class="text-bar">
+                <input type="text" id="message" placeholder="Write messege"><i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add script to update the page and send messages.-->
+<script type="text/javascript">
+    $(function () {
+        // Declare a proxy to reference the hub.
+        debugger
+        var chat = $.connection.chatHub;
+        // Create a function that the hub can call to broadcast messages.
+        chat.client.addNewMessageToPage = function (name, message, id) {
+            // Html encode display name and message.
+            var encodedName = $('<div />').text(name).html();
+            var encodedMsg = $('<div />').text(message).html();
+            // Add the message to the page.
+            if ($("ul." + id).length > 0) {
+                $("#" + id).append('<li><strong>' + encodedName
+                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            }
+            else {
+
+                $(".parent-div").append("<ul id='" + id + "'></ul>");
+                $("#" + id).append('<li><strong>' + encodedName
+                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+
+            }
+            //$('#discussion').append('<li><strong>' + encodedName
+            //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        };
+
+        chat.client.receiveFromAdmin = function (from, message) {
+            // Html encode display name and message.
+            var encodedName = $('<div />').text(from).html();
+            var encodedMsg = $('<div />').text(message).html();
+            // Add the message to the page.
+            $('#discussion').append('<li>privte message from: <strong>' + encodedName
+                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+
+        };
+
+        // Get the user name and store it to prepend to messages.
+        $('#displayname').val(prompt('Enter your name:', ''));
+        // Set initial focus to message input box.
+        $('#message').focus();
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+
+            var id = $.connection.hub.id;
+            chat.server.register($('#displayname').val(), id);
+            $('#sendToUser').click(function () {
+                debugger
+                chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
+            });
+
+            $('#sendmessage').click(function () {
+
+
+                // Call the Send method on the hub.
+
+                var id = $.connection.hub.id;
+                chat.server.sendToAdmin($('#displayname').val(), $('#message').val(), id);
+                // Clear text box and reset focus for next comment.
+                $('#message').val('').focus();
+            });
+        });
+    });
+    $(document).ready(function () {
+        $(".left-first-section").click(function () {
+            $('.main-section').toggleClass("open-more");
+        });
+    });
+    $(document).ready(function () {
+        $(".fa-minus").click(function () {
+            $('.main-section').toggleClass("open-more");
+        });
+    });
+</script>
+
+
     <!-- Footer ================================================================== -->
     <div id="footerSection">
         <div class="container">

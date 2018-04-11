@@ -6,6 +6,8 @@ angular.module('AdvanceSearchTechnologies', [
     'productdetails',
     'login',
     'register',
+    'chat',
+    'usermanagerchat',
     'usersmanager',
     'userdetails',
     'currentuserdetails',

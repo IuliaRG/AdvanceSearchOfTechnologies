@@ -22,14 +22,31 @@
     public initialize(): void {
         var self = this;
         setTimeout(function () {
+            self.loadChatScript('jquery-3.2.1.js');
+            self.loadChatScript('jquery.signalR-2.2.3.min.js');
+            self.loadHub();
             self.loadScript('jquery.js');
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
+           
         }, 1000);
        
     }
-
+    public loadHub() {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'signalr/hubs';
+        head.appendChild(script);
+    }
+    public loadChatScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'Scripts/' + path;
+        head.appendChild(script);
+    }
     public loadScript(path: string) {
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');

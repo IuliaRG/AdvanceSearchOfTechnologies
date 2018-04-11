@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link id="callCss" rel="stylesheet" href="Content/themes/bootshop/bootstrap.min.css" media="screen" />
+    <link href="Content/themes/css/base.css" rel="stylesheet" media="screen" />
+    <!-- Bootstrap style responsive -->
+    <link href="Content/themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="Content/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <!-- Google-code-prettify -->
+    <link href="Content/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="Content/themes/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ontent/themes/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="Content/themes/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="Content/themes/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="Content/themes/images/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css" id="enject"></style>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="Scripts/jquery-3.2.1.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="Content/themes/js/bootstrap.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="signalr/hubs"></script>
+</head>
+<body>
+
+    <div class="container"></div>
+
+    <div class="container">
+        message
+
+        <input type="button" id="register" value="Connect" />
+        <!--<input type="button" id="sendmessage" value="Send" />-->
+        <!--<input type="button" id="sendToUser" value="Send to user" />-->
+        to user
+        <input type="text" id="toUser" />
+        <input type="hidden" id="displayname" />
+        <!--<ul id="discussion"></ul>-->
+    </div>
+
+
+
+    <style>
+    </style>
+    <div class="main-section">
+        <div class="row" id="allChats">
+
+
+        </div>
+        
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 first-section">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-6 left-first-section">
+                        <p>Chat</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-6 right-first-section">
+                        <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 second-section">
+                <div class="chat-section">
+                    <ul id="discussion">
+                        <!--<li>
+                        <div class="left-chat">
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="right-chat">
+
+                        </div>
+                    </li>-->
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 third-section">
+                <div class="text-bar">
+                    <input type="text" id="message" placeholder="Write messege">
+                    <i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call to broadcast messages.
+            chat.client.addNewMessageToPage = function (name, message,id) {
+                // Html encode display name and message.
+                var encodedName = $('<div />').text(name).html();
+                var encodedMsg = $('<div />').text(message).html();
+                // Add the message to the page.
+                if ($("ul." + id).length > 0)
+                   {
+                    $("#" + id).append('<li><strong>' + encodedName
+                        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+                }
+                else
+                {
+
+                    $(".parent-div").append("<ul id='" + id + "'></ul>");
+                    $("#" + id).append('<li><strong>' + encodedName
+                        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+
+                }
+                //$('#discussion').append('<li><strong>' + encodedName
+                //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+
+            chat.client.adminReceiveFromUser = function (name, message, id) {
+                // Html encode display name and message.
+                $("#discussion").append("<li>from " + name + ": " + message + "</li>");
+                $("#sendmessage").attr('userName', name);
+                $("#sendmessage").attr('userId', id);
+                $("#sendmessage").click(function () {
+                    debugger
+                    var user = $(this).attr("userName");
+                    var userId = $(this).attr("userId");
+                    //send message to user
+                    var text = $("#message").val();
+                    $("#discussion").append("<li>me: " + text + "</li>");
+                    chat.server.sendToUser("Admin", user, text);
+                });
+
+                if ($("#" + id).length == 0) {
+                    // add html elements for this user
+                    //var maineContainer = $("#usersChats");
+                    //var chatBox = maineContainer.append("<div class='col-md-1'></div>");
+                    //var ul = chatBox.append("<ul id='ul_" + id + "'></ul><br/>");
+                    //ul.append("<li>" + message + "</li>");
+                    //chatBox.append("<input type='text' id='tx_" + id + "' /><br/>");
+                    //chatBox.append("<input type='button' userId='" + id + "' userName='" + name + "' id='bt_" + id + "' /><br/>");
+                    //var button = $("#bt_" + id);
+                    //button.click(function () {
+                    //    debugger
+                    //    var user = $(this).attr("userName");
+                    //    var userId = $(this).attr("userId");
+                    //    //send message to user
+                    //    chat.server.sendToUser("Admin", user, $("#tx_" + userId).val());
+                    //});
+                }
+                //var encodedName = $('<div />').text(from).html();
+                //var encodedMsg = $('<div />').text(message).html();
+                //// Add the message to the page.
+                //$('#discussion').append('<li>privte message from: <strong>' + encodedName
+                //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+
+            // Get the user name and store it to prepend to messages.
+            $('#displayname').val(prompt('Enter your name:', ''));
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+
+                var id = $.connection.hub.id;
+                chat.server.registerAdmin($('#displayname').val(), id);
+                //$('#sendToUser').click(function () {
+                //    debugger
+                //    chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
+                //});
+
+                //$('#sendToUser').click(function () {
+
+
+                //    // Call the Send method on the hub.
+
+                //    var id = $.connection.hub.id;
+                    
+                //    chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
+                //    // Clear text box and reset focus for next comment.
+                //    $('#message').val('').focus();
+                //});
+            });
+        });
+        $(document).ready(function () {
+            $(".left-first-section").click(function () {
+                $('.main-section').toggleClass("open-more");
+            });
+        });
+        $(document).ready(function () {
+            $(".fa-minus").click(function () {
+                $('.main-section').toggleClass("open-more");
+            });
+        });
+    </script>
+
+</body>
+</html>

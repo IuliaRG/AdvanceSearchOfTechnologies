@@ -17,6 +17,12 @@ angular.
             when('/usersmanager', {
             template: '<usersmanager></usersmanager>'
         }).
+            when('/chat', {
+            template: '<chat></chat>'
+        }).
+            when('/usermanagerchat', {
+            template: '<usermanagerchat></usermanagerchat>'
+        }).
             when('/userdetails', {
             template: '<userdetails></userdetails>'
         }).

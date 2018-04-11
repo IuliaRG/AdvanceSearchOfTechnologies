@@ -75,6 +75,12 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -256,6 +262,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseAuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -278,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="ClientChat.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
@@ -418,6 +426,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\changepassword\changepassword.template.html" />
+    <Content Include="Scripts\app\chat\chat.template.html" />
     <Content Include="Scripts\app\currentuserdetails\currentuserdetails.template.html" />
     <Content Include="Scripts\app\forgotpassword\forgotpassword.template.html" />
     <Content Include="Scripts\app\register\register.template.html" />
@@ -425,6 +434,7 @@
     <Content Include="Scripts\app\home\home.template.html" />
     <Content Include="Scripts\app\login\login.template.html" />
     <Content Include="Scripts\app\userdetails\userdetails.template.html" />
+    <Content Include="Scripts\app\usermanagerchat\usermanagerchat.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -528,6 +538,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -535,6 +547,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="UserManagerChat.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -589,6 +602,9 @@
     <TypeScriptCompile Include="Scripts\app\changepassword\changepassword.component.ts" />
     <TypeScriptCompile Include="Scripts\app\changepassword\changepassword.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\changepassword\changepassword.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\chat\chat.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\chat\chat.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\chat\chat.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\core\core.module.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\accountservice\account.service.ts" />
     <TypeScriptCompile Include="Scripts\app\core\services\accountservice\account.module.ts" />
@@ -626,6 +642,9 @@
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.component.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\usermanagerchat\usermanagerchat.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\usermanagerchat\usermanagerchat.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\usermanagerchat\usermanagerchat.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.component.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\usersmanager\usersmanager.module.ts" />

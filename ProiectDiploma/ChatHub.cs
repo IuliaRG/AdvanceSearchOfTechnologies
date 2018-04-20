@@ -15,33 +15,33 @@ namespace ProiectDiploma
             Clients.All.addNewMessageToPage(name, message,id);
         }
 
-        public void SendToAdmin(string name, string message, string id)
+        public void SendToAdmin( string message, string id)
         {
             //Clients.All.addNewMessageToPage(name, message, id);
             // aici trebuie sa iei clientul admin din clients trebuie sa ne gandim cum
             //check if there is admin
             // Clients.Client(adminId).adminReceiveFromUser(name, message, id);
-            Clients.Client(adminId).adminReceiveFromUser(name, message,id);
+            Clients.Client(adminId).adminReceiveFromUser(id,message);
         }
 
-        public void Register(string userName, string id)
+        public void Register(string id)
         {
             if (users == null)
             {
                 users = new Dictionary<string, string>();
             }
 
-            if (users.ContainsKey(userName))
+            if (users.ContainsKey(id))
             {
-                users[userName] = id;
+                users[id] = id;
             }
             else
             {
-                users.Add(userName, id);
+                users.Add(id, id);
             }
         }
 
-        public void RegisterAdmin(string userName, string id)
+        public void RegisterAdmin(string id)
         {
             adminId = id;
         }

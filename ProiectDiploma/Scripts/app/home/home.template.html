@@ -1,6 +1,6 @@
 ﻿<script src="Scripts/jquery.signalR-2.2.3.min.js"></script>
 <script src="signalr/hubs"></script>
-Andi
+<script src='/signalr/js'></script>
     <div id="header">
         <div class="container">
             <div id="welcomeLine" class="row">
@@ -450,16 +450,9 @@ Andi
         <div class="col-md-12 col-sm-12 col-xs-12 second-section">
             <div class="chat-section">
                 <ul id="discussion">
-                    <!--<li>
-                        <div class="left-chat">
-
-                        </div>
+                    <li ng-repeat="line in $ctrl.Discussion">
+                        {{line}}
                     </li>
-                    <li>
-                        <div class="right-chat">
-
-                        </div>
-                    </li>-->
 
 
                 </ul>
@@ -469,7 +462,7 @@ Andi
     <div class="row border-chat">
         <div class="col-md-12 col-sm-12 col-xs-12 third-section">
             <div class="text-bar">
-                <input type="text" id="message" placeholder="Write messege"><i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage"></i>
+                <input ng-model="$ctrl.Message" type="text" id="message" placeholder="Write messege"><i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage" ng-click="$ctrl.SendMessage()"></i>
             </div>
         </div>
     </div>
@@ -477,67 +470,67 @@ Andi
 
 <!--Add script to update the page and send messages.-->
 <script type="text/javascript">
-    $(function () {
-        // Declare a proxy to reference the hub.
-        debugger
-        var chat = $.connection.chatHub;
-        // Create a function that the hub can call to broadcast messages.
-        chat.client.addNewMessageToPage = function (name, message, id) {
-            // Html encode display name and message.
-            var encodedName = $('<div />').text(name).html();
-            var encodedMsg = $('<div />').text(message).html();
-            // Add the message to the page.
-            if ($("ul." + id).length > 0) {
-                $("#" + id).append('<li><strong>' + encodedName
-                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-            }
-            else {
+    //$(function () {
+    //    // Declare a proxy to reference the hub.
+       
+    //    var chat = $.connection.chatHub;
+    //    // Create a function that the hub can call to broadcast messages.
+    //    chat.client.addNewMessageToPage = function (name, message, id) {
+    //        // Html encode display name and message.
+    //        var encodedName = $('<div />').text(name).html();
+    //        var encodedMsg = $('<div />').text(message).html();
+    //        // Add the message to the page.
+    //        if ($("ul." + id).length > 0) {
+    //            $("#" + id).append('<li><strong>' + encodedName
+    //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    //        }
+    //        else {
 
-                $(".parent-div").append("<ul id='" + id + "'></ul>");
-                $("#" + id).append('<li><strong>' + encodedName
-                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    //            $(".parent-div").append("<ul id='" + id + "'></ul>");
+    //            $("#" + id).append('<li><strong>' + encodedName
+    //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
 
-            }
-            //$('#discussion').append('<li><strong>' + encodedName
-            //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-        };
+    //        }
+    //        //$('#discussion').append('<li><strong>' + encodedName
+    //        //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    //    };
 
-        chat.client.receiveFromAdmin = function (from, message) {
-            // Html encode display name and message.
-            var encodedName = $('<div />').text(from).html();
-            var encodedMsg = $('<div />').text(message).html();
-            // Add the message to the page.
-            $('#discussion').append('<li>privte message from: <strong>' + encodedName
-                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        //chat.client.receiveFromAdmin = function (from, message) {
+        //    // Html encode display name and message.
+        //    var encodedName = $('<div />').text(from).html();
+        //    var encodedMsg = $('<div />').text(message).html();
+        //    // Add the message to the page.
+        //    $('#discussion').append('<li>privte message from: <strong>' + encodedName
+        //        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
 
-        };
+        //};
 
-        // Get the user name and store it to prepend to messages.
-        $('#displayname').val(prompt('Enter your name:', ''));
-        // Set initial focus to message input box.
-        $('#message').focus();
-        // Start the connection.
-        $.connection.hub.start().done(function () {
+    //    // Get the user name and store it to prepend to messages.
+    //    //$('#displayname').val(prompt('Enter your name:', ''));
+    //    // Set initial focus to message input box.
+    //    $('#message').focus();
+    //    // Start the connection.
+    //    $.connection.hub.start().done(function () {
 
-            var id = $.connection.hub.id;
-            chat.server.register($('#displayname').val(), id);
-            $('#sendToUser').click(function () {
-                debugger
-                chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
-            });
+    //        var id = $.connection.hub.id;
+    //        chat.server.register(id);
+    //        $('#sendToUser').click(function () {
+    //            debugger
+    //            chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
+    //        });
 
-            $('#sendmessage').click(function () {
+    //        $('#sendmessage').click(function () {
 
 
-                // Call the Send method on the hub.
+    //            // Call the Send method on the hub.
 
-                var id = $.connection.hub.id;
-                chat.server.sendToAdmin($('#displayname').val(), $('#message').val(), id);
-                // Clear text box and reset focus for next comment.
-                $('#message').val('').focus();
-            });
-        });
-    });
+    //            var id = $.connection.hub.id;
+    //            chat.server.sendToAdmin( $('#message').val(), id);
+    //            // Clear text box and reset focus for next comment.
+    //            $('#message').val('').focus();
+    //        });
+    //    });
+    //});
     $(document).ready(function () {
         $(".left-first-section").click(function () {
             $('.main-section').toggleClass("open-more");
@@ -590,7 +583,7 @@ Andi
         </div><!-- Container End -->
     </div>
     <!-- Placed at the end of the document so the pages load faster ============================================= -->
-    <script src="Content/themes/js/jquery.js" type="text/javascript"></script>
+    <!--<script src="Content/themes/js/jquery.js" type="text/javascript"></script>-->
     <script src="Content/themes/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="Content/themes/js/google-code-prettify/prettify.js"></script>
 

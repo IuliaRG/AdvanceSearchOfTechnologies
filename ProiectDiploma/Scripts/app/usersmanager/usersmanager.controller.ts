@@ -5,6 +5,7 @@
     protected iUserRoleService: IUserRoleService;
     protected iWindowService: ng.IWindowService;
     protected users: Array<any>;
+
     constructor(iLocalStorageService: ILocalStorageService, iUserRoleService: IUserRoleService, iUserService: IUserService, $window: ng.IWindowService, $http: ng.IHttpService) {
         this.httpService = $http;
         this.iUserService = iUserService;

@@ -134,7 +134,8 @@
     .first-section p {
         color: #fff;
         margin: 0px;
-        padding: 10px 0px;
+        font-size: 17px;
+        padding: 1px 60px 1px;
     }
 
         .first-section p:hover {
@@ -221,7 +222,7 @@
     }
 
 .third-section {
-    border-top: 1px solid #EEEEEE;
+    border-top: 8px solid #EEEEEE;
 }
 
 .text-bar input {

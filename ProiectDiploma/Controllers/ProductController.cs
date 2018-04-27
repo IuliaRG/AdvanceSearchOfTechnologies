@@ -12,6 +12,7 @@ namespace ProiectDiploma.Controllers
     public class ProductController : ApiController
     {
         private IProductService service;
+        private IReviewService review;
         [Route("GetAllProducts")]
         public IEnumerable<ProductDetailsDto> GetAll()
         {
@@ -30,7 +31,10 @@ namespace ProiectDiploma.Controllers
         public ProductDetailsDto GetProductByID(int id)
         {
             service = DIContainerST.GetInstance().Resolve<IProductService>();
+           // review= DIContainerST.GetInstance().Resolve<IReviewService>();
             var product = service.GetProductById(id);
+           // var productreview= review.GetReviewsByProductCode(product.Code);
+          //  product.Reviews = productreview;
             return product;
         }
     }

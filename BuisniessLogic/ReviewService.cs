@@ -50,6 +50,13 @@ namespace BuisniessLogic
 
             return reviews;
         }
+        //public List<string> GetReviewsByProductCode(object id)
+        //{
+        //    var allReviews = userReviewRepository.GetAll();
+        //         var reviews = allReviews.Where(it => id.Equals(it.ProductDetails_Id)).Select(r => r.Content).ToList();
+            
+        //    return reviews;
+        //}
         public TextAnalyticResponsDto GetTextAnalyticsSentiment(TextAnalyticsDto documentDto)
         {
             var sentimentResponse = client.UploadString(sentimentUri, JsonConvert.SerializeObject(documentDto));
@@ -60,6 +67,10 @@ namespace BuisniessLogic
         {
             throw new NotImplementedException();
         }
-        
+
+        public List<string> GetReviewsByProductCode(object id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

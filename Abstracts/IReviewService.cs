@@ -14,5 +14,6 @@ namespace Abstracts
         void AddOrUpdateReview(UserReviewDto user);
         IEnumerable<UserReviewDto> GetAllReviews();
         List<string> GetReviewsByUserId(object id);
+        List<string> GetReviewsByProductCode(object id);
     }
 }

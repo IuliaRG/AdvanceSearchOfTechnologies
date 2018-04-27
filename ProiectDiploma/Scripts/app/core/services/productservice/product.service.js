@@ -11,6 +11,13 @@ var ProductService = (function () {
             console.log(err);
         });
     };
+    ProductService.prototype.GetProductReviews = function (url, caller) {
+        this._iHttpService.get(url, {}).then(function (response) {
+            console.log(response);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
     ProductService.prototype.GetProductPage = function (url, data, caller, successCallback) {
         this._iHttpService.post(url, data).then(function (response) {
             console.log(response);
@@ -20,6 +27,13 @@ var ProductService = (function () {
     };
     ProductService.prototype.AddOrUpdateProduct = function (url, data, caller) {
         this._iHttpService.post(url, data).then(function (response) {
+        }).catch(function (err) {
+        });
+    };
+    ProductService.prototype.AddOrUpdateReview = function (url, config, data, caller) {
+        this._iHttpService.post(url, data, config)
+            .then(function (response) {
+            console.log(response);
         }).catch(function (err) {
         });
     };

@@ -24,6 +24,13 @@ namespace DAL
             .HasForeignKey<string>(s => s.ApplicationUserId);
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ProductDetails>()
+          .HasMany(g => g.UserReview)
+          .WithRequired(s => s.ProductDetails)
+          .HasForeignKey<int>(s => s.ProductDetails_Id);
+            base.OnModelCreating(modelBuilder);
+
+
         }
         public DbSet<UserDetails> User { get; set; }
         public DbSet<ProductDetails> Product { get; set; }

@@ -1,8 +1,11 @@
 ﻿interface IProductService {
     GetProduct(url: string, caller: any, successCallback: Function): any;
+    GetProductReviews(url: string, caller: any): any;
     GetProductPage(url: string, data: any, caller: any, successCallback: Function): any;
     DeleteProduct(url: string, id: any, caller: any, successCallback: Function);
     AddOrUpdateProduct(url: string, data: any, caller: any);
+    AddOrUpdateReview(url: string,config:any, data: any, caller: any);
+
 }
 class ProductService implements IProductService {
     private _iHttpService: ng.IHttpService;
@@ -22,7 +25,16 @@ class ProductService implements IProductService {
                 console.log(err);
             });
     }
-   
+    public GetProductReviews(url: string, caller: any): any {
+        this._iHttpService.get(
+            url, {}).then((response) => {
+
+                console.log(response);
+               
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
     public GetProductPage(url: string, data: any, caller: any, successCallback: Function): any {
         this._iHttpService.post(
             url, data).then((response) => {
@@ -31,11 +43,20 @@ class ProductService implements IProductService {
             }).catch((err) => {
             });
     }
-    public AddOrUpdateProduct(url: string, data: any, caller: any): any {
+    public AddOrUpdateProduct(url: string,data: any, caller: any): any {
         this._iHttpService.post(
-            url, data).then((response) => {
+            url,  data).then((response) => {
             }).catch((err) => {
             });
+    }
+    public AddOrUpdateReview(url: string, config: any, data: any, caller: any): any {
+       
+
+this._iHttpService.post(url, data, config)
+    .then((response) => {
+        console.log(response);
+    }).catch((err) => {
+    });
     }
     public DeleteProduct(url: string, id: any, caller: any, successCallback: Function): any {
         this._iHttpService.delete(

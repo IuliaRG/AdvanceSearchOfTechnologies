@@ -69,7 +69,9 @@
         {
             var ChatVM = new UserChatModel();
             ChatVM.Id = from;
+            ChatVM.TextMessage = message;
             ChatVM.UserDiscussion.push('From' + ' ' + ChatVM.Id + ':' + ' ' + ChatVM.TextMessage);
+            ChatVM.TextMessage = " ";
             self.UsersDiscussion.push(ChatVM);
             
             
@@ -120,6 +122,7 @@ class UserChatModel
 {
     public Id: string;
     public TextMessage: string;
+    public AdminMessage: string;
     public UserDiscussion: Array<string>;
     constructor() {
         this.UserDiscussion = new Array<string>();

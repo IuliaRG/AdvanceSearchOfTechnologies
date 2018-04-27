@@ -227,35 +227,33 @@
 				<tr class="techSpecRow"><td class="techSpecTD1">Model:</td><td class="techSpecTD2">{{$ctrl.ProductDetailsVM.Model}}</td></tr>
 				<tr class="techSpecRow"><td class="techSpecTD1">Released on:</td><td class="techSpecTD2"> {{$ctrl.ProductDetailsVM.ReleaseDate}}</td></tr>
 				<tr class="techSpecRow"><td class="techSpecTD1">Dimensions:</td><td class="techSpecTD2"> {{$ctrl.ProductDetailsVM.Dimensions}}</td></tr>
-				<tr class="techSpecRow"><td class="techSpecTD1">Display size:</td><td class="techSpecTD2">{{$ctrl.ProductDetailsVM.Dimensions}}</td></tr>
+				
 				</tbody>
 				</table>
 				
-				<h5>Features</h5>
-				<p>
-				
-				</p>
-
-				<h4>Editorial Reviews</h4>
-				<h5>Manufacturer's Description </h5>
-				<p>
-				
-				</p>
-
-				<h5>Electric powered Fujinon 18x zoom lens</h5>
-				<p>
-			
-				</p>
-				<h5>Impressive panoramas</h5>
-				<p>
-			
-				</p>
-
-				<h5>Sharp, clear shots</h5>
-				<p>
-				
-				</p>
-              </div>
+                 
+                     
+                     
+                      <div class="form-group">
+                          <h4>Leave a Review</h4>
+                          <form >
+                              <textarea class="form-control" rows="5" style="width:600px; height:100px;" ng-model="$ctrl.ProducReviewVM.Content" placeholder="Your Review"></textarea>
+                              <br />
+                             
+                              <button type="button" class="btn btn-success" ng-click="$ctrl.AddReview()">Comment</button>
+                              <br />
+                              <hr />
+                              <h3 ng-hide="$ctrl.ProductDetailsVM.Reviews.length== 0 ">Comments</h3>
+                              <ul class="list-group">
+                                  <li  ng-repeat="review in $ctrl.ProductDetailsVM.Reviews">
+                                      {{review.Content}}
+                                     
+                                  </li>
+                              </ul>
+                          </form>
+                      </div>
+                  </div>
+             
 		<div class="tab-pane fade" id="profile">
 		<div id="myTab" class="pull-right">
 		 <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>

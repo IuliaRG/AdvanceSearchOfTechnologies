@@ -39,7 +39,7 @@ namespace BusinessObjects
            {
               Content = it.Content,
               Sentiment = it.Sentiment,
-              ProductName = it.ProductName,
+             //  ProductName = it.ProductDetails_Id,
 
            });
 
@@ -49,7 +49,7 @@ namespace BusinessObjects
         {
             entityUserReview.ApplicationUserId = userReviewDto.ApplicationUserId;
             entityUserReview.Content = userReviewDto.Content;
-            entityUserReview.ProductName = userReviewDto.ProductName;
+            entityUserReview.ProductDetails_Id = userReviewDto.ProductName;
             entityUserReview.Sentiment =  userReviewDto.TextAnalyticRespons.Documents.Select(x => x.Score)
                        .FirstOrDefault();
 

@@ -15,39 +15,21 @@ var HomeController = (function () {
         self.ProductVM.FromProductsDto(data);
         console.log(self.ProductVM.products);
     };
-    //public initialize(): void {
-    //    var self = this;
-    //    setTimeout(function () {
-    //        //self.loadHub();
-    //        //self.loadScript('jquery.js');
-    //        self.loadScript('jquery.lightbox-0.5.js');
-    //        self.loadScript('bootstrap.min.js');
-    //        self.loadScript('bootshop.js');
-    //        //self.loadChatScript('jquery-3.2.1.js');
-    //        //self.loadChatScript('jquery.signalR-2.2.3.min.js');
-    //    }, 1000);
-    //}
     HomeController.prototype.initialize = function () {
         var _this = this;
         var self = this;
         setTimeout(function () {
-            //self.loadHub();
-            //self.loadScript('jquery.js');
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-            //self.loadChatScript('jquery-3.2.1.js');
-            // self.loadChatScript('jquery.signalR-2.2.3.min.js');
             console.log(0);
             $(function () {
                 self.chat = $.connection.chatHub;
-                //  this.chat.client.receiveFromAdmin = (from: string, message: string) => this.ReceiveFromAdmin;
                 _this.chat.client.receiveFromAdmin = function (from, message) { self.ReceiveFromAdmin(from, message, self); };
                 $('#message').focus();
                 $.connection.hub.start().done(function () {
                     self.id = _this.chat.connection.id;
                     self.chat.server.register(_this.id);
-                    //  this.chat.client.receiveFromAdmin = this.ReceiveFromAdmin;
                 });
             });
         }, 1200);
@@ -55,6 +37,7 @@ var HomeController = (function () {
     HomeController.prototype.SendMessage = function () {
         this.myHub = $;
         this.chat = this.myHub.connection.chatHub;
+        debugger;
         this.Discussion.push(this.Message);
         this.chat.server.sendToAdmin(this.Message, this.id);
         this.Message = " ";

@@ -20,10 +20,11 @@ namespace ProiectDiploma.Controllers
         [Route("AddOrUpdate")]
         public IHttpActionResult AddOrUpdate(UserReviewDto user)
         {
-            user.ApplicationUserId = RequestContext.Principal.Identity.GetUserId();
-            service = DIContainerST.GetInstance().Resolve<IReviewService>();
-            service.AddOrUpdateReview(user);
-            return Ok();
+               user.ApplicationUserId = RequestContext.Principal.Identity.GetUserId();
+                service = DIContainerST.GetInstance().Resolve<IReviewService>();
+                service.AddOrUpdateReview(user);
+           
+                return Ok();
         }
         [Route("GetAllReviews")]
         public IEnumerable<UserReviewDto> GetAll()
@@ -46,6 +47,14 @@ namespace ProiectDiploma.Controllers
         {
             service = DIContainerST.GetInstance().Resolve<IReviewService>();
             var user = service.GetReviewsByUserId(id);
+
+            return user;
+        }
+        [Route("GetReviewsByProductCode")]
+        public List<string> GetReviewsByProductCode(string id)
+        {
+            service = DIContainerST.GetInstance().Resolve<IReviewService>();
+            var user = service.GetReviewsByProductCode(id);
 
             return user;
         }

@@ -22,5 +22,6 @@ namespace BusinessObjects
         public DateTime ReleaseDate { get; set; }
         public string Model { get; set; }
         public string Dimensions { get; set; }
+        public virtual ICollection<UserReview> UserReview { get; set; }
     }
 }

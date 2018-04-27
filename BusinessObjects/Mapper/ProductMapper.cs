@@ -22,6 +22,7 @@ namespace BusinessObjects.Mapper
             result.Code = product.Code;
             result.Brand = product.Brand;
             result.Image = product.Image;
+            result.Reviews = product.UserReview.ToReviewDtos();
             return result;
         }
         public static IEnumerable<ProductDetailsDto> ToProductDetailsDtos(this IEnumerable<ProductDetails> user)
@@ -37,9 +38,22 @@ namespace BusinessObjects.Mapper
                 Model = it.Model,
                 Dimensions = it.Dimensions,
                 Image = it.Image,
+                Reviews = it.UserReview.ToReviewDtos(),
             });
 
             return result;
+        }
+        public static UserReviewDto ToReviewDto(this UserReview review)
+        {
+            var reviewUser = new UserReviewDto();
+            if (review != null)
+            {
+                reviewUser.Content = review.Content;
+                reviewUser.Sentiment = review.Sentiment;
+                
+            }
+
+            return reviewUser;
         }
         public static ProductDetails FromProductDetailsDto(this ProductDetails entityProductDetails, ProductDetailsDto productDetailsDto)
         {
@@ -53,9 +67,22 @@ namespace BusinessObjects.Mapper
             entityProductDetails.Price = productDetailsDto.Price;
             entityProductDetails.Brand = productDetailsDto.Brand;
             entityProductDetails.Image = productDetailsDto.Image;
-
+            
 
             return entityProductDetails;
         }
+        public static IEnumerable<UserReviewDto> ToReviewDtos(this IEnumerable<UserReview> userReview)
+        {
+            var result = userReview.Select(it => new UserReviewDto()
+            {
+                Content = it.Content,
+                Sentiment = it.Sentiment,
+           //     ProductName = it.ProductDetails_Id,
+
+            });
+
+            return result;
+        }
+
     }
 }

@@ -48,6 +48,18 @@ namespace BusinessObjects.Mapper
             result.TokenGuid = user.TokenGuid;
             result.IsValidate = user.IsValidate;
             result.UserDetailsDto = user.UserDetails.ToUserDetailsDto();
+            result.UserReviewDto = user.UserReview.ToReviewDtos();
+            return result;
+        }
+        public static IEnumerable<UserReviewDto> ToReviewDtos(this ICollection<UserReview> userReview)
+        {
+            var result = userReview.Select(it => new UserReviewDto()
+            {
+                Content = it.Content,
+                Sentiment = it.Sentiment,
+                //     ProductName = it.ProductDetails_Id,
+
+            });
 
             return result;
         }

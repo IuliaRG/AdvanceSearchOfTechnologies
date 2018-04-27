@@ -49,7 +49,9 @@ var UserManagerChatController = (function () {
         else {
             var ChatVM = new UserChatModel();
             ChatVM.Id = from;
+            ChatVM.TextMessage = message;
             ChatVM.UserDiscussion.push('From' + ' ' + ChatVM.Id + ':' + ' ' + ChatVM.TextMessage);
+            ChatVM.TextMessage = " ";
             self.UsersDiscussion.push(ChatVM);
         }
         self.scope.$apply();

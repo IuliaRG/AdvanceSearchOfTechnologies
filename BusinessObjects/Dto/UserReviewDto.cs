@@ -11,11 +11,12 @@ namespace BusinessObjects
     {
         public int? ReviewId { get; set; }
         public string Content { get; set; }
-        public string ProductName { get; set; }
+        public int ProductName { get; set; }
         public double? Sentiment { get; set; }
         public TextAnalyticResponsDto TextAnalyticRespons { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUserDto ApplicationUserDto { get; set; }
+        
 
     }
 }

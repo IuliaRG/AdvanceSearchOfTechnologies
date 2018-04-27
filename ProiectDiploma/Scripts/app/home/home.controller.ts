@@ -27,44 +27,21 @@
         console.log(self.ProductVM.products);
    
     }
-    //public initialize(): void {
-    //    var self = this;
-    //    setTimeout(function () {
-
-    //        //self.loadHub();
-    //        //self.loadScript('jquery.js');
-    //        self.loadScript('jquery.lightbox-0.5.js');
-    //        self.loadScript('bootstrap.min.js');
-    //        self.loadScript('bootshop.js');
-    //        //self.loadChatScript('jquery-3.2.1.js');
-    //        //self.loadChatScript('jquery.signalR-2.2.3.min.js');
-
-    //    }, 1000);
-
-    //}
+   
     public initialize(): void {
         var self = this;
         setTimeout(() => {
-
-            //self.loadHub();
-           //self.loadScript('jquery.js');
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-            //self.loadChatScript('jquery-3.2.1.js');
-           // self.loadChatScript('jquery.signalR-2.2.3.min.js');
             console.log(0);
             $(() => {
                 self.chat = (<any>$).connection.chatHub;
-              //  this.chat.client.receiveFromAdmin = (from: string, message: string) => this.ReceiveFromAdmin;
                 this.chat.client.receiveFromAdmin = (from: string, message: string) => { self.ReceiveFromAdmin(from, message, self) };
                 $('#message').focus();
                 (<any>$).connection.hub.start().done(() => {
-                   
                     self.id = this.chat.connection.id;
                     self.chat.server.register(this.id);
-                  
-                  //  this.chat.client.receiveFromAdmin = this.ReceiveFromAdmin;
                 });
             });
            
@@ -75,6 +52,7 @@
     {
         this.myHub = $;
         this.chat = this.myHub.connection.chatHub;
+        debugger
         this.Discussion.push(this.Message);
         this.chat.server.sendToAdmin(this.Message, this.id);
         this.Message = " ";
@@ -120,9 +98,7 @@ class ProductPageModel {
         this.products = new Array<ProductDetailsModel>();
     }
     public FromProductsDto(data: any): any {
-       
         this.products = data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
-       
         return this;
     }
 }

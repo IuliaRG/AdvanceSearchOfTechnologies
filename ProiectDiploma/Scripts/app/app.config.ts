@@ -15,6 +15,12 @@ angular.
                 when('/login', {
                     template: '<login></login>'
                 }).
+                when('/addproduct', {
+                    template: '<addproduct></addproduct>'
+                }).
+                when('/statistics', {
+                    template: '<statistics></statistics>'
+                 }).
                 when('/usersmanager', {
                     template: '<usersmanager></usersmanager>'
                 }).

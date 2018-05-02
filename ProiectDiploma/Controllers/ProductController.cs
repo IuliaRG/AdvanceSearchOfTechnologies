@@ -37,5 +37,21 @@ namespace ProiectDiploma.Controllers
           //  product.Reviews = productreview;
             return product;
         }
+        [Route("GetAllBrands")]
+        public List<string> GetAllBrands()
+        {
+            service = DIContainerST.GetInstance().Resolve<IProductService>();
+            var brands = service.GetAllBrands();
+
+            return brands;
+        }
+        [Route("GetBrandProducts")]
+        public List<string> GetBrandProducts(string brandName)
+        {
+            service = DIContainerST.GetInstance().Resolve<IProductService>();
+            var products = service.GetBrandProducts(brandName);
+
+            return products;
+        }
     }
 }

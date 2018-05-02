@@ -68,9 +68,55 @@ namespace BuisniessLogic
             throw new NotImplementedException();
         }
 
-        public List<string> GetReviewsByProductCode(object id)
+        public ReviewStatistics GetBrandReviewsStatistics(string brandName)
         {
-            throw new NotImplementedException();
+            int badReviews ,mediumReviews,excellentReviewes;
+            badReviews = mediumReviews = excellentReviewes = 0;
+            var allReviews = userReviewRepository.GetAll();
+            var reviews = allReviews.Where(it => brandName.Equals(it.Brand)).Select(r => r.Sentiment).ToList();
+            foreach (var review in reviews)
+            {
+                if (review <= 0.5)
+                {
+                    badReviews++;
+                }
+                if (review <= 0.85 && review > 0.5)
+                {
+                    mediumReviews++;
+                }
+                if (review > 0.85)
+                {
+                    excellentReviewes++;
+                }
+            }
+            var statistics = new ReviewStatistics() { Excellent = excellentReviewes, Medium = mediumReviews, Bad = badReviews };
+            return statistics;
+        }
+        public ReviewStatistics GetProductReviewsStatistics(string code)
+        {
+            int badReviews, mediumReviews, excellentReviewes;
+            badReviews = mediumReviews = excellentReviewes = 0;
+            var allReviews = userReviewRepository.GetAll();
+            var reviews = allReviews.Where(it => code.Equals(it.ProductCode)).Select(r => r.Sentiment).ToList();
+            foreach (var review in reviews)
+            {
+                if (review <= 0.5)
+                {
+                    badReviews++;
+                }
+                if (review <= 0.85 && review > 0.5)
+                {
+                    mediumReviews++;
+                }
+                if (review > 0.85)
+                {
+                    excellentReviewes++;
+                }
+            }
+            var statistics = new ReviewStatistics() { Excellent = excellentReviewes, Medium = mediumReviews, Bad = badReviews };
+            return statistics;
         }
     }
 }
+
+

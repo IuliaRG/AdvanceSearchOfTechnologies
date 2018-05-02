@@ -12,5 +12,7 @@ namespace Abstracts
         IEnumerable<ProductDetailsDto> GetAllProducts();
         void AddOrUpdateProduct(ProductDetailsDto product);
         ProductDetailsDto GetProductById(int id);
+        List<string> GetAllBrands();
+        List<string> GetBrandProducts(string brandName);
     }
 }

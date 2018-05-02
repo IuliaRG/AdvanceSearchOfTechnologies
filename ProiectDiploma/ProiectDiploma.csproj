@@ -425,6 +425,7 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\addproduct\addproduct.template.html" />
     <Content Include="Scripts\app\changepassword\changepassword.template.html" />
     <Content Include="Scripts\app\chat\chat.template.html" />
     <Content Include="Scripts\app\currentuserdetails\currentuserdetails.template.html" />
@@ -433,6 +434,7 @@
     <Content Include="Scripts\app\resetpassword\resetpassword.template.html" />
     <Content Include="Scripts\app\home\home.template.html" />
     <Content Include="Scripts\app\login\login.template.html" />
+    <Content Include="Scripts\app\statistics\statistics.template.html" />
     <Content Include="Scripts\app\userdetails\userdetails.template.html" />
     <Content Include="Scripts\app\usermanagerchat\usermanagerchat.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
@@ -596,6 +598,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\app\addproduct\addproduct.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\addproduct\addproduct.controller.ts" />
+    <TypeScriptCompile Include="Scripts\app\addproduct\addproduct.module.ts" />
     <TypeScriptCompile Include="Scripts\app\app.config.ts" />
     <TypeScriptCompile Include="Scripts\app\app.module.ts" />
     <TypeScriptCompile Include="Scripts\app\app.run.ts" />
@@ -639,6 +644,9 @@
     <TypeScriptCompile Include="Scripts\app\login\login.component.ts" />
     <TypeScriptCompile Include="Scripts\app\login\login.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\login\login.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\statistics\statistics.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\statistics\statistics.controller.ts" />
+    <TypeScriptCompile Include="Scripts\app\statistics\statistics.module.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.component.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.module.ts" />

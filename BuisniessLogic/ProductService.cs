@@ -52,5 +52,18 @@ namespace BuisniessLogic
 
             return product;
         }
+        public List<string> GetBrandProducts(string brandName)
+        {
+            var allProducts = productDetailsRepository.GetAll();
+            var products = allProducts.Where(it => brandName.Equals(it.Brand)).Select(r => r.Name).ToList();
+
+            return products;
+        }
+        public List<string> GetAllBrands()
+        {
+            var allProducts = productDetailsRepository.GetAll();
+            var products = allProducts.Where(it => it.Brand != null).Select(r => r.Brand).Distinct().ToList();
+            return products;
+        }
     }
 }

@@ -1,0 +1,16 @@
+﻿<nav  >
+    <ul class="nav" >
+      
+        <li type="button" ng-repeat="brand in $ctrl.ProductsDataVM.Brand" ng-click="$ctrl.GetProducts(brand)">
+            {{brand}}
+            <ul>
+                <li ng-repeat="product in $ctrl.ProductsDataVM.Products">
+                    <a href="#">{{product}}</a>
+                </li>
+               
+            </ul>
+            
+        </li>
+</ul>
+</nav>
+

@@ -1,5 +1,7 @@
 ﻿interface IProductService {
     GetProduct(url: string, caller: any, successCallback: Function): any;
+    GetAllBrands(url: string, caller: any, successCallback: Function): any;
+    GetProductByBrand(url: string, id: any, caller: any, successCallback: Function): any;
     GetProductReviews(url: string, caller: any): any;
     GetProductPage(url: string, data: any, caller: any, successCallback: Function): any;
     DeleteProduct(url: string, id: any, caller: any, successCallback: Function);
@@ -19,6 +21,25 @@ class ProductService implements IProductService {
         this._iHttpService.get(
             url, {}).then((response) => {
                 
+                console.log(response);
+                successCallback(response.data, caller);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+    public GetProductByBrand(url: string, brand: any, caller: any, successCallback: Function): any {
+        this._iHttpService.get(
+            url + brand, {}).then((response) => {
+                console.log(response);
+                successCallback(response.data, caller);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+    public GetAllBrands(url: string, caller: any, successCallback: Function): any {
+        this._iHttpService.get(
+            url, {}).then((response) => {
+
                 console.log(response);
                 successCallback(response.data, caller);
             }).catch((err) => {
@@ -50,9 +71,7 @@ class ProductService implements IProductService {
             });
     }
     public AddOrUpdateReview(url: string, config: any, data: any, caller: any): any {
-       
-
-this._iHttpService.post(url, data, config)
+    this._iHttpService.post(url, data, config)
     .then((response) => {
         console.log(response);
     }).catch((err) => {

@@ -82,6 +82,7 @@
     <Compile Include="Dto\PageItemsToSendDto.cs" />
     <Compile Include="Dto\ApplicationRoleDto.cs" />
     <Compile Include="Dto\ProductDetailsDto.cs" />
+    <Compile Include="Dto\ReviewStatistics.cs" />
     <Compile Include="Dto\TextAnalyticResponsDto.cs" />
     <Compile Include="Dto\TextAnalyticsConfiguration.cs" />
     <Compile Include="Dto\TextAnalyticsDocumentsDto.cs" />

@@ -18,11 +18,11 @@ namespace ProiectDiploma.Controllers
         private IReviewService service;
         [Authorize]
         [Route("AddOrUpdate")]
-        public IHttpActionResult AddOrUpdate(UserReviewDto user)
+        public IHttpActionResult AddOrUpdate(UserReviewDto userReview)
         {
-               user.ApplicationUserId = RequestContext.Principal.Identity.GetUserId();
+            userReview.ApplicationUserId = RequestContext.Principal.Identity.GetUserId();
                 service = DIContainerST.GetInstance().Resolve<IReviewService>();
-                service.AddOrUpdateReview(user);
+                service.AddOrUpdateReview(userReview);
            
                 return Ok();
         }
@@ -30,9 +30,9 @@ namespace ProiectDiploma.Controllers
         public IEnumerable<UserReviewDto> GetAll()
         {
             service = DIContainerST.GetInstance().Resolve<IReviewService>();
-            var user = service.GetAllReviews();
+            var reviews = service.GetAllReviews();
        
-            return user;
+            return reviews;
         }
         [Route("Delete/{id}")]
         public IHttpActionResult DeleteReview(string id)
@@ -46,17 +46,25 @@ namespace ProiectDiploma.Controllers
         public List<string> GetReviewsById(string id)
         {
             service = DIContainerST.GetInstance().Resolve<IReviewService>();
-            var user = service.GetReviewsByUserId(id);
+            var userReviews = service.GetReviewsByUserId(id);
 
-            return user;
+            return userReviews;
         }
-        [Route("GetReviewsByProductCode")]
-        public List<string> GetReviewsByProductCode(string id)
+        [Route("GetBrandReviewsStatistics")]
+        public ReviewStatistics GetBrandReviewsStatistics(string brandName)
         {
             service = DIContainerST.GetInstance().Resolve<IReviewService>();
-            var user = service.GetReviewsByProductCode(id);
+            var statistics = service.GetBrandReviewsStatistics(brandName);
 
-            return user;
+            return statistics;
+        }
+        [Route("GetProductReviewsStatistics")]
+        public ReviewStatistics GetProductReviewsStatistics(string name)
+        {
+            service = DIContainerST.GetInstance().Resolve<IReviewService>();
+            var statistics = service.GetProductReviewsStatistics(name);
+
+            return statistics;
         }
     }
 }

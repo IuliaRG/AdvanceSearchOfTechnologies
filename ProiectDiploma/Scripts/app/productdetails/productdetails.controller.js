@@ -25,7 +25,9 @@ var ProductDetailsController = (function () {
         };
         var userDto = {
             "Content": self.ProducReviewVM.Content,
-            "ProductName": self.ProductDetailsVM.Id,
+            "ProductId": self.ProductDetailsVM.Id,
+            "Brand": self.ProductDetailsVM.Brand,
+            "ProductCode": self.ProductDetailsVM.Code,
         };
         self.iProductService.AddOrUpdateReview('api/Review/AddOrUpdate', config, userDto, this);
         self.iWindowService.location.href = '/index.html#!/home';

@@ -50,6 +50,7 @@ namespace ProiectDiploma.Controllers
         {
             service = DIContainerST.GetInstance().Resolve<IProductService>();
             var products = service.GetBrandProducts(brandName);
+            
 
             return products;
         }

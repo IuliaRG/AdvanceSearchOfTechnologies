@@ -92,12 +92,12 @@ namespace BuisniessLogic
             var statistics = new ReviewStatistics() { Excellent = excellentReviewes, Medium = mediumReviews, Bad = badReviews };
             return statistics;
         }
-        public ReviewStatistics GetProductReviewsStatistics(string code)
+        public ReviewStatistics GetProductReviewsStatistics(int id)
         {
             int badReviews, mediumReviews, excellentReviewes;
             badReviews = mediumReviews = excellentReviewes = 0;
             var allReviews = userReviewRepository.GetAll();
-            var reviews = allReviews.Where(it => code.Equals(it.ProductCode)).Select(r => r.Sentiment).ToList();
+            var reviews = allReviews.Where(it => id.Equals(it.ProductDetails_Id)).Select(r => r.Sentiment).ToList();
             foreach (var review in reviews)
             {
                 if (review <= 0.5)

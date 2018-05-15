@@ -43,6 +43,7 @@ namespace BusinessObjects.Mapper
 
             return result;
         }
+
         public static UserReviewDto ToReviewDto(this UserReview review)
         {
             var reviewUser = new UserReviewDto();

@@ -1,92 +1,117 @@
 ﻿<span class="counter pull-right"></span>
-<form ng-submit="$ctrl.Pagination()">
-    <input placeholder="Search text here" type="text" ng-model="$ctrl.PageVM.SearchText"   >
-</form>
-<div class="col-md-4 col-sm-6">
-    <div class="products-number">
+<div id="sidebar" class="span3">
 
-        <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PageVM.ItemsOnPage == 12 ? 'btn-primary' :''" ng-click="$ctrl.Pagination(12)">12</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PageVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.Pagination(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.Pagination($ctrl.PageVM.MaxPageItems)">All</a>
+    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+        <li>
+            <a href="/index.html#!/home">Home</a>
+        </li>
+        <li>
+            <a href="/index.html#!/statistics">Statistics</a>
+        </li>
+        <li>
+            <a href="/index.html#!/usermanagerchat">Chat</a>
+        </li>
+    </ul>
+    <br />
+
+</div>
+<!-- Sidebar end=============================================== -->
+<div class="span9">
+    <br>
+    <form ng-submit="$ctrl.Pagination()">
+        <input placeholder="Search text here" type="text" ng-model="$ctrl.PageVM.SearchText">
+    </form>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="products-number">
+
+            <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PageVM.ItemsOnPage == 12 ? 'btn-primary' :''" ng-click="$ctrl.Pagination(12)">12</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.PageVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.Pagination(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.Pagination($ctrl.PageVM.MaxPageItems)">All</a>
+            
+        </div>
 
     </div>
-  
-</div>
-<div class="col-md-4 col-sm-6">
-    <div class="products-sort-by">
-        <strong>Sort by</strong>
-        <select name="sort-by" class="form-control" ng-model="$ctrl.PageVM.SortField" ng-change="$ctrl.Pagination()">
-            <option>FirstName</option>
-            <option>LastName</option>
-            <option>Email</option>
-            <option>Address</option>
-        </select>
+    <br>
+    <div class="col-md-4 col-sm-6">
+        <div class="products-sort-by">
+            <strong>Sort by</strong>
+            <select name="sort-by" class="form-control" ng-model="$ctrl.PageVM.SortField" ng-change="$ctrl.Pagination()">
+                <option>FirstName</option>
+                <option>LastName</option>
+                <option>Email</option>
+                <option>Address</option>
+            </select>
+        </div>
     </div>
-</div>
-<div class="col-md-4 col-sm-6">
-    <div class="products-sort-by">
-        <strong>Order</strong>
-        <select name="sort-by" class="form-control" ng-model="$ctrl.PageVM.SortDirection" ng-change="$ctrl.Pagination()">
-            <option>Ascending</option>
+    <div class="col-md-4 col-sm-6">
+        <div class="products-sort-by">
+            <strong>Order</strong>
+            <select name="sort-by" class="form-control" ng-model="$ctrl.PageVM.SortDirection" ng-change="$ctrl.Pagination()">
+                <option>Ascending</option>
 
-            <option>Descending</option>
+                <option>Descending</option>
 
 
-        </select>
+            </select>
+        </div>
     </div>
-</div>
-<table class="table table-hover table-bordered results">
-    
-    <thead>
-        <tr>
-           
-            <th class="col-md-5 col-xs-5">FirstName</th>
-            <th class="col-md-4 col-xs-4">LastName</th>
-            <th class="col-md-3 col-xs-3">Adress</th>
-            <th class="col-md-1 col-xs-1">Email</th>
-            <th class="col-md-1 col-xs-1">Edit/Delete</th>
-        </tr>
+    <table class="table table-hover table-bordered results">
 
-    </thead>
-    <tbody>
-      <tr ng-repeat="user in $ctrl.PageVM.users" >
-          
-           
-            <td >{{user.FirstName}} </td>
-            <td>{{user.LastName}}</td>
-            <td>{{user.Address}}</td>
-            <td>{{user.Email}}</td>
-          <td>
-              <a href="/index.html#!/userdetails?id={{user.Id}}">Edit</a>
-              <button  ng-click="$ctrl.DeleteUser(user.Id)">Detele</button>
-          </td>
-    </tbody>
-</table>
-<ul id="pagination">
-    <li>
-        <a href=""  ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1" >&laquo;</a>
-    </li>
-   
-    <li>
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage-2<1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-2)">{{$ctrl.PageVM.CurrentPage-2}}</a>
-    </li>
-    <li>
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-1)">{{$ctrl.PageVM.CurrentPage-1}}</a>
-    </li>
-    <li>
-        <a href="" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage)">{{$ctrl.PageVM.CurrentPage}}</a>
-    </li>
-    <li >
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage==$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+1)">{{$ctrl.PageVM.CurrentPage+1}}</a>
-    </li>
-    <li>
-        <a href="" ng-hide="$ctrl.PageVM.CurrentPage+2>$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+2)" >{{$ctrl.PageVM.CurrentPage+2}}</a>
-    </li>
-   
-    <li>
-        <a href=""  ng-click="$ctrl.Pagination(null,$ctrl.PageVM.LastPage)">&raquo;</a>
-    </li>
-</ul>
-<style>
-    ul#pagination li {
-        display: inline;
-    }
-</style>
+        <thead>
+            <tr>
+
+                <th class="col-md-5 col-xs-5">FirstName</th>
+                <th class="col-md-4 col-xs-4">LastName</th>
+                <th class="col-md-3 col-xs-3">Adress</th>
+                <th class="col-md-1 col-xs-1">Email</th>
+                <th class="col-md-1 col-xs-1">Edit/Delete</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in $ctrl.PageVM.users">
+
+
+                <td>{{user.FirstName}} </td>
+                <td>{{user.LastName}}</td>
+                <td>{{user.Address}}</td>
+                <td>{{user.Email}}</td>
+                <td>
+                    <a href="/index.html#!/userdetails?id={{user.Id}}">Edit</a>
+                    <button ng-click="$ctrl.DeleteUser(user.Id)">Detele</button>
+                </td>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <ul >
+            <li>
+                <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1">&laquo;</a>
+            </li>
+
+            <li>
+                <a href="" ng-hide="$ctrl.PageVM.CurrentPage-2<1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-2)">{{$ctrl.PageVM.CurrentPage-2}}</a>
+            </li>
+            <li>
+                <a href="" ng-hide="$ctrl.PageVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage-1)">{{$ctrl.PageVM.CurrentPage-1}}</a>
+            </li>
+            <li>
+                <a href="" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage)">{{$ctrl.PageVM.CurrentPage}}</a>
+            </li>
+            <li>
+                <a href="" ng-hide="$ctrl.PageVM.CurrentPage==$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+1)">{{$ctrl.PageVM.CurrentPage+1}}</a>
+            </li>
+            <li>
+                <a href="" ng-hide="$ctrl.PageVM.CurrentPage+2>$ctrl.PageVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.CurrentPage+2)">{{$ctrl.PageVM.CurrentPage+2}}</a>
+            </li>
+
+            <li>
+                <a href="" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.LastPage)">&raquo;</a>
+            </li>
+        </ul>
+        </div>
+       
+
+
+
+
+
+    </div>

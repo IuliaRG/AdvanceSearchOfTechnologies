@@ -10,6 +10,7 @@
         this.httpService = $http;
         this.iUserService = iUserService;
         this.iWindowService = $window;
+        this.initialize();
         this.iUserRoleService = iUserRoleService;
         this.PageVM = new PageModel();
         this.iUserRoleService.CheckUser("Admin", "usermanager");
@@ -43,6 +44,41 @@
     protected DeleteUserCallback( self: UsersManagerController): void {
         self.Pagination();
     }
+    public initialize(): void {
+        var self = this;
+        setTimeout(function () {
+         
+            self.loadScript('jquery.js');
+            self.loadScript('jquery.lightbox-0.5.js');
+            self.loadScript('bootstrap.min.js');
+           self.loadScript('bootshop.js');
+            self.loadBoostrapScript('bootstrap.min.css');
+           
+            self.loadCssScript('base.css');
+        }, 1000);
+
+    }
+    public loadBoostrapScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/bootshop/' + path;
+        head.appendChild(script);
+    }
+    public loadScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/js/' + path;
+        head.appendChild(script);
+    }
+    public loadCssScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/css/' + path;
+        head.appendChild(script);
+    }
 }
 class PageModel {
     public Id: string;
@@ -64,8 +100,10 @@ class PageModel {
     public SortField: string;
     public LastPage: string;
     public users: Array<any>;
+ 
     constructor() {
         this.users = new Array<UserDto>();
+       
     }
     public FromUsersDto(data: any): any {
         this.Id = data.Id;

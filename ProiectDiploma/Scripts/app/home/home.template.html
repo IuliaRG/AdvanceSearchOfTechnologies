@@ -36,8 +36,8 @@
                         <li class=""><a href="normal.html">Delivery</a></li>
                         <li class=""><a href="contact.html">Contact</a></li>
                         <li class="">
-                            <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
-                            <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
+                            <a href="/index.html#!/register" ng-show="$ctrl.currentUser==null" type="button"  style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
+                            <!--<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h3>Login Block</h3>
@@ -61,7 +61,7 @@
                                     <span ng-show="$ctrl.LoginVM.ShowError" class="error-message">{{$ctrl.LoginVM.ErrorMessage}}</span>
                                     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                                 </div>
-                            </div>
+                            </div>-->
                         </li>
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
     </div>
     <!-- Header End====================================================================== -->
     <div id="carouselBlk">
-        <div id="myCarousel" class="carousel slide">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="container">
@@ -142,7 +142,7 @@
                     <ul id="sideManu" class="nav nav-tabs nav-stacked">
                         <li class="subMenu open">
                             <a> ELECTRONICS [230]</a>
-                            <ul>
+                            <ul style="display:none">
                                 <li><a class="active" href="products.html"><i class="icon-chevron-right"></i>Cameras (100) </a></li>
                                 <li><a href="products.html"><i class="icon-chevron-right"></i>Computers, Tablets & laptop (30)</a></li>
                                 <li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>
@@ -174,9 +174,6 @@
                                 <li><a href="products.html"><i class="icon-chevron-right"></i>Khao Shong (11)</a></li>
                             </ul>
                         </li>
-                        <li><a href="products.html">HEALTH & BEAUTY [18]</a></li>
-                        <li><a href="products.html">SPORTS & LEISURE [58]</a></li>
-                        <li><a href="products.html">BOOKS & ENTERTAINMENTS [14]</a></li>
                     </ul>
                     <br />
                 </div>
@@ -359,7 +356,40 @@
                             </div>
                         </div>
                     </div>
-                    <h4>Latest Products </h4>
+                    <form class="form-horizontal span6">
+                        <div class="control-group">
+                            <label class="control-label alignL">Sort By </label>
+                            <select ng-model="$ctrl.ProductVM.SortField" ng-change="$ctrl.ProductPagination()">
+                                <option>Name</option>
+                                <option>Price</option>
+                           
+                            </select>
+                            <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage == 12 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(12)">12</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.ProductPagination($ctrl.ProductVM.MaxPageItems)">All</a>
+                        </div>
+                
+                            <div class="control-group">
+                                <strong>Order</strong>
+                                <select name="sort-by" class="form-control" ng-model="$ctrl.ProductVM.SortDirection" ng-change="$ctrl.ProductPagination()">
+                                    <option>Ascending</option>
+
+                                    <option>Descending</option>
+
+
+                                </select>
+                            </div>
+                     
+                        <div class="control-group">
+                            
+                            <label class="control-label alignL">Products on page </label>
+                            <select>
+                                <option>3</option>
+                                <option>12</option>
+                                <option>20</option>
+
+                            </select>
+                        </div>
+                    </form>
+               
                     <ul class="thumbnails">
                         <li class="span3" ng-repeat="product in $ctrl.ProductVM.products">
                             <div class="thumbnail">
@@ -376,122 +406,163 @@
                         </li>
                       
                     </ul>
+                    <!--<div class="pagination">
+                        <ul>
+                            <li>
+                                <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.ProductVM.CurrentPage==1">&laquo;</a>
+                            </li>
 
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage-2<1" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage-2)">{{$ctrl.ProductVM.CurrentPage-2}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.PageVMProductVM.CurrentPage-1)">{{$ctrl.ProductVM.CurrentPage-1}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage)">{{$ctrl.ProductVM.CurrentPage}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==$ctrl.ProductVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage+1)">{{$ctrl.ProductVM.CurrentPage+1}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage+2>$ctrl.ProductVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage+2)">{{$ctrl.ProductVM.CurrentPage+2}}</a>
+                            </li>
+
+                            <li>
+                                <a href="" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.LastPage)">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>-->
+                    <div class="pagination">
+                        <ul>
+                            <li>
+                                <a href="" ng-click="$ctrl.ProductPagination(null,1)" ng-hide="$ctrl.ProductVM.CurrentPage==1">&laquo;</a>
+                            </li>
+
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage-2<1" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.CurrentPage-2)">{{$ctrl.ProductVM.CurrentPage-2}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==1" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.CurrentPage-1)">{{$ctrl.ProductVM.CurrentPage-1}}</a>
+                            </li>
+                            <li>
+                                <a href="" class="active"  ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.CurrentPage)">{{$ctrl.ProductVM.CurrentPage}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==$ctrl.ProductVM.LastPage" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.CurrentPage+1)">{{$ctrl.ProductVM.CurrentPage+1}}</a>
+                            </li>
+                            <li>
+                                <a href="" ng-hide="$ctrl.ProductVM.CurrentPage+2>$ctrl.ProductVM.LastPage" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.CurrentPage+2)">{{$ctrl.ProductVM.CurrentPage+2}}</a>
+                            </li>
+
+                            <li>
+                                <a href="" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.LastPage)">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-<!--<ul id="paginationPage">
-    <li>
-        <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.PageVM.CurrentPage==1">&laquo;</a>
-    </li>
 
-    <li>
-        <a href=""  >1</a>
-    </li>
-    <li>
-        <a href="" >2</a>
-    </li>
-    <li>
-        <a href="" >3</a>
-    </li>
-    <li>
-        <a href="" >4</a>
-    </li>
-    <li>
-        <a href="">5</a>
-    </li>
+<!--<div class="pagination1">
+    
+        <a href="" ng-click="$ctrl.Pagination(null,1)" ng-hide="$ctrl.ProductVM.CurrentPage==1">&laquo;</a>
+   
 
-    <li>
-        <a href="" >&raquo;</a>
-    </li>
-</ul>-->
-<!--<ul id="paginationPage1" class="pagination pagination-lg">
-    <li><a href="#">&laquo;</a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">&raquo;</a></li>
-</ul>-->
-<!--<style>
-    ul#paginationPage1 li {
-        display: inline;
-    }
-</style>-->
+    
+        <a href="" ng-hide="$ctrl.ProductVM.CurrentPage-2<1" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage-2)">{{$ctrl.ProductVM.CurrentPage-2}}</a>
+    
+        <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==1" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage-1)">{{$ctrl.ProductVM.CurrentPage-1}}</a>
+    
+        <a href="" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage)">{{$ctrl.ProductVM.CurrentPage}}</a>
+   
+        <a href="" ng-hide="$ctrl.ProductVM.CurrentPage==$ctrl.ProductVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage+1)">{{$ctrl.ProductVM.CurrentPage+1}}</a>
+    
+        <a href="" ng-hide="$ctrl.ProductVM.CurrentPage+2>$ctrl.ProductVM.LastPage" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.CurrentPage+2)">{{$ctrl.ProductVM.CurrentPage+2}}</a>
+   
+        <a href="" ng-click="$ctrl.Pagination(null,$ctrl.ProductVM.LastPage)">&raquo;</a>
+    
+</div>-->
 
-<div class="container">
-    <input type="hidden" id="displayname" />
-</div>
+		
 
-
-
-<style>
-</style>
-<div class="main-section">
-    <div class="row border-chat">
-        <div class="col-md-12 col-sm-12 col-xs-12 first-section">
-            <div class="row">
-                <div class="col-md-8 col-sm-6 col-xs-6 left-first-section">
-                    <p>Chat</p>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-6 right-first-section">
-                    <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+    <!--<div class="pagination justify-content-center">
+        <a href="#">&laquo;</a>
+        <a class="active" href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#" ng-click="$ctrl.Pagination(null,$ctrl.PageVM.LastPage)">&raquo;</a>
+    </div>-->
+    <div class="container">
+        <input type="hidden" id="displayname" />
+    </div>
+    <div class="main-section">
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 first-section">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-6 left-first-section">
+                        <p>Chat</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-6 right-first-section">
+                        <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-clone" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row border-chat">
-        <div class="col-md-12 col-sm-12 col-xs-12 second-section">
-            <div class="chat-section">
-                <ul id="discussion">
-                    <li ng-repeat="line in $ctrl.Discussion">
-                        {{line}}
-                    </li>
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 second-section">
+                <div class="chat-section">
+                    <ul id="discussion">
+                        <li ng-repeat="line in $ctrl.Discussion">
+                            {{line}}
+                        </li>
 
 
-                </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row border-chat">
+            <div class="col-md-12 col-sm-12 col-xs-12 third-section">
+                <div class="text-bar">
+                    <input ng-model="$ctrl.Message" type="text" id="message" placeholder="Write messege"><i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage" ng-click="$ctrl.SendMessage()"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row border-chat">
-        <div class="col-md-12 col-sm-12 col-xs-12 third-section">
-            <div class="text-bar">
-                <input ng-model="$ctrl.Message" type="text" id="message" placeholder="Write messege"><i class="fa fa-arrow-right" aria-hidden="true" id="sendmessage" ng-click="$ctrl.SendMessage()"></i>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--Add script to update the page and send messages.-->
-<script type="text/javascript">
-    //$(function () {
-    //    // Declare a proxy to reference the hub.
-       
-    //    var chat = $.connection.chatHub;
-    //    // Create a function that the hub can call to broadcast messages.
-    //    chat.client.addNewMessageToPage = function (name, message, id) {
-    //        // Html encode display name and message.
-    //        var encodedName = $('<div />').text(name).html();
-    //        var encodedMsg = $('<div />').text(message).html();
-    //        // Add the message to the page.
-    //        if ($("ul." + id).length > 0) {
-    //            $("#" + id).append('<li><strong>' + encodedName
-    //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-    //        }
-    //        else {
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+        //$(function () {
+        //    // Declare a proxy to reference the hub.
 
-    //            $(".parent-div").append("<ul id='" + id + "'></ul>");
-    //            $("#" + id).append('<li><strong>' + encodedName
-    //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        //    var chat = $.connection.chatHub;
+        //    // Create a function that the hub can call to broadcast messages.
+        //    chat.client.addNewMessageToPage = function (name, message, id) {
+        //        // Html encode display name and message.
+        //        var encodedName = $('<div />').text(name).html();
+        //        var encodedMsg = $('<div />').text(message).html();
+        //        // Add the message to the page.
+        //        if ($("ul." + id).length > 0) {
+        //            $("#" + id).append('<li><strong>' + encodedName
+        //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        //        }
+        //        else {
 
-    //        }
-    //        //$('#discussion').append('<li><strong>' + encodedName
-    //        //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
-    //    };
+        //            $(".parent-div").append("<ul id='" + id + "'></ul>");
+        //            $("#" + id).append('<li><strong>' + encodedName
+        //                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+
+        //        }
+        //        //$('#discussion').append('<li><strong>' + encodedName
+        //        //    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        //    };
 
         //chat.client.receiveFromAdmin = function (from, message) {
         //    // Html encode display name and message.
@@ -503,43 +574,43 @@
 
         //};
 
-    //    // Get the user name and store it to prepend to messages.
-    //    //$('#displayname').val(prompt('Enter your name:', ''));
-    //    // Set initial focus to message input box.
-    //    $('#message').focus();
-    //    // Start the connection.
-    //    $.connection.hub.start().done(function () {
+        //    // Get the user name and store it to prepend to messages.
+        //    //$('#displayname').val(prompt('Enter your name:', ''));
+        //    // Set initial focus to message input box.
+        //    $('#message').focus();
+        //    // Start the connection.
+        //    $.connection.hub.start().done(function () {
 
-    //        var id = $.connection.hub.id;
-    //        chat.server.register(id);
-    //        $('#sendToUser').click(function () {
-    //            debugger
-    //            chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
-    //        });
+        //        var id = $.connection.hub.id;
+        //        chat.server.register(id);
+        //        $('#sendToUser').click(function () {
+        //            debugger
+        //            chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
+        //        });
 
-    //        $('#sendmessage').click(function () {
+        //        $('#sendmessage').click(function () {
 
 
-    //            // Call the Send method on the hub.
+        //            // Call the Send method on the hub.
 
-    //            var id = $.connection.hub.id;
-    //            chat.server.sendToAdmin( $('#message').val(), id);
-    //            // Clear text box and reset focus for next comment.
-    //            $('#message').val('').focus();
-    //        });
-    //    });
-    //});
-    $(document).ready(function () {
-        $(".left-first-section").click(function () {
-            $('.main-section').toggleClass("open-more");
+        //            var id = $.connection.hub.id;
+        //            chat.server.sendToAdmin( $('#message').val(), id);
+        //            // Clear text box and reset focus for next comment.
+        //            $('#message').val('').focus();
+        //        });
+        //    });
+        //});
+        $(document).ready(function () {
+            $(".left-first-section").click(function () {
+                $('.main-section').toggleClass("open-more");
+            });
         });
-    });
-    $(document).ready(function () {
-        $(".fa-minus").click(function () {
-            $('.main-section').toggleClass("open-more");
+        $(document).ready(function () {
+            $(".fa-minus").click(function () {
+                $('.main-section').toggleClass("open-more");
+            });
         });
-    });
-</script>
+    </script>
 
 
     <!-- Footer ================================================================== -->

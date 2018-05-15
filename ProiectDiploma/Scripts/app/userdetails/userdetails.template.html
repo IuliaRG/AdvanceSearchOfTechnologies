@@ -1,5 +1,5 @@
-﻿<div>
-    <div>
+﻿
+    <div style="margin-left:20px;"">
         <label for="fname">First Name</label>
         <input type="text" id="fname" name="Firstname" ng-model="$ctrl.UserDetailsVM.FirstName">
 
@@ -13,14 +13,30 @@
                 <div>
                     <label for="email">Email</label>
                     <input type="text" id="email" name="Email" ng-model="$ctrl.UserDetailsVM.Email">
-
                     <div>
-                        <label for="username">UserName</label>
-                        <input type="text" id="username" name="address" ng-model="$ctrl.UserDetailsVM.UserName">
+                        <nav>
+                            <label for="adrr"> Current Roles</label>
+                            <ul>
 
+                                <li ng-repeat="role in $ctrl.UserDetailsVM.Roles">
+                                    {{role}}
 
+                                </li>
+                            </ul>
+                        </nav>
+                        </div>
+                    <div >
+                        <div class="products-sort-by">
+                            <label for="email">Add a new role</label>
+                            <select name="sort-by" class="form-control" ng-model="$ctrl.UserDetailsVM.Role">
+                                <option>Company</option>
+
+                                <option>NormalUser</option>
+                                <option>Admin</option>
+
+                            </select>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

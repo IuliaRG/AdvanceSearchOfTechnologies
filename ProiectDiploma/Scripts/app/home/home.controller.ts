@@ -18,22 +18,40 @@
         this.iLocalStorageService = iLocalStorageService;
         this.currentUser = iLocalStorageService.GetCurrentUser();
         console.log(this.currentUser.email);
-        this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
+       // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
+        this.ProductPagination();
     }
     protected GetProductsCallback(data: any, self: HomeController): void {
         self.ProductVM.FromProductsDto(data);
-        console.log(self.ProductVM.products);
+        console.log("current page " + self.ProductVM.CurrentPage);
    
     }
-   
+    protected ProductPagination(itemsNumber?: number, pageNumber?: number) {
+        var self = this;
+        self.ProductVM.ItemsOnPage = itemsNumber;
+        self.ProductVM.PageNumber = pageNumber;
+        var pageDto = {
+            "PageNumber": self.ProductVM.PageNumber,
+           "ItemsOnPage": self.ProductVM.ItemsOnPage,
+           "SortDirection": self.ProductVM.SortDirection,
+           "SortField": self.ProductVM.SortField,
+            "CurrentPage": self.ProductVM.CurrentPage,
+        };
+       
+        self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
+    }
     public initialize(): void {
         var self = this;
         setTimeout(() => {
+            self.loadScript('jquery.js');
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
+            self.loadBoostrapScript('bootstrap.min.css');
+         
+           self.loadCssScript('base.css');
             console.log(0);
             $(() => {
                 self.chat = (<any>$).connection.chatHub;
@@ -45,7 +63,7 @@
                 });
             });
            
-        }, 1200);
+        }, 1000);
 
     }
     public SendMessage()
@@ -84,7 +102,20 @@
         script.src = '../../../Content/themes/js/' + path;
         head.appendChild(script);
     }
-   
+    public loadBoostrapScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/bootshop/' + path;
+        head.appendChild(script);
+    }
+    public loadCssScript(path: string) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/css/' + path;
+        head.appendChild(script);
+    }
 }
 
 class ProductPageModel {
@@ -93,12 +124,32 @@ class ProductPageModel {
     public Description: string;
     public Price: string;
     public Code: string;
+    public CurrentPage: number;
+    public PageNumber: number;
+    public ItemsOnPage: number;
+    public SearchText: string;
+    public MaxPageItems: number;
+    public NextPage: string;
+    public PreviousPage: string;
+    public SortDirection: string;
+    public SortField: string;
+    public LastPage: string;
     public products: Array<any>;
     constructor() {
         this.products = new Array<ProductDetailsModel>();
     }
     public FromProductsDto(data: any): any {
-        this.products = data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
+        this.ItemsOnPage = data.ItemsOnPage;
+        this.SearchText = data.SearchText;
+        this.MaxPageItems = data.MaxPageItems;
+        this.NextPage = data.NextPage;
+        this.CurrentPage = data.CurrentPage;
+        this.LastPage = data.LastPage;
+        this.SortField = data.SortField;
+        this.products = data.Data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
         return this;
     }
 }
+
+
+

@@ -52,17 +52,49 @@ namespace BuisniessLogic
 
             return product;
         }
-        public List<string> GetBrandProducts(string brandName)
+        public List<ProductDto> GetBrandProducts(string brandName)
         {
             var allProducts = productDetailsRepository.GetAll();
-            var products = allProducts.Where(it => brandName.Equals(it.Brand)).Select(r => r.Name).ToList();
+            var products = allProducts.Where(it => brandName.Equals(it.Brand)).Select(r => new ProductDto { Name = r.Name, Id = r.Id }).ToList();
 
             return products;
         }
-        public List<string> GetAllBrands()
+        public ProductPaginingParametersDto GetProductsOnPage(ProductPaginingParametersDto paginationParameters)
+        {
+            var allProducts = productDetailsRepository.GetAll().AsQueryable();
+            var products = allProducts;
+           
+            if (!string.IsNullOrEmpty(paginationParameters.SortField))
+            {
+                products = allProducts.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
+            }
+            //if (!string.IsNullOrEmpty(paginationParameters.SearchText))
+            //{
+            //    products = allProducts.Filter("Email", paginationParameters.SearchText);
+            //    products = (from user in activeUsers.Where(user => user.UserDetails.Address.Contains(paginationParameters.SearchText) || user.UserDetails.FirstName.Contains(paginationParameters.SearchText) || user.UserDetails.LastName.Contains(paginationParameters.SearchText) || user.UserName.Contains(paginationParameters.SearchText) || user.Email.Contains(paginationParameters.SearchText))
+            //             select user).AsQueryable();
+            //    if (!string.IsNullOrEmpty(paginationParameters.SortField))
+            //    {
+            //        users = users.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
+            //    }
+            //}
+            int totalNrProducts = products.Count();
+            int currentPage = paginationParameters.PageNumber;
+            int lastPage = (int)Math.Ceiling(totalNrProducts / (double)paginationParameters.ItemsOnPage);
+            var productToSend = products.ToProductDetailsDtos().Skip((currentPage - 1) * paginationParameters.ItemsOnPage).Take(paginationParameters.ItemsOnPage).ToList();
+            ProductPaginingParametersDto pageDto = new ProductPaginingParametersDto();
+            pageDto.MaxPageItems = totalNrProducts;
+            pageDto.CurrentPage = currentPage;
+            pageDto.LastPage = lastPage;
+            pageDto.Data = productToSend;
+            pageDto.SearchText = paginationParameters.SearchText;
+
+            return pageDto;
+        }
+        public object GetAllBrands()
         {
             var allProducts = productDetailsRepository.GetAll();
-            var products = allProducts.Where(it => it.Brand != null).Select(r => r.Brand).Distinct().ToList();
+            var products = allProducts.Where(it => it.Brand != null).Select(r => new { Name= r.Brand, Products=new List<string>()}).Distinct().ToList();
             return products;
         }
     }

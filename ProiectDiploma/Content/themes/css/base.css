@@ -109,7 +109,7 @@
 .main-section {
     width: 300px;
     position: fixed;
-    right: 50px;
+    right: 5px;
     bottom: -340px;
 }
 
@@ -123,19 +123,19 @@
 }
 
 .border-chat {
-    border: 1px solid #FD8468;
+    border: 1px solid #4CAF50;
     margin: 0px;
 }
 
 .first-section {
-    background-color: #FD8468;
+    background-color: #4CAF50;
 }
 
     .first-section p {
         color: #fff;
-        margin: 0px;
-        font-size: 17px;
-        padding: 1px 60px 1px;
+        margin: 2px;
+        font-size: 28px;
+        padding: 17px 130px 1px;
     }
 
         .first-section p:hover {
@@ -150,7 +150,7 @@
     .right-first-section i {
         color: #fff;
         font-size: 15px;
-        padding: 12px 3px;
+        padding: 6px 3px;
     }
 
         .right-first-section i:hover {
@@ -187,7 +187,7 @@
     padding: 0px;
     margin: 0px;
     background-color: #F3F3F3;
-    height: 300px;
+    height: 279px;
 }
 
 .left-chat, .right-chat {
@@ -195,7 +195,7 @@
 }
 
     .left-chat p, .right-chat p {
-        background-color: #FD8468;
+        background-color: #4CAF50;
         padding: 10px;
         color: #fff;
         border-radius: 5px;
@@ -261,3 +261,23 @@
     border: 15px solid transparent;
     border-top-color: #fff;
 }
+.pagination {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }

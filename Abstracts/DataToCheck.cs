@@ -10,6 +10,7 @@ namespace Abstracts
     {
         NormalUser = 0,
         Admin,
-        UserTest2
+        UserTest2,
+        Company
     };
 }

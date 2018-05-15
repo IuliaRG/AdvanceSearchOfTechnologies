@@ -59,10 +59,10 @@ namespace ProiectDiploma.Controllers
             return statistics;
         }
         [Route("GetProductReviewsStatistics")]
-        public ReviewStatistics GetProductReviewsStatistics(string name)
+        public ReviewStatistics GetProductReviewsStatistics(int id)
         {
             service = DIContainerST.GetInstance().Resolve<IReviewService>();
-            var statistics = service.GetProductReviewsStatistics(name);
+            var statistics = service.GetProductReviewsStatistics(id);
 
             return statistics;
         }

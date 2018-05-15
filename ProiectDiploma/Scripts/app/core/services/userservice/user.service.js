@@ -38,6 +38,13 @@ var UserService = (function () {
         }).catch(function (err) {
         });
     };
+    UserService.prototype.UpdateUserByAdmin = function (url, id, config, data, caller) {
+        this._iHttpService.post(url + id, data, config)
+            .then(function (response) {
+            console.log(response);
+        }).catch(function (err) {
+        });
+    };
     UserService.prototype.DeleteUser = function (url, id, caller, successCallback) {
         this._iHttpService.delete(url + id, {}).then(function (response) {
             console.log(response);

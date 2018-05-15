@@ -14,7 +14,7 @@ var ProductService = (function () {
     ProductService.prototype.GetProductByBrand = function (url, brand, caller, successCallback) {
         this._iHttpService.get(url + brand, {}).then(function (response) {
             console.log(response);
-            successCallback(response.data, caller);
+            successCallback(response.data, caller, brand);
         }).catch(function (err) {
             console.log(err);
         });
@@ -32,6 +32,13 @@ var ProductService = (function () {
             console.log(response);
         }).catch(function (err) {
             console.log(err);
+        });
+    };
+    ProductService.prototype.GetPageProducts = function (url, data, caller, successCallback) {
+        this._iHttpService.post(url, data).then(function (response) {
+            console.log(response);
+            successCallback(response.data, caller);
+        }).catch(function (err) {
         });
     };
     ProductService.prototype.GetProductPage = function (url, data, caller, successCallback) {

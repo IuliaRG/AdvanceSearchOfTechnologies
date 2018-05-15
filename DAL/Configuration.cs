@@ -32,6 +32,10 @@ namespace DAL
             {
                 context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.UserTest2.ToString() });
             }
+            if (!(context.Roles.Any(it => it.Name == UserRole.Company.ToString())))
+            {
+                context.Roles.AddOrUpdate(new ApplicationRole() { Name = UserRole.Company.ToString() });
+            }
             context.SaveChanges();
             base.Seed(context);
         }

@@ -1,15 +1,22 @@
-﻿<nav  >
-    <ul class="nav" >
-      
-        <li type="button" ng-repeat="brand in $ctrl.ProductsDataVM.Brand" ng-click="$ctrl.GetProducts(brand)">
-            {{brand}}
-            <ul>
-                <li ng-repeat="product in $ctrl.ProductsDataVM.Products">
-                    <a href="#">{{product}}</a>
+﻿
+<div id="sidebar" class="span3">
+    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+        <li class="subMenu open" ng-repeat="brand in $ctrl.ProductsDataVM.Brand" ng-click="$ctrl.GetProducts(brand.Name)">
+            <a>   {{brand.Name}}</a>
+            <ul style="display:none">
+                <li type="button" ng-repeat="product in brand.Products" ng-click="$ctrl.CreatProductChart(product.Id)"><i class="icon-chevron-right"></i>{{product.Name}}
+                    <button type="button" ng-click="">Export data</button> 
                 </li>
-               
+           
             </ul>
-            
         </li>
-</ul>
-</nav>
+    </ul>
+    <br />
+</div>
+<div class="span9">
+   <h4>Statistics </h4>
+    
+   <div google-chart chart="myChartObject" style="height:600px; width:100%;"></div>
+    <div id="toolbar_div"></div>
+ </div>
+     

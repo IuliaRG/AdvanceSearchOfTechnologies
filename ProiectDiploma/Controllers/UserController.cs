@@ -44,7 +44,13 @@ private IUserService service;
             var user = service.GetUserById(id);
             return user;
         }
-
+        [Route("GetUserWithRoleById")]
+        public ApplicationUserDto GetUserWithRoleById(string id)
+        {
+            service = DIContainerST.GetInstance().Resolve<IUserService>();
+            var user = service.GetUserRolesById(id);
+            return user;
+        }
         [Authorize]
         [Route("CurrentUser")]
         public ApplicationUserDto GetUserByUserName()

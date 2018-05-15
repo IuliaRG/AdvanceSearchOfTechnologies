@@ -4,5 +4,5 @@ angular.
     module('statistics').
     component('statistics', {
         templateUrl: 'scripts/app/statistics/statistics.template.html',
-        controller: ['ILocalStorageService','IUserRoleService','IProductService','$window','$scope','$http', StatisticsController]
+        controller: ['ILocalStorageService', 'IUserRoleService', 'IProductService', '$window', '$scope', '$http',StatisticsController]
     });

@@ -20,6 +20,13 @@ namespace ProiectDiploma.Controllers
             var products = service.GetAllProducts();
             return products;
         }
+        [Route("ProductPage")]
+        public ProductPaginingParametersDto ProductPage(ProductPaginingParametersDto pageDto)
+        {
+            service = DIContainerST.GetInstance().Resolve<IProductService>();
+            var user = service.GetProductsOnPage(pageDto);
+            return user;
+        }
         [Route("AddOrUpdateProduct")]
         public IHttpActionResult AddOrUpdateProduct(ProductDetailsDto product)
         {
@@ -38,7 +45,7 @@ namespace ProiectDiploma.Controllers
             return product;
         }
         [Route("GetAllBrands")]
-        public List<string> GetAllBrands()
+        public object GetAllBrands()
         {
             service = DIContainerST.GetInstance().Resolve<IProductService>();
             var brands = service.GetAllBrands();
@@ -46,7 +53,7 @@ namespace ProiectDiploma.Controllers
             return brands;
         }
         [Route("GetBrandProducts")]
-        public List<string> GetBrandProducts(string brandName)
+        public List<ProductDto> GetBrandProducts(string brandName)
         {
             service = DIContainerST.GetInstance().Resolve<IProductService>();
             var products = service.GetBrandProducts(brandName);

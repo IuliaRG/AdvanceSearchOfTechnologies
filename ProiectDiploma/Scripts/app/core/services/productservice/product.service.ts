@@ -6,6 +6,7 @@
     GetProductPage(url: string, data: any, caller: any, successCallback: Function): any;
     DeleteProduct(url: string, id: any, caller: any, successCallback: Function);
     AddOrUpdateProduct(url: string, data: any, caller: any);
+    GetPageProducts(url: string, data: any, caller: any, successCallback: Function): any;
     AddOrUpdateReview(url: string,config:any, data: any, caller: any);
 
 }
@@ -31,7 +32,7 @@ class ProductService implements IProductService {
         this._iHttpService.get(
             url + brand, {}).then((response) => {
                 console.log(response);
-                successCallback(response.data, caller);
+                successCallback(response.data, caller, brand);
             }).catch((err) => {
                 console.log(err);
             });
@@ -54,6 +55,14 @@ class ProductService implements IProductService {
                
             }).catch((err) => {
                 console.log(err);
+            });
+    }
+    public GetPageProducts(url: string, data: any, caller: any, successCallback: Function): any {
+        this._iHttpService.post(
+            url, data).then((response) => {
+                console.log(response);
+                successCallback(response.data, caller);
+            }).catch((err) => {
             });
     }
     public GetProductPage(url: string, data: any, caller: any, successCallback: Function): any {

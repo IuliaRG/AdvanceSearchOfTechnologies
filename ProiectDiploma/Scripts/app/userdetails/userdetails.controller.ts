@@ -4,14 +4,17 @@
     protected iUserRoleService: IUserRoleService;
     private iWindowService: ng.IWindowService;
     private route: any;
-    constructor(iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService, iUserRoleService: IUserRoleService) {
+    protected currentUser: CurrentUserModel;
+    constructor(iLocalStorageService: ILocalStorageService,iUserService: IUserService, $window: ng.IWindowService, $routeParams: ng.RouteData, $http: ng.IHttpService, iUserRoleService: IUserRoleService) {
         this.iUserService = iUserService;
         this.route = $routeParams;
         this.iWindowService = $window;
         this.iUserRoleService = iUserRoleService;
+        this.iUserRoleService.CheckUser("Admin", "usermanager");
         this.iUserService = iUserService;
+        this.currentUser = iLocalStorageService.GetCurrentUser();
         this.UserDetailsVM = new UserModel();
-        this.iUserService.GetUser("api/User?id=" + this.route.id, this, this.GetUsersCallback);
+        this.iUserService.GetUser("api/User/GetUserWithRoleById?id=" + this.route.id, this, this.GetUsersCallback);
     }
     protected GetUsersCallback(user: UserDto, self: UserDetailsController): void {
         self.UserDetailsVM.FromUserDto(user);
@@ -24,10 +27,17 @@
            "UserDetailsDto": {
                "FirstName": self.UserDetailsVM.FirstName,
                "LastName": self.UserDetailsVM.LastName,
-               "Address": self.UserDetailsVM.Address
+               "Address": self.UserDetailsVM.Address,
            }
         };
-        self.iUserService.UserUpdate('api/User/AddOrUpdate', userDto, this);
+        var config: angular.IRequestShortcutConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": 'Bearer ' + this.currentUser.token,
+            }
+        }
+       
+        self.iUserService.UpdateUserByAdmin('api/UserManager/EditUser?RoleName=', self.UserDetailsVM.Role,config, userDto, this);
             self.iWindowService.location.href = '/index.html#!/usersmanager';
     }
 }
@@ -38,6 +48,8 @@ class UserModel {
     public FirstName: string;
     public LastName: string;
     public Address: string;
+    public Role: string;
+    public Roles:Array<string>;
     public users: UserDto;
     constructor() {
     }
@@ -47,7 +59,8 @@ class UserModel {
         this.Email = dto.Email;
         this.UserName = dto.UserName;
         this.FirstName = dto.UserDetailsDto.FirstName;
-        this.LastName = dto.UserDetailsDto.LastName;
+        this.Roles = dto.Roles;
+
         return this;
     }
 }

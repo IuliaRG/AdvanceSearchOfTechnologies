@@ -55,6 +55,7 @@ namespace ProiectDiploma.Controllers
 
             return Ok();
         }
+      
         [Route("AddNewRole")]
         public async Task<IHttpActionResult> AddNewRole(ApplicationRoleDto model)
         {
@@ -92,12 +93,19 @@ namespace ProiectDiploma.Controllers
             return Ok();
         }
         [Route("EditUser")]
-        public async Task<IHttpActionResult> EditUser(ApplicationUserDto user)
+        public async Task<IHttpActionResult> EditUser(ApplicationUserDto user, string RoleName)
         {
             var id = RequestContext.Principal.Identity.GetUserId();
             await AdminAuthorization(id);
             service = DIContainerST.GetInstance().Resolve<IUserService>();
             service.AddOrUpdateUser(user);
+            var userRole = await UserManager.FindByNameAsync(user.Email);
+            var roles = await UserManager.GetRolesAsync(id);
+            var result = await UserManager.AddToRoleAsync(userRole.Id, RoleName);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
 
             return Ok();
         }

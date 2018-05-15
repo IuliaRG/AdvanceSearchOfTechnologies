@@ -16,7 +16,6 @@
                 "Authorization": 'Bearer ' + this.currentUser.token,
             }
         }
-        debugger
         this.iUserService.GetCurrentUser("api/User/CurrentUser", config, this, this.GetUsersCallback);
     }
     

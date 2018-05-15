@@ -15,6 +15,6 @@ namespace Abstracts
         IEnumerable<UserReviewDto> GetAllReviews();
         List<string> GetReviewsByUserId(object id);
         ReviewStatistics GetBrandReviewsStatistics(string code);
-        ReviewStatistics GetProductReviewsStatistics(string code);
+        ReviewStatistics GetProductReviewsStatistics(int id);
     }
 }

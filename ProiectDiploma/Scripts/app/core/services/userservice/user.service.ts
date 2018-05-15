@@ -1,6 +1,7 @@
 ﻿interface IUserService {
     GetUser(url: string, caller: any, successCallback: Function): any;
     GetUserRole(url: string, data: any, caller: any, successCallback: Function): any;
+    UpdateUserByAdmin(url: string, name: any,config: any,data:any, caller: any): any;
     DeleteUser(url: string, id: any, caller: any, successCallback: Function);
     UserUpdate(url: string, data: any, caller: any);
     GetPageItems(url: string, data: any, caller: any, successCallback: Function): any;
@@ -51,6 +52,13 @@ class UserService implements IUserService {
     public UserUpdate(url: string, data: any, caller: any): any {
         this._iHttpService.post(
             url, data).then((response) => {
+            }).catch((err) => {
+            });
+    }
+    public UpdateUserByAdmin(url: string, id: any, config: any, data: any, caller: any): any {
+        this._iHttpService.post(url + id, data, config)
+            .then((response) => {
+                console.log(response);
             }).catch((err) => {
             });
     }

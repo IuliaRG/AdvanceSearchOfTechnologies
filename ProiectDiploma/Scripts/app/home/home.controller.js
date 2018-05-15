@@ -7,21 +7,38 @@ var HomeController = (function () {
         this.iLocalStorageService = iLocalStorageService;
         this.currentUser = iLocalStorageService.GetCurrentUser();
         console.log(this.currentUser.email);
-        this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
+        // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
+        this.ProductPagination();
     }
     HomeController.prototype.GetProductsCallback = function (data, self) {
         self.ProductVM.FromProductsDto(data);
-        console.log(self.ProductVM.products);
+        console.log("current page " + self.ProductVM.CurrentPage);
+    };
+    HomeController.prototype.ProductPagination = function (itemsNumber, pageNumber) {
+        var self = this;
+        self.ProductVM.ItemsOnPage = itemsNumber;
+        self.ProductVM.PageNumber = pageNumber;
+        var pageDto = {
+            "PageNumber": self.ProductVM.PageNumber,
+            "ItemsOnPage": self.ProductVM.ItemsOnPage,
+            "SortDirection": self.ProductVM.SortDirection,
+            "SortField": self.ProductVM.SortField,
+            "CurrentPage": self.ProductVM.CurrentPage,
+        };
+        self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
     };
     HomeController.prototype.initialize = function () {
         var _this = this;
         var self = this;
         setTimeout(function () {
+            self.loadScript('jquery.js');
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
+            self.loadBoostrapScript('bootstrap.min.css');
+            self.loadCssScript('base.css');
             console.log(0);
             $(function () {
                 self.chat = $.connection.chatHub;
@@ -32,7 +49,7 @@ var HomeController = (function () {
                     self.chat.server.register(_this.id);
                 });
             });
-        }, 1200);
+        }, 1000);
     };
     HomeController.prototype.SendMessage = function () {
         this.myHub = $;
@@ -67,6 +84,20 @@ var HomeController = (function () {
         script.src = '../../../Content/themes/js/' + path;
         head.appendChild(script);
     };
+    HomeController.prototype.loadBoostrapScript = function (path) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/bootshop/' + path;
+        head.appendChild(script);
+    };
+    HomeController.prototype.loadCssScript = function (path) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '../../../Content/themes/css/' + path;
+        head.appendChild(script);
+    };
     return HomeController;
 }());
 var ProductPageModel = (function () {
@@ -74,7 +105,14 @@ var ProductPageModel = (function () {
         this.products = new Array();
     }
     ProductPageModel.prototype.FromProductsDto = function (data) {
-        this.products = data.map(function (dto) { return ((new ProductDetailsModel()).FromProductDto(dto)); });
+        this.ItemsOnPage = data.ItemsOnPage;
+        this.SearchText = data.SearchText;
+        this.MaxPageItems = data.MaxPageItems;
+        this.NextPage = data.NextPage;
+        this.CurrentPage = data.CurrentPage;
+        this.LastPage = data.LastPage;
+        this.SortField = data.SortField;
+        this.products = data.Data.map(function (dto) { return ((new ProductDetailsModel()).FromProductDto(dto)); });
         return this;
     };
     return ProductPageModel;

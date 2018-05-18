@@ -82,7 +82,11 @@ var StatisticsController = (function () {
         self.scope.myChartObject.options = {
             'title': 'Statistics'
         };
-        //   self.scope.myChartObjec.drawToolbar;
+        this.scope.
+            self.scope.myChartObject.drawToolbar("toolbar_div");
+    };
+    StatisticsController.prototype.ExtractData = function (id) {
+        this.scope.myChart.drawToolbar(id);
     };
     StatisticsController.prototype.GetBrandsProductCallback = function (data, self, brand) {
         var index = self.ProductsDataVM.Brand.map(function (brand) { return brand.Name; }).indexOf(brand);

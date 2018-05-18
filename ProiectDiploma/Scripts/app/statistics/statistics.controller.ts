@@ -100,9 +100,17 @@
         self.scope.myChartObject.options = {
             'title': 'Statistics'
         };
-   //   self.scope.myChartObjec.drawToolbar;
+        this.scope.
+            self.scope.myChartObject.drawToolbar("toolbar_div");
        
     }
+    protected ExtractData(id: any)
+    {
+        this.scope.myChart.drawToolbar(id);
+
+    }
+
+
     protected GetBrandsProductCallback(data: any, self: StatisticsController, brand: string): void {
         var index = self.ProductsDataVM.Brand.map(brand => brand.Name).indexOf(brand);
         self.ProductsDataVM.Brand[index].Products = data; 
@@ -133,6 +141,7 @@ class ProductsDataModel {
 class ProductModel {
     public Id: number;
     public Name: string;
+    public ToolbarId: string;
     public FromProductDto(dto: any): ProductModel {
         this.Id = dto.Id;
         this.Name = dto.Name;

@@ -1,12 +1,12 @@
 var HomeController = (function () {
-    function HomeController($scope, iLocalStorageService, iProductService, $http) {
+    function HomeController($scope, iLocalStorageService, iProductService, $http, $window) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
-        console.log(this.currentUser.email);
         // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
@@ -16,16 +16,24 @@ var HomeController = (function () {
         self.ProductVM.FromProductsDto(data);
         console.log("current page " + self.ProductVM.CurrentPage);
     };
-    HomeController.prototype.ProductPagination = function (itemsNumber, pageNumber) {
+    HomeController.prototype.LogOut = function () {
+        this.iLocalStorageService.LogOut(' api/Account/Logout');
+        //this.iWindowService.location.href = '/index.html#!/home';
+    };
+    HomeController.prototype.ProductPagination = function (itemsNumber, pageNumber, category, brand) {
         var self = this;
         self.ProductVM.ItemsOnPage = itemsNumber;
         self.ProductVM.PageNumber = pageNumber;
+        self.ProductVM.Brand = brand;
+        self.ProductVM.Category = category;
         var pageDto = {
             "PageNumber": self.ProductVM.PageNumber,
             "ItemsOnPage": self.ProductVM.ItemsOnPage,
             "SortDirection": self.ProductVM.SortDirection,
             "SortField": self.ProductVM.SortField,
             "CurrentPage": self.ProductVM.CurrentPage,
+            "Brand": self.ProductVM.Brand,
+            "Category": self.ProductVM.Category,
         };
         self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
     };
@@ -37,7 +45,7 @@ var HomeController = (function () {
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-            self.loadBoostrapScript('bootstrap.min.css');
+            //self.loadBoostrapScript('bootstrap.min.css');
             self.loadCssScript('base.css');
             console.log(0);
             $(function () {
@@ -52,9 +60,6 @@ var HomeController = (function () {
         }, 1000);
     };
     HomeController.prototype.SendMessage = function () {
-        this.myHub = $;
-        this.chat = this.myHub.connection.chatHub;
-        debugger;
         this.Discussion.push(this.Message);
         this.chat.server.sendToAdmin(this.Message, this.id);
         this.Message = " ";
@@ -103,6 +108,7 @@ var HomeController = (function () {
 var ProductPageModel = (function () {
     function ProductPageModel() {
         this.products = new Array();
+        this.meniu = new Array();
     }
     ProductPageModel.prototype.FromProductsDto = function (data) {
         this.ItemsOnPage = data.ItemsOnPage;
@@ -112,9 +118,22 @@ var ProductPageModel = (function () {
         this.CurrentPage = data.CurrentPage;
         this.LastPage = data.LastPage;
         this.SortField = data.SortField;
+        this.Image = data.Image;
+        this.meniu = data.Meniu.map(function (dto) { return ((new MeniuModel()).FromMeniuDto(dto)); });
         this.products = data.Data.map(function (dto) { return ((new ProductDetailsModel()).FromProductDto(dto)); });
         return this;
     };
     return ProductPageModel;
+}());
+var MeniuModel = (function () {
+    function MeniuModel() {
+        this.Brands = new Array();
+    }
+    MeniuModel.prototype.FromMeniuDto = function (dto) {
+        this.Category = dto.Category;
+        this.Brands = dto.Brands;
+        return this;
+    };
+    return MeniuModel;
 }());
 //# sourceMappingURL=home.controller.js.map

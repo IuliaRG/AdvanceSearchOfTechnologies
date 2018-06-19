@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.Dto
 {
-    class MeniuModelDto
+  public  class MeniuModelDto
     {
-        public int Brand { get; set; }
-        public List<string> Products { get; set; }
+        public string Category { get; set; }
+        public IEnumerable<string> Brands { get; set; }
       
     }
 }

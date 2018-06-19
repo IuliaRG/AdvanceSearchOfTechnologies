@@ -15,7 +15,7 @@
         this.ProducReviewVM = new ProducReviewModel();
         this.iProductService = iProductService;
         this.currentUser = iLocalStorageService.GetCurrentUser();
-        console.log(this.currentUser.email);
+      
         this.route = $routeParams;
         this.iProductService.GetProduct("api/Product/GetProductByID?id=" + this.route.id, this, this.GetProductCallback);
 
@@ -97,6 +97,7 @@ class ProductDetailsModel {
     public ReleaseDate: Date;
     public Model: string;
     public Dimensions: string;
+    public Image: string;
     public Reviews: Array<any>;
     constructor() {
         this.Reviews = new Array<ProducReviewModel>();
@@ -107,6 +108,7 @@ class ProductDetailsModel {
         this.Description = dto.Description;
         this.Price = dto.Price;
         this.Code = dto.Code;
+        this.Image = dto.Image;
         this.ShortDescription = dto.ShortDescription;
         this.Brand = dto.Brand;
         this.ReleaseDate = dto.ReleaseDate;

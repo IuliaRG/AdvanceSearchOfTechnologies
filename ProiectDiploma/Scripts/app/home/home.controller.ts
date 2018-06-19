@@ -3,6 +3,7 @@
     protected ProductVM: ProductPageModel;
     protected iProductService: IProductService;
     protected iLocalStorageService: ILocalStorageService;
+    protected iWindowService: ng.IWindowService;
     protected currentUser: CurrentUserModel;
     public Discussion: Array<string>;
     protected Message: string ;
@@ -10,14 +11,15 @@
     protected chat: any;
     protected scope: any;
     protected id: any;
-    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService) {
+    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
-        console.log(this.currentUser.email);
+      
        // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
@@ -28,18 +30,29 @@
         console.log("current page " + self.ProductVM.CurrentPage);
    
     }
-    protected ProductPagination(itemsNumber?: number, pageNumber?: number) {
+    protected LogOut(): void {
+        this.iLocalStorageService.LogOut(' api/Account/Logout');
+      //this.iWindowService.location.href = '/index.html#!/home';
+
+    }
+    protected ProductPagination(itemsNumber?: number, pageNumber?: number,category? :string ,brand? : string) {
         var self = this;
         self.ProductVM.ItemsOnPage = itemsNumber;
         self.ProductVM.PageNumber = pageNumber;
+        self.ProductVM.Brand = brand;
+        self.ProductVM.Category = category;
         var pageDto = {
             "PageNumber": self.ProductVM.PageNumber,
            "ItemsOnPage": self.ProductVM.ItemsOnPage,
            "SortDirection": self.ProductVM.SortDirection,
            "SortField": self.ProductVM.SortField,
-            "CurrentPage": self.ProductVM.CurrentPage,
+           
+           "CurrentPage": self.ProductVM.CurrentPage,
+         
+           "Brand": self.ProductVM.Brand,
+           "Category": self.ProductVM.Category,
         };
-       
+      
         self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
     }
     public initialize(): void {
@@ -49,7 +62,8 @@
             self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-            self.loadBoostrapScript('bootstrap.min.css');
+            //self.loadBoostrapScript('bootstrap.min.css');
+
          
            self.loadCssScript('base.css');
             console.log(0);
@@ -68,9 +82,7 @@
     }
     public SendMessage()
     {
-        this.myHub = $;
-        this.chat = this.myHub.connection.chatHub;
-        debugger
+       
         this.Discussion.push(this.Message);
         this.chat.server.sendToAdmin(this.Message, this.id);
         this.Message = " ";
@@ -128,15 +140,20 @@ class ProductPageModel {
     public PageNumber: number;
     public ItemsOnPage: number;
     public SearchText: string;
+    public Brand: string;
     public MaxPageItems: number;
     public NextPage: string;
     public PreviousPage: string;
     public SortDirection: string;
     public SortField: string;
     public LastPage: string;
+    public Category: string;
+    public Image: string;
     public products: Array<any>;
+    public meniu: Array<any>;
     constructor() {
         this.products = new Array<ProductDetailsModel>();
+        this.meniu = new Array<MeniuModel>();
     }
     public FromProductsDto(data: any): any {
         this.ItemsOnPage = data.ItemsOnPage;
@@ -146,10 +163,24 @@ class ProductPageModel {
         this.CurrentPage = data.CurrentPage;
         this.LastPage = data.LastPage;
         this.SortField = data.SortField;
+        this.Image = data.Image;
+        this.meniu = data.Meniu.map(dto => ((new MeniuModel()).FromMeniuDto(dto)));
         this.products = data.Data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
         return this;
     }
 }
-
+class MeniuModel {
+    public Category: Array<any>;
+    public Brands: Array<any>;
+    constructor() {
+        this.Brands = new Array<string>();
+    }
+    public FromMeniuDto(dto: any): MeniuModel {
+        this.Category = dto.Category;
+        this.Brands = dto.Brands;
+       
+        return this;
+    }
+}
 
 

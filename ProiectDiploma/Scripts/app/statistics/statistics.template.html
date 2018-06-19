@@ -5,7 +5,7 @@
             <a>   {{brand.Name}}</a>
             <ul style="display:none">
                 <li type="button" ng-repeat="product in brand.Products" ng-click="$ctrl.CreatProductChart(product.Id)"><i class="icon-chevron-right"></i>{{product.Name}}
-                    <button type="button" ng-click="">Export data</button> 
+                    <button type="button"  ng-click="$ctrl.ExtractData(product.Name)">Export data</button> 
                 </li>
            
             </ul>
@@ -14,9 +14,9 @@
     <br />
 </div>
 <div class="span9">
-   <h4>Statistics </h4>
+   <h4> </h4>
     
    <div google-chart chart="myChartObject" style="height:600px; width:100%;"></div>
-    <div  google-chart  chart="myChartObject" id="toolbar_div"></div>
+   
  </div>
      

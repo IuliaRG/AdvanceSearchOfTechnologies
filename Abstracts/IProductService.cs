@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using BusinessObjects.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Abstracts
         ProductDetailsDto GetProductById(int id);
         object GetAllBrands();
         List<ProductDto> GetBrandProducts(string brandName);
+        IEnumerable<MeniuModelDto> GetBrandsByCategory();
         ProductPaginingParametersDto GetProductsOnPage(ProductPaginingParametersDto paginationParameters);
     }
 }

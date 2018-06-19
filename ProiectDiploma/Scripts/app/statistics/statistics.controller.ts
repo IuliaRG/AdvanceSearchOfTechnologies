@@ -29,7 +29,7 @@
            // self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-           // self.loadBoostrapScript('bootstrap.min.css');
+            self.loadBoostrapScript('bootstrap.min.css');
         
            //self.loadCssScript('ng-google-chart.js');
         }, 1000);
@@ -68,7 +68,7 @@
     }
     protected GetReviewStatisticsCallback(data: any, self: StatisticsController): void {
         self.StatisticsVM.FromReviewStatisticsDto(data);
-      
+        
         self.scope.myChartObject = {};
         self.scope.myChartObject.type = "PieChart";
         self.scope.myChartObject.data = {
@@ -100,18 +100,35 @@
         self.scope.myChartObject.options = {
             'title': 'Statistics'
         };
-        this.scope.
-            self.scope.myChartObject.drawToolbar("toolbar_div");
-       
+      
+ 
     }
-    protected ExtractData(id: any)
+    protected ExtractData(name: any)
     {
-        this.scope.myChart.drawToolbar(id);
+        
+        const rows = [["Bad", "Medium", "Excellent"], [this.StatisticsVM.Bad, this.StatisticsVM.Medium, this.StatisticsVM.Excellent]];;
+        let csvContent = "data:text/csv;charset=utf-8,";
+        rows.forEach(function (rowArray) {
+            var row = rowArray.join(",");
+            csvContent += row + "\r\n";
+        });
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+       
+        link.setAttribute("id", "downloadLink");
+       
+        link.setAttribute("download", name+".csv");
+        document.body.appendChild(link); 
+
+        link.click();
+       document.getElementById("downloadLink").remove();
 
     }
 
 
     protected GetBrandsProductCallback(data: any, self: StatisticsController, brand: string): void {
+        
         var index = self.ProductsDataVM.Brand.map(brand => brand.Name).indexOf(brand);
         self.ProductsDataVM.Brand[index].Products = data; 
         self.ProductsDataVM.Brand[index].Products.map(dto => ((new ProductModel()).FromProductDto(dto)));

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BusinessObjects;
 using BusinessObjects.Entity;
 using BusinessObjects.Mapper;
+using BusinessObjects.Dto;
 
 namespace BuisniessLogic
 {
@@ -30,7 +31,6 @@ namespace BuisniessLogic
             else
             {
                 product.Code = Guid.NewGuid().ToString(); ;
-              //  entityProduct = productDetailsRepository.GetAll().FirstOrDefault(it => it.TokenGuid == product.TokenGuid);
                 entityProduct.FromProductDetailsDto(product);
                 productDetailsRepository.Insert(entityProduct);
             }
@@ -62,8 +62,15 @@ namespace BuisniessLogic
         public ProductPaginingParametersDto GetProductsOnPage(ProductPaginingParametersDto paginationParameters)
         {
             var allProducts = productDetailsRepository.GetAll().AsQueryable();
-            var products = allProducts;
-           
+            var products = allProducts.Where(it => it.Code != "");
+            if (!string.IsNullOrEmpty(paginationParameters.Category))
+            {
+                products = allProducts.Where(it => it.Category.Equals(paginationParameters.Category ) );
+            }
+            if (!string.IsNullOrEmpty(paginationParameters.Brand))
+            {
+                products = products.Where(it => it.Brand.Equals(paginationParameters.Brand));
+            }
             if (!string.IsNullOrEmpty(paginationParameters.SortField))
             {
                 products = allProducts.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
@@ -78,6 +85,7 @@ namespace BuisniessLogic
             //        users = users.OrderBy(paginationParameters.SortField, paginationParameters.SortDirection);
             //    }
             //}
+        
             int totalNrProducts = products.Count();
             int currentPage = paginationParameters.PageNumber;
             int lastPage = (int)Math.Ceiling(totalNrProducts / (double)paginationParameters.ItemsOnPage);
@@ -88,14 +96,35 @@ namespace BuisniessLogic
             pageDto.LastPage = lastPage;
             pageDto.Data = productToSend;
             pageDto.SearchText = paginationParameters.SearchText;
-
+            pageDto.Meniu =GetBrandsByCategory() ;
             return pageDto;
+        }
+        public IEnumerable<MeniuModelDto> GetBrandsByCategory()
+        {
+            var allProducts = productDetailsRepository.GetAll();
+
+            var results = from p in allProducts
+                          where p.Brand != null
+                          group p.Brand
+                          by p.Category into g
+                          select new MeniuModelDto()
+                          { Category = g.Key, Brands = g.Distinct()
+        };
+            return results;
         }
         public object GetAllBrands()
         {
             var allProducts = productDetailsRepository.GetAll();
-            var products = allProducts.Where(it => it.Brand != null).Select(r => new { Name= r.Brand, Products=new List<string>()}).Distinct().ToList();
+
+            var products = allProducts.Where(it => it.Brand != null).Select(r => new { Name= r.Brand}).Distinct().ToList();
             return products;
         }
+
+        public List<ProductDto> GetBrandsByCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }

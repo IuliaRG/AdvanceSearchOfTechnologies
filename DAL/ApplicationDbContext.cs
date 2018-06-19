@@ -13,6 +13,9 @@ namespace DAL
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, DAL.Configuration>("ApplicationDbContext"));
 
         }
+        public DbSet<UserDetails> User { get; set; }
+        public DbSet<ProductDetails> Product { get; set; }
+        public DbSet<UserReview> Review { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
           //  modelBuilder.Entity<ApplicationUser>()
@@ -32,9 +35,7 @@ namespace DAL
 
 
         }
-        public DbSet<UserDetails> User { get; set; }
-        public DbSet<ProductDetails> Product { get; set; }
-        public DbSet<UserReview> Review { get; set; }
+     
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

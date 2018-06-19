@@ -15,13 +15,13 @@ namespace BusinessObjects.Mapper
             result.Name = product.Name;
             result.Description = product.Description;
             result.ShortDescription = product.ShortDescription;
-            result.ReleaseDate = product.ReleaseDate;
+            result.ReleaseDate = product.ReleaseDate.ToString("MM/dd/yyyy");
             result.Model = product.Model;
             result.Dimensions = product.Dimensions;
             result.Price = product.Price;
             result.Code = product.Code;
             result.Brand = product.Brand;
-            result.Image = product.Image;
+            result.Image = "Content/themes/images/products/large/" + product.Image;
             result.Reviews = product.UserReview.ToReviewDtos();
             return result;
         }
@@ -34,10 +34,13 @@ namespace BusinessObjects.Mapper
                 Description = it.Description,
                 Price = it.Price,
                 ShortDescription = it.ShortDescription,
-                ReleaseDate = it.ReleaseDate,
+                ReleaseDate = it.ReleaseDate.ToString("MM/dd/yyyy"),
                 Model = it.Model,
+                Brand = it.Brand,
+                Code = it.Code,
                 Dimensions = it.Dimensions,
-                Image = it.Image,
+                Image = "Content/themes/images/products/large/" + it.Image,
+                
                 Reviews = it.UserReview.ToReviewDtos(),
             });
 
@@ -62,12 +65,12 @@ namespace BusinessObjects.Mapper
             entityProductDetails.Code = productDetailsDto.Code;
             entityProductDetails.Description = productDetailsDto.Description;
             entityProductDetails.ShortDescription = productDetailsDto.ShortDescription;
-            entityProductDetails.ReleaseDate = productDetailsDto.ReleaseDate;
+            entityProductDetails.ReleaseDate = DateTime.Parse(productDetailsDto.ReleaseDate);
             entityProductDetails.Model = productDetailsDto.Model;
             entityProductDetails.Dimensions = productDetailsDto.Dimensions;
             entityProductDetails.Price = productDetailsDto.Price;
             entityProductDetails.Brand = productDetailsDto.Brand;
-            entityProductDetails.Image = productDetailsDto.Image;
+            entityProductDetails.Image = "Content/themes/images/products/large/" + productDetailsDto.Image;
             
 
             return entityProductDetails;

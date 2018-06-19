@@ -17,9 +17,5 @@ namespace Abstracts
         void ValidateEmail(string userName, string token);
         ItemsPaginingParametersDto GetUsersOnPage(ItemsPaginingParametersDto parameters);
         ApplicationUserDto GetUserRolesById(object id);
-
-
-
-
     }
 }

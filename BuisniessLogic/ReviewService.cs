@@ -116,6 +116,7 @@ namespace BuisniessLogic
             var statistics = new ReviewStatistics() { Excellent = excellentReviewes, Medium = mediumReviews, Bad = badReviews };
             return statistics;
         }
+
     }
 }
 

@@ -30,10 +30,7 @@ namespace DAL
         {
             return dbSet.Find(Id);
         }
-        public T GetByUserName(string UserName)
-        {
-            return dbSet.Find(UserName);
-        }
+    
         public void Insert(T obj)
         {
             dbSet.Add(obj);

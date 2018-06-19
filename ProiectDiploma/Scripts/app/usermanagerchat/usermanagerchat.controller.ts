@@ -48,9 +48,9 @@
 
     }
     public SendAdminMessage(chatModel: UserChatModel) {
-        debugger
-        this.myHub = $;
-        this.chat = this.myHub.connection.chatHub;
+        //debugger
+        //this.myHub = $;
+        //this.chat = this.myHub.connection.chatHub;
         this.AdminDiscussion.push(chatModel.TextMessage);
         this.chat.server.sendToUser("Admin", chatModel.Id, chatModel.TextMessage);
         chatModel.TextMessage ="";

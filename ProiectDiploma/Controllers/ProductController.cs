@@ -61,5 +61,14 @@ namespace ProiectDiploma.Controllers
 
             return products;
         }
+        [Route("GetBrandsByCategory")]
+        public object GetBrandsByCategory()
+        {
+            service = DIContainerST.GetInstance().Resolve<IProductService>();
+            var products = service.GetBrandsByCategory();
+
+
+            return products;
+        }
     }
 }

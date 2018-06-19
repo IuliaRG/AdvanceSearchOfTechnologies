@@ -35,33 +35,10 @@
                         <li class="" ng-hide="$ctrl.currentUser==null"><a href="/index.html#!/currentuserdetails">User Details</a></li>
                         <li class=""><a href="normal.html">Delivery</a></li>
                         <li class=""><a href="contact.html">Contact</a></li>
+                        <li class="" ng-show="$ctrl.currentUser!=null" ><a href="#" ng-click="$ctrl.LogOut()">Log Out</a></li>
                         <li class="">
                             <a href="/index.html#!/register" ng-show="$ctrl.currentUser==null" type="button"  style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
-                            <!--<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3>Login Block</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <form class="form-horizontal loginFrm">
-                                        <div class="control-group">
-                                            <input type="text" id="inputEmail2" class="form-control" placeholder="username" ng-model="$ctrl.LoginVM.Email">
-                                        </div>
-                                        <div class="control-group">
-                                            <input type="password"  id="inputPassword4" class="form-control" placeholder="password" ng-model="$ctrl.LoginVM.Password">
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox"> Remember me
-                                            </label>
-                                        </div>
-                                    </form>
-                                    <button type="button" class="btn btn-success" ng-click="$ctrl.LogIn()">Sign in</button>
-                                    <br /><br />
-                                    <span ng-show="$ctrl.LoginVM.ShowError" class="error-message">{{$ctrl.LoginVM.ErrorMessage}}</span>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                </div>
-                            </div>-->
+                           
                         </li>
                     </ul>
                 </div>
@@ -140,40 +117,21 @@
                 <div id="sidebar" class="span3">
                    
                     <ul id="sideManu" class="nav nav-tabs nav-stacked">
-                        <li class="subMenu open">
-                            <a> ELECTRONICS [230]</a>
+
+
+
+
+                        <li class="subMenu open" ng-repeat="data in $ctrl.ProductVM.meniu">
+                            <a ng-model="$ctrl.ProductVM.Category"> {{data.Category}}</a>
                             <ul style="display:none">
-                                <li><a class="active" href="products.html"><i class="icon-chevron-right"></i>Cameras (100) </a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Computers, Tablets & laptop (30)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Sound & Vision (15)</a></li>
-                            </ul>
+                                    <li  type="button" ng-repeat="brand in data.Brands"  ng-click="$ctrl.ProductPagination(null,null,data.Category,brand)"  >
+                                        <i class="icon-chevron-right"></i>{{brand}}
+                                    </li>
+
+                                </ul>
                         </li>
-                        <li class="subMenu">
-                            <a> CLOTHES [840] </a>
-                            <ul style="display:none">
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Clothing (45)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Shoes (8)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Hand Bags (5)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Men's Clothings  (45)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Men's Shoes (6)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Kids Clothing (5)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Kids Shoes (3)</a></li>
-                            </ul>
-                        </li>
-                        <li class="subMenu">
-                            <a>FOOD AND BEVERAGES [1000]</a>
-                            <ul style="display:none">
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Angoves  (35)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Bouchard Aine & Fils (8)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>French Rabbit (5)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Louis Bernard  (45)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>BIB Wine (Bag in Box) (8)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Other Liquors & Wine (5)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Garden (3)</a></li>
-                                <li><a href="products.html"><i class="icon-chevron-right"></i>Khao Shong (11)</a></li>
-                            </ul>
-                        </li>
+                      
+                       
                     </ul>
                     <br />
                 </div>
@@ -358,15 +316,18 @@
                     </div>
                     <form class="form-horizontal span6">
                         <div class="control-group">
-                            <label class="control-label alignL">Sort By </label>
-                            <select ng-model="$ctrl.ProductVM.SortField" ng-change="$ctrl.ProductPagination()">
-                                <option>Name</option>
-                                <option>Price</option>
-                           
-                            </select>
-                            <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage == 12 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(12)">12</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.ProductPagination($ctrl.ProductVM.MaxPageItems)">All</a>
+                          
+                            <strong>Show</strong>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage == 4 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(4)">4</a>  <a href="" class="btn btn-default btn-sm" ng-class="$ctrl.ProductVM.ItemsOnPage== 24 ? 'btn-primary' :''" ng-click="$ctrl.ProductPagination(24)">24</a>  <a href="" class="btn btn-default btn-sm " ng-click="$ctrl.ProductPagination($ctrl.ProductVM.MaxPageItems)">All</a>
                         </div>
-                
+                        <div class="control-group">
+                            <strong>Sort by</strong>
+                            <select name="sort-by" class="form-control" ng-model="$ctrl.ProductVM.SortField" ng-change="$ctrl.ProductPagination()">
+                                <option>Name</option>
+
+                                <option>Price</option>
+
+                            </select>
+                        </div>
                             <div class="control-group">
                                 <strong>Order</strong>
                                 <select name="sort-by" class="form-control" ng-model="$ctrl.ProductVM.SortDirection" ng-change="$ctrl.ProductPagination()">
@@ -378,22 +339,13 @@
                                 </select>
                             </div>
                      
-                        <div class="control-group">
-                            
-                            <label class="control-label alignL">Products on page </label>
-                            <select>
-                                <option>3</option>
-                                <option>12</option>
-                                <option>20</option>
-
-                            </select>
-                        </div>
+                       
                     </form>
                
                     <ul class="thumbnails">
                         <li class="span3" ng-repeat="product in $ctrl.ProductVM.products">
                             <div class="thumbnail">
-                                <a href="/index.html#!/productdetails?id={{product.Id}}"><img src="Content/themes/images/products/6.jpg" alt="" /></a>
+                                <a href="/index.html#!/productdetails?id={{product.Id}}"><img src="{{product.Image}}" alt="" /></a>
                                 <div class="caption">
                                     <h5>{{product.Name}}</h5>
                                     <p>
@@ -456,7 +408,7 @@
                             </li>
 
                             <li>
-                                <a href="" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.LastPage)">&raquo;</a>
+                                <a href="" ng-click="$ctrl.ProductPagination(null,$ctrl.ProductVM.LastPage)" ng-hide="$ctrl.ProductVM.CurrentPage==$ctrl.ProductVM.LastPage">&raquo;</a>
                             </li>
                         </ul>
                     </div>

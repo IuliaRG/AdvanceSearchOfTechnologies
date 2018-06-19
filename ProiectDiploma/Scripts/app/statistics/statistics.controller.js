@@ -19,7 +19,7 @@ var StatisticsController = (function () {
             // self.loadScript('jquery.lightbox-0.5.js');
             self.loadScript('bootstrap.min.js');
             self.loadScript('bootshop.js');
-            // self.loadBoostrapScript('bootstrap.min.css');
+            self.loadBoostrapScript('bootstrap.min.css');
             //self.loadCssScript('ng-google-chart.js');
         }, 1000);
     };
@@ -82,11 +82,23 @@ var StatisticsController = (function () {
         self.scope.myChartObject.options = {
             'title': 'Statistics'
         };
-        this.scope.
-            self.scope.myChartObject.drawToolbar("toolbar_div");
     };
-    StatisticsController.prototype.ExtractData = function (id) {
-        this.scope.myChart.drawToolbar(id);
+    StatisticsController.prototype.ExtractData = function (name) {
+        var rows = [["Bad", "Medium", "Excellent"], [this.StatisticsVM.Bad, this.StatisticsVM.Medium, this.StatisticsVM.Excellent]];
+        ;
+        var csvContent = "data:text/csv;charset=utf-8,";
+        rows.forEach(function (rowArray) {
+            var row = rowArray.join(",");
+            csvContent += row + "\r\n";
+        });
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("id", "downloadLink");
+        link.setAttribute("download", name + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.getElementById("downloadLink").remove();
     };
     StatisticsController.prototype.GetBrandsProductCallback = function (data, self, brand) {
         var index = self.ProductsDataVM.Brand.map(function (brand) { return brand.Name; }).indexOf(brand);

@@ -813,26 +813,7 @@
                     }
                 }
             }
-            function drawToolbar(id) {
-                var components = [
-                    {
-                        type: 'igoogle', datasource: 'https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA',
-                        gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
-                        userprefs: { '3d': 1 }
-                    },
-                    { type: 'html', datasource: 'https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA' },
-                    { type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA' },
-                    {
-                        type: 'htmlcode', datasource: 'https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA',
-                        gadget: 'https://www.google.com/ig/modules/pie-chart.xml',
-                        userprefs: { '3d': 1 },
-                        style: 'width: 800px; height: 700px; border: 3px solid purple;'
-                    }
-                ];
-
-                var container = document.getElementById(id);
-                google.visualization.drawToolbar(container, components);
-            };
+          
 
             function _apiLoadFail(reason) {
                 // Not sure what to do if this does happen.
@@ -859,12 +840,14 @@
                         containerId: _element[0]
                     });
                     _registerListenersWithGoogle(_chartWrapper, wrapperListeners);
+               
                 }
                 else {
                     _chartWrapper.setChartType(_chartType);
                     _chartWrapper.setDataTable(_data);
                     _chartWrapper.setView(_view);
                     _chartWrapper.setOptions(_options);
+                 
                 }
 
                 if (!_formatManager) {

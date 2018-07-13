@@ -19,8 +19,7 @@
   <div class="navbar-inner">
     <a class="brand" href="index.html"><img src="Content/themes/images/logo.png" alt="Bootsshop"/></a>
 	
-		
-    </form>
+
       <ul id="topMenu" class="nav pull-right">
           <li class=""><a href="/index.html#!/home">Home</a></li>
           <li class="" ng-hide="$ctrl.currentUser==null"><a href="/index.html#!/currentuserdetails">User Details</a></li>
@@ -52,7 +51,7 @@
 				<img ng-src="{{$ctrl.ProductDetailsVM.Image}}" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera"/>
             </a>
 			<div id="differentview" class="moreOptopm carousel slide">
-                <div class="carousel-inner">
+                <!--<div class="carousel-inner">
                   <div class="item active">
                    <a href="Content/themes/images/products/large/f1.jpg"> <img style="width:29%" src="Content/themes/images/products/large/f1.jpg" alt=""/></a>
                    <a href="Content/themes/images/products/large/f2.jpg"> <img style="width:29%" src="Content/themes/images/products/large/f2.jpg" alt=""/></a>
@@ -63,7 +62,7 @@
                    <a href="Content/themes/images/products/large/f1.jpg"> <img style="width:29%" src="Content/themes/images/products/large/f1.jpg" alt=""/></a>
                    <a href="Content/themes/images/products/large/f2.jpg"> <img style="width:29%" src="Content/themes/images/products/large/f2.jpg" alt=""/></a>
                   </div>
-                </div>
+                </div>-->
               <!--  
 			  <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
               <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a> 
@@ -97,7 +96,7 @@
 				
 				<hr class="soft"/>
 				
-				<form class="form-horizontal qtyFrm pull-right">
+				<!--<form class="form-horizontal qtyFrm pull-right">
 				  <div class="control-group">
 					<label class="control-label"><span>Color</span></label>
 					<div class="controls">
@@ -109,7 +108,7 @@
 						</select>
 					</div>
 				  </div>
-				</form>
+				</form>-->
 				<hr class="soft clr"/>
 				<p >
 				{{$ctrl.ProductDetailsVM.Description}}
@@ -148,8 +147,9 @@
                           <form >
                               <textarea class="form-control" rows="5" style="width:600px; height:100px;" ng-model="$ctrl.ProducReviewVM.Content" placeholder="Your Review"></textarea>
                               <br />
-                             
-                              <button type="button" class="btn btn-success" ng-click="$ctrl.AddReview()">Comment</button>
+                           
+                            <a href="/index.html#!/register" class="btn btn-success" ng-show="$ctrl.currentUser==null">If you want to leave a review please register </a> 
+                              <button type="button" class="btn btn-success" ng-hide="$ctrl.currentUser==null" ng-click="$ctrl.AddReview()">Comment</button>
                               <br />
                               <hr />
                               <h3 ng-hide="$ctrl.ProductDetailsVM.Reviews.length== 0 ">Comments</h3>

@@ -11,6 +11,7 @@ namespace Abstracts
   public  interface IProductService
     {
         IEnumerable<ProductDetailsDto> GetAllProducts();
+        IEnumerable<ProductDetailsDto> GetPopularProducts();
         void AddOrUpdateProduct(ProductDetailsDto product);
         ProductDetailsDto GetProductById(int id);
         object GetAllBrands();

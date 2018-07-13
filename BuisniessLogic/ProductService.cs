@@ -45,6 +45,13 @@ namespace BuisniessLogic
 
             return result;
         }
+        public IEnumerable<ProductDetailsDto> GetPopularProducts()
+        {
+            var productEnitiy = productDetailsRepository.GetAll().Where(it => it.Code != "").OrderByDescending(it => it.UserReview.Count()).Take(4);
+            var result = productEnitiy.ToProductDetailsDtos().ToList();
+         
+            return result;
+        }
 
         public ProductDetailsDto GetProductById(int id)
         {
@@ -61,6 +68,7 @@ namespace BuisniessLogic
         }
         public ProductPaginingParametersDto GetProductsOnPage(ProductPaginingParametersDto paginationParameters)
         {
+            
             var allProducts = productDetailsRepository.GetAll().AsQueryable();
             var products = allProducts.Where(it => it.Code != "");
             if (!string.IsNullOrEmpty(paginationParameters.Category))

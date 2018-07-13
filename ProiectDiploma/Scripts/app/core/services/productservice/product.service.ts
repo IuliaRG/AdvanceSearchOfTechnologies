@@ -1,5 +1,6 @@
 ﻿interface IProductService {
     GetProduct(url: string, caller: any, successCallback: Function): any;
+    GetPopularProducts(url: string, caller: any, successCallback: Function): any;
     GetAllBrands(url: string, caller: any, successCallback: Function): any;
     GetProductByBrand(url: string, id: any, caller: any, successCallback: Function): any;
     GetProductReviews(url: string, caller: any): any;
@@ -22,6 +23,16 @@ class ProductService implements IProductService {
         this._iHttpService.get(
             url, {}).then((response) => {
                 
+                console.log(response);
+                successCallback(response.data, caller);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+    public GetPopularProducts(url: string, caller: any, successCallback: Function): any {
+        this._iHttpService.get(
+            url, {}).then((response) => {
+
                 console.log(response);
                 successCallback(response.data, caller);
             }).catch((err) => {

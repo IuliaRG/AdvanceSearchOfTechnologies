@@ -54,7 +54,7 @@ var ResetPasswordController = (function (_super) {
         self.iAccountService.ResetPassword('api/Account/ResetPassword', config, userDto, this, this.SuccessCallback);
     };
     ResetPasswordController.prototype.SuccessCallback = function (user, self) {
-        self.iWindowService.location.href = '/index.html#!/login';
+        self.iWindowService.location.href = '/index.html#!/register';
         self.ResetPassworVM.ErrorMessage = "Your password has been successfully reset";
         self.ResetPassworVM.ShowError = true;
     };

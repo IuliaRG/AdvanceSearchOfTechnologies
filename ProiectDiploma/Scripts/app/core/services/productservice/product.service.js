@@ -11,6 +11,14 @@ var ProductService = (function () {
             console.log(err);
         });
     };
+    ProductService.prototype.GetPopularProducts = function (url, caller, successCallback) {
+        this._iHttpService.get(url, {}).then(function (response) {
+            console.log(response);
+            successCallback(response.data, caller);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
     ProductService.prototype.GetProductByBrand = function (url, brand, caller, successCallback) {
         this._iHttpService.get(url + brand, {}).then(function (response) {
             console.log(response);

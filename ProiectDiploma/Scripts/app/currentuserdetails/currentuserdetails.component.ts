@@ -4,5 +4,5 @@ angular.
     module('currentuserdetails').
     component('currentuserdetails', {
         templateUrl: 'scripts/app/currentuserdetails/currentuserdetails.template.html',
-        controller: ['ILocalStorageService','IUserService','$window','$http', CurrentUserDetailsController]
+        controller: ['ILocalStorageService','IProductService','IUserService','$window','$http', CurrentUserDetailsController]
     });

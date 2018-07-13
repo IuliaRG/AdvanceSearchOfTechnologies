@@ -35,6 +35,9 @@ angular.
             when('/currentuserdetails', {
             template: '<currentuserdetails></currentuserdetails>'
         }).
+            when('/store', {
+            template: '<store></store>'
+        }).
             when('/forgotpassword', {
             template: '<forgotpassword></forgotpassword>'
         }).

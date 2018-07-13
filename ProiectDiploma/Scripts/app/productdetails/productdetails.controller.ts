@@ -14,6 +14,7 @@
         this.ProductDetailsVM = new ProductDetailsModel();
         this.ProducReviewVM = new ProducReviewModel();
         this.iProductService = iProductService;
+        this.iLocalStorageService = iLocalStorageService;
         this.currentUser = iLocalStorageService.GetCurrentUser();
       
         this.route = $routeParams;
@@ -26,18 +27,20 @@
         console.log("code" + self.ProductDetailsVM.Reviews);
         
     }
+    protected LogOut(): void {
+        this.iLocalStorageService.LogOut(' api/Account/Logout');
+   
+
+    }
   
     protected AddReview(): void {
-     
         var self = this;
-     
         var config: angular.IRequestShortcutConfig = {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": 'Bearer ' + this.currentUser.token,
             }
         }
-   
         var userDto = {
             "Content": self.ProducReviewVM.Content,
             "ProductId": self.ProductDetailsVM.Id,

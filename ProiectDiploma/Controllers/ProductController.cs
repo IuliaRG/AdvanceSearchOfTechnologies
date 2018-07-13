@@ -20,6 +20,13 @@ namespace ProiectDiploma.Controllers
             var products = service.GetAllProducts();
             return products;
         }
+        [Route("GetPopularProducts")]
+        public IEnumerable<ProductDetailsDto> GetPopularProducts()
+        {
+            service = DIContainerST.GetInstance().Resolve<IProductService>();
+            var products = service.GetPopularProducts();
+            return products;
+        }
         [Route("ProductPage")]
         public ProductPaginingParametersDto ProductPage(ProductPaginingParametersDto pageDto)
         {

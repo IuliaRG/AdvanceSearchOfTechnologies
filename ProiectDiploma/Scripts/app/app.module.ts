@@ -16,6 +16,7 @@ angular.module('AdvanceSearchTechnologies', [
     'currentuserdetails',
     'forgotpassword',
     'changepassword',
+    'store',
     'resetpassword',
     
 ]);

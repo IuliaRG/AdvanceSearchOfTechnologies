@@ -311,6 +311,11 @@
     <Content Include="Content\themes\images\carousel\5.png" />
     <Content Include="Content\themes\images\carousel\6.png" />
     <Content Include="Content\themes\images\carousel\7.png" />
+    <Content Include="Content\themes\images\carousel\slider1.jpg" />
+    <Content Include="Content\themes\images\carousel\slider2.jpg" />
+    <Content Include="Content\themes\images\carousel\slider22.png" />
+    <Content Include="Content\themes\images\carousel\slider3.jpg" />
+    <Content Include="Content\themes\images\carousel\slider4.jpg" />
     <Content Include="Content\themes\images\facebook.png" />
     <Content Include="Content\themes\images\headerRepeat.png" />
     <Content Include="Content\themes\images\ico-cart.png" />
@@ -326,6 +331,7 @@
     <Content Include="Content\themes\images\lightbox\lightbox-btn-prev.gif" />
     <Content Include="Content\themes\images\lightbox\lightbox-ico-loading.gif" />
     <Content Include="Content\themes\images\logo.png" />
+    <Content Include="Content\themes\images\logoo.png" />
     <Content Include="Content\themes\images\new.png" />
     <Content Include="Content\themes\images\payment_methods.png" />
     <Content Include="Content\themes\images\products\1.jpg" />
@@ -452,6 +458,7 @@
     <Content Include="Scripts\app\home\home.template.html" />
     <Content Include="Scripts\app\login\login.template.html" />
     <Content Include="Scripts\app\statistics\statistics.template.html" />
+    <Content Include="Scripts\app\store\store.template.html" />
     <Content Include="Scripts\app\userdetails\userdetails.template.html" />
     <Content Include="Scripts\app\usermanagerchat\usermanagerchat.template.html" />
     <Content Include="Scripts\app\usersmanager\usersmanager.template.html" />
@@ -665,6 +672,9 @@
     <TypeScriptCompile Include="Scripts\app\statistics\statistics.component.ts" />
     <TypeScriptCompile Include="Scripts\app\statistics\statistics.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\statistics\statistics.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\store\store.component.ts" />
+    <TypeScriptCompile Include="Scripts\app\store\store.module.ts" />
+    <TypeScriptCompile Include="Scripts\app\store\store.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.component.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.controller.ts" />
     <TypeScriptCompile Include="Scripts\app\userdetails\userdetails.module.ts" />

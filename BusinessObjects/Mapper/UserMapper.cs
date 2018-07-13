@@ -17,6 +17,11 @@ namespace BusinessObjects.Mapper
                 Id = it.Id,
                 FirstName = it.FirstName,
                 LastName = it.LastName,
+                City = it.City,
+                Country = it.Country,
+                District = it.District,
+                Sex = it.Sex,
+                Phone = it.Phone,
                 Address = it.Address
             });
 
@@ -94,6 +99,11 @@ namespace BusinessObjects.Mapper
             userDetails.FirstName = userDetailsDto.FirstName;
             userDetails.LastName = userDetailsDto.LastName;
             userDetails.Address = userDetailsDto.Address;
+            userDetails.Country = userDetailsDto.Country;
+            userDetails.City = userDetailsDto.City;
+            userDetails.District = userDetailsDto.District;
+            userDetails.Sex = userDetailsDto.Sex;
+            userDetails.Phone = userDetailsDto.Phone;
 
             return userDetails;
     }
@@ -106,6 +116,11 @@ namespace BusinessObjects.Mapper
                 dtoUser.FirstName = userDetails.FirstName;
                 dtoUser.LastName = userDetails.LastName;
                 dtoUser.Address = userDetails.Address;
+                dtoUser.City = userDetails.City;
+                dtoUser.Country = userDetails.Country;
+                dtoUser.Sex = userDetails.Sex;
+                dtoUser.District = userDetails.District;
+                dtoUser.Phone = userDetails.Phone;
             }
 
             return dtoUser;

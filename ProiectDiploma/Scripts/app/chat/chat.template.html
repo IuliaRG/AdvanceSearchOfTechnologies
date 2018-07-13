@@ -101,7 +101,6 @@
             var id = $.connection.hub.id;
             chat.server.register($('#displayname').val(), id);
             $('#sendToUser').click(function () {
-                debugger
                 chat.server.sendToUser($('#displayname').val(), $('#toUser').val(), $('#message').val());
             });
 

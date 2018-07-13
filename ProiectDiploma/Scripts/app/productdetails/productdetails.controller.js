@@ -6,6 +6,7 @@ var ProductDetailsController = (function () {
         this.ProductDetailsVM = new ProductDetailsModel();
         this.ProducReviewVM = new ProducReviewModel();
         this.iProductService = iProductService;
+        this.iLocalStorageService = iLocalStorageService;
         this.currentUser = iLocalStorageService.GetCurrentUser();
         this.route = $routeParams;
         this.iProductService.GetProduct("api/Product/GetProductByID?id=" + this.route.id, this, this.GetProductCallback);
@@ -13,6 +14,9 @@ var ProductDetailsController = (function () {
     ProductDetailsController.prototype.GetProductCallback = function (data, self) {
         self.ProductDetailsVM.FromProductDto(data);
         console.log("code" + self.ProductDetailsVM.Reviews);
+    };
+    ProductDetailsController.prototype.LogOut = function () {
+        this.iLocalStorageService.LogOut(' api/Account/Logout');
     };
     ProductDetailsController.prototype.AddReview = function () {
         var self = this;

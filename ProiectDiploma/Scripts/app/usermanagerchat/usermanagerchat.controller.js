@@ -41,7 +41,6 @@ var UserManagerChatController = (function () {
         chatModel.TextMessage = "";
     };
     UserManagerChatController.prototype.AdminReceiveFromUser = function (from, message, self) {
-        debugger;
         if (self.UsersDiscussion.map(function (it) { return it.Id; }).indexOf(from) > -1) {
             var chatVM = self.UsersDiscussion.filter(function (it) { return it.Id === from; })[0];
             chatVM.UserDiscussion.push('From' + ' ' + from + ':' + ' ' + message);

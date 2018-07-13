@@ -17,22 +17,10 @@
             </a>
             <div class="navbar-inner">
                 <a class="brand" href="index.html"><img src="Content/themes/images/logo.png" alt="Bootsshop" /></a>
-                <form class="form-inline navbar-search" method="post" action="products.html">
-                    <input id="srchFld" class="srchTxt" type="text" />
-                    <select class="srchTxt">
-                        <option>All</option>
-                        <option>CLOTHES </option>
-                        <option>FOOD AND BEVERAGES </option>
-                        <option>HEALTH & BEAUTY </option>
-                        <option>SPORTS & LEISURE </option>
-                        <option>BOOKS & ENTERTAINMENTS </option>
-                    </select>
-                    <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
-                </form>
+               
                 <ul id="topMenu" class="nav pull-right">
-                    <li class=""><a href="special_offer.html">Specials Offer</a></li>
-                    <li class=""><a href="normal.html">Delivery</a></li>
-                    <li class=""><a href="contact.html">Contact</a></li>
+           
+                    <li class=" " ng-show="$ctrl.currentUser==null"><a href="/index.html#!/home">Home</a></li>
                    
                 </ul>
             </div>
@@ -45,123 +33,90 @@
         <div class="row">
             <!-- Sidebar ================================================== -->
             <div id="sidebar" class="span3">
-               
+            
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
-                    <li class="subMenu open">
-                        <a> ELECTRONICS [230]</a>
+                    <li class="subMenu open" ng-repeat="data in $ctrl.ProductVM.meniu">
+                        <a ng-model="$ctrl.ProductVM.Category"> {{data.Category}}</a>
                         <ul style="display:none">
-                            <li><a class="active" href="products.html"><i class="icon-chevron-right"></i>Cameras (100) </a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Computers, Tablets & laptop (30)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Sound & Vision (15)</a></li>
+                            <li type="button" ng-repeat="brand in data.Brands" ng-click="$ctrl.ProductPagination(null,null,data.Category,brand)">
+                                <i class="icon-chevron-right"></i>{{brand}}
+                            </li>
                         </ul>
                     </li>
-                    <li class="subMenu">
-                        <a> CLOTHES [840] </a>
-                        <ul style="display:none">
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Clothing (45)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Shoes (8)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Women's Hand Bags (5)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Men's Clothings  (45)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Men's Shoes (6)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Kids Clothing (5)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Kids Shoes (3)</a></li>
-                        </ul>
-                    </li>
-                    <li class="subMenu">
-                        <a>FOOD AND BEVERAGES [1000]</a>
-                        <ul style="display:none">
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Angoves  (35)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Bouchard Aine & Fils (8)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>French Rabbit (5)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Louis Bernard  (45)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>BIB Wine (Bag in Box) (8)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Other Liquors & Wine (5)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Garden (3)</a></li>
-                            <li><a href="products.html"><i class="icon-chevron-right"></i>Khao Shong (11)</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="products.html">HEALTH & BEAUTY [18]</a></li>
-                    <li><a href="products.html">SPORTS & LEISURE [58]</a></li>
-                    <li><a href="products.html">BOOKS & ENTERTAINMENTS [14]</a></li>
+                   
+                 
                 </ul>
                 <br />
-                <br />
-                <br />
-
+            
             </div>
-            <!-- Sidebar end=============================================== -->
-            <div class="span9">
-                <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                    <li class="active">Login</li>
-                </ul>
-                <h3> Login</h3>
-                <hr class="soft" />
+        <!-- Sidebar end=============================================== -->
+        <div class="span9">
+        
+    
 
-                <div class="row">
-                    <div class="span4">
-                        <div class="well">
-                            <h5>CREATE YOUR ACCOUNT</h5><br />
-                            <form action="register.html">
-                                <div class="control-group">
-                                    <label class="control-label" for="inputEmail0">E-mail address</label>
-                                    <div class="controls">
-                                        <input input type="text" class="form-control" placeholder="Email" ng-model="$ctrl.RegisterVM.Email ">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPassword1">Password</label>
-                                    <div class="controls">
-                                        <input type="password" class="form-control" placeholder="Password" ng-model="$ctrl.RegisterVM.Password">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPassword2">Confirm Password</label>
-                                    <div class="controls">
-                                        <input type="password" class="form-control" placeholder="ConfirmPassword" ng-model="$ctrl.RegisterVM.ConfirmPassword">
-                                    </div>
-                                </div>
+            <div class="row">
+                <div class="span4">
+                    <div class="well">
+                        <h5>CREATE YOUR ACCOUNT</h5><br />
+                        <form action="register.html">
+                            <div class="control-group">
+                                <label class="control-label" for="inputEmail0">E-mail address</label>
                                 <div class="controls">
-                                    <button type="button" class="btn btn-success" ng-click="$ctrl.UserRegister()">Register</button>
-                                    <br /><br />
-                                    <span ng-show="$ctrl.RegisterVM.ShowError" class="error-message">{{$ctrl.RegisterVM.ErrorMessage}}</span>
+                                    <input input type="text" class="form-control" placeholder="Email" ng-model="$ctrl.RegisterVM.Email ">
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="span1"> &nbsp;</div>
-                    <div class="span4">
-                        <div class="well">
-                            <h5>ALREADY REGISTERED ?</h5>
-                            <form>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputEmail1">Email</label>
-                                    <div class="controls">
-                                        <input type="text" class="form-control" placeholder="username" ng-model="$ctrl.LoginVM.Email">
-                                    </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="inputPassword1">Password</label>
+                                <div class="controls">
+                                    <input type="password" class="form-control" placeholder="Password" ng-model="$ctrl.RegisterVM.Password">
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPassword3">Password</label>
-                                    <div class="controls">
-                                        <input type="password" class="form-control" placeholder="password" ng-model="$ctrl.LoginVM.Password">
-                                    </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="inputPassword2">Confirm Password</label>
+                                <div class="controls">
+                                    <input type="password" class="form-control" placeholder="ConfirmPassword" ng-model="$ctrl.RegisterVM.ConfirmPassword">
                                 </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="button" class="btn btn-success" ng-click="$ctrl.LogIn()">Sign in</button> <a href="/index.html#!/forgotpassword">Forget password?</a>
-                                        <br /><br />
-                                        <span ng-show="$ctrl.LoginVM.ShowError" class="error-message">{{$ctrl.LoginVM.ErrorMessage}}</span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="controls">
+                                <button type="button" class="btn btn-success" ng-click="$ctrl.UserRegister()">Register</button>
+                                <br /><br />
+                                <span ng-show="$ctrl.RegisterVM.ShowError" class="error-message">{{$ctrl.RegisterVM.ErrorMessage}}</span>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
+                <div class="span1"> &nbsp;</div>
+                <div class="span4">
+                    <div class="well">
+                        <h5>ALREADY REGISTERED ?</h5>
+                        <form>
+                            <div class="control-group">
+                                <label class="control-label" for="inputEmail1">Email</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" placeholder="username" ng-model="$ctrl.LoginVM.Email">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="inputPassword3">Password</label>
+                                <div class="controls">
+                                    <input type="password" class="form-control" placeholder="password" ng-model="$ctrl.LoginVM.Password">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-success" ng-click="$ctrl.LogIn()">Sign in</button> <a href="/index.html#!/forgotpassword">Forget password?</a>
+                                    <br /><br />
+                                    <span ng-show="$ctrl.LoginVM.ShowError" class="error-message">{{$ctrl.LoginVM.ErrorMessage}}</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+</div>
 </div>
 <!-- MainBody End ============================= -->
 <!-- Footer ================================================================== -->

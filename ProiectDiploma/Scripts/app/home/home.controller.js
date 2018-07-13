@@ -1,5 +1,5 @@
 var HomeController = (function () {
-    function HomeController($scope, iLocalStorageService, iProductService, $http, $window) {
+    function HomeController($scope, iLocalStorageService, iProductService, $http, $window, $routeParams) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
@@ -7,14 +7,26 @@ var HomeController = (function () {
         this.iLocalStorageService = iLocalStorageService;
         this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
+        this.route = $routeParams;
+        this.PopularProductVM = new PopularProductModel();
         // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination();
+        this.ProductPagination(null, null, this.route.category, this.route.brand);
+        this.GetPopularProducts();
     }
     HomeController.prototype.GetProductsCallback = function (data, self) {
         self.ProductVM.FromProductsDto(data);
-        console.log("current page " + self.ProductVM.CurrentPage);
+        console.log(self.ProductVM.CurrentPage);
+        self.loadBootstrap();
+    };
+    HomeController.prototype.GetPopularProductsCallback = function (data, self) {
+        self.PopularProductVM.FromProductsDto(data);
+        console.log(self.PopularProductVM.Name);
+    };
+    HomeController.prototype.GetPopularProducts = function () {
+        var self = this;
+        self.iProductService.GetPopularProducts('api/Product/GetPopularProducts', this, this.GetPopularProductsCallback);
     };
     HomeController.prototype.LogOut = function () {
         this.iLocalStorageService.LogOut(' api/Account/Logout');
@@ -37,14 +49,19 @@ var HomeController = (function () {
         };
         self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
     };
+    HomeController.prototype.loadBootstrap = function () {
+        var self = this;
+        setTimeout(function () {
+            self.loadScript('jquery.lightbox-0.5.js');
+            self.loadScript('bootstrap.min.js');
+            self.loadScript('bootshop.js');
+        });
+    };
     HomeController.prototype.initialize = function () {
         var _this = this;
         var self = this;
         setTimeout(function () {
             self.loadScript('jquery.js');
-            self.loadScript('jquery.lightbox-0.5.js');
-            self.loadScript('bootstrap.min.js');
-            self.loadScript('bootshop.js');
             //self.loadBoostrapScript('bootstrap.min.css');
             self.loadCssScript('base.css');
             console.log(0);
@@ -104,6 +121,16 @@ var HomeController = (function () {
         head.appendChild(script);
     };
     return HomeController;
+}());
+var PopularProductModel = (function () {
+    function PopularProductModel() {
+        this.popularProducts = new Array();
+    }
+    PopularProductModel.prototype.FromProductsDto = function (data) {
+        this.popularProducts = data.map(function (dto) { return ((new ProductDetailsModel()).FromProductDto(dto)); });
+        return this;
+    };
+    return PopularProductModel;
 }());
 var ProductPageModel = (function () {
     function ProductPageModel() {

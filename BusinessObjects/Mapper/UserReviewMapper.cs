@@ -52,9 +52,7 @@ namespace BusinessObjects
             entityUserReview.ProductDetails_Id = userReviewDto.ProductId;
             entityUserReview.ProductCode = userReviewDto.ProductCode;
             entityUserReview.Brand = userReviewDto.Brand;
-            entityUserReview.Sentiment =  userReviewDto.TextAnalyticRespons.Documents.Select(x => x.Score)
-                       .FirstOrDefault();
-
+            entityUserReview.Sentiment =  userReviewDto.TextAnalyticRespons.Documents.Select(x => x.Score).FirstOrDefault();
 
             return entityUserReview;
         }

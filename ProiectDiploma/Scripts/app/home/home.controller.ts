@@ -1,6 +1,7 @@
 ﻿class HomeController {
     protected _httpService: ng.IHttpService;
     protected ProductVM: ProductPageModel;
+    protected PopularProductVM: PopularProductModel;
     protected iProductService: IProductService;
     protected iLocalStorageService: ILocalStorageService;
     protected iWindowService: ng.IWindowService;
@@ -11,7 +12,9 @@
     protected chat: any;
     protected scope: any;
     protected id: any;
-    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService) {
+    protected bestProducts: any;
+    private route: any;
+    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService, $routeParams: ng.RouteData) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
@@ -19,16 +22,32 @@
         this.iLocalStorageService = iLocalStorageService;
         this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
-      
+        this.route = $routeParams;
+
+        this.PopularProductVM = new PopularProductModel();
        // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination();
+        this.ProductPagination(null,null,this.route.category, this.route.brand);
+        this.GetPopularProducts();
     }
     protected GetProductsCallback(data: any, self: HomeController): void {
         self.ProductVM.FromProductsDto(data);
-        console.log("current page " + self.ProductVM.CurrentPage);
-   
+        console.log(self.ProductVM.CurrentPage);
+     
+        self.loadBootstrap();
+    }
+    protected GetPopularProductsCallback(data: any, self: HomeController): void {
+  
+        self.PopularProductVM.FromProductsDto(data);
+        console.log(self.PopularProductVM.Name);
+      
+    }
+    protected GetPopularProducts(): void {
+        var self = this;
+        self.iProductService.GetPopularProducts('api/Product/GetPopularProducts', this, this.GetPopularProductsCallback);
+
+
     }
     protected LogOut(): void {
         this.iLocalStorageService.LogOut(' api/Account/Logout');
@@ -55,16 +74,19 @@
       
         self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetProductsCallback);
     }
+    public loadBootstrap(): void {
+        var self = this;
+        setTimeout(() => {
+            self.loadScript('jquery.lightbox-0.5.js');
+            self.loadScript('bootstrap.min.js');
+            self.loadScript('bootshop.js');
+        });
+    }
     public initialize(): void {
         var self = this;
         setTimeout(() => {
             self.loadScript('jquery.js');
-            self.loadScript('jquery.lightbox-0.5.js');
-            self.loadScript('bootstrap.min.js');
-            self.loadScript('bootshop.js');
             //self.loadBoostrapScript('bootstrap.min.css');
-
-         
            self.loadCssScript('base.css');
             console.log(0);
             $(() => {
@@ -129,7 +151,23 @@
         head.appendChild(script);
     }
 }
-
+class PopularProductModel
+{
+    public Id: number;
+    public Name: string;
+    public Image: string;
+    public Price: string;
+    public popularProducts: Array<any>;
+    constructor() {
+        this.popularProducts = new Array<ProductDetailsModel>();
+    }
+   
+    public FromProductsDto(data: any): any {
+    
+        this.popularProducts = data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
+        return this;
+    }
+}
 class ProductPageModel {
     public Id: number;
     public Name: string;
@@ -165,6 +203,7 @@ class ProductPageModel {
         this.SortField = data.SortField;
         this.Image = data.Image;
         this.meniu = data.Meniu.map(dto => ((new MeniuModel()).FromMeniuDto(dto)));
+        
         this.products = data.Data.map(dto => ((new ProductDetailsModel()).FromProductDto(dto)));
         return this;
     }

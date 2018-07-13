@@ -129,7 +129,7 @@ namespace ProiectDiploma.Controllers
             if (user!= null )
             {
                 string link = string.Format("http://localhost:6251/index.html#!/resetpassword?username={0}", model.Email);
-                emailService.SendEmail(/*model.Email*/ email1, Const.EmailForgotPasswordSubject, string.Format(Const.EmailForgotPasswordBody, link));
+                emailService.SendEmail(/*model.Email*/ "rad.iulia19@gamil.com", Const.EmailForgotPasswordSubject, string.Format(Const.EmailForgotPasswordBody, link));
             }
               
             return Ok();
@@ -397,11 +397,11 @@ namespace ProiectDiploma.Controllers
             var response = new HttpResponseMessage();
             response.Content = new StringContent("<html>" +
                 "<body>" +
-               "<h1>"+
+               "<h1 style='font - family:courier; '>" +
                "Confirm Email "+
-               "<p>"+
+               "<p style='font - family:courier; '>" +
                Const.EmailConfirmation +
-               "<a href='http://localhost:6251/index.html#!/login'> "+
+               "<a href='http://localhost:6251/index.html#!/register' style='font - family:courier; '> " +
               " click here to Log In"+
               "</a>"+
                "</p>" +

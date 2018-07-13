@@ -227,8 +227,8 @@
 
 .text-bar input {
     width: 90%;
-    margin-left: -15px;
-    padding: 10px 10px;
+    /*margin-left: 0.5px;*/
+    padding: 10px 8px;
     border: 1px solid #fff;
 }
 

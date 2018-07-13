@@ -58,7 +58,6 @@
    
     
     public AdminReceiveFromUser(from: string, message: string, self: UserManagerChatController) {
-        debugger
      
        
         if (self.UsersDiscussion.map(it => it.Id).indexOf(from) > -1) {

@@ -5,17 +5,7 @@
 <script src='/signalr/js'></script>-->
     <div class="container"></div>
 
-    <div class="container">
-        message
-
-        <input type="button" id="register" value="Connect" />
-        <!--<input type="button" id="sendmessage" value="Send" />-->
-        <!--<input type="button" id="sendToUser" value="Send to user" />-->
-        to user
-        <input type="text" id="toUser" />
-        <input type="hidden" ng-model="$ctrl.Username" id="displayname" />
-        <!--<ul id="discussion"></ul>-->
-    </div>
+  
 
 
 
@@ -23,7 +13,7 @@
     </style>
    
         
-            <div class='col-md-2'  ng-repeat="userModel in $ctrl.UsersDiscussion">
+            <div class='col-md-2' style="position: relative; left: 30px;"  ng-repeat="userModel in $ctrl.UsersDiscussion">
                 <div class="chat-section">
                     <ul id="discussion">
                         <li ng-repeat="line in userModel.UserDiscussion">

@@ -15,6 +15,7 @@ angular.module('AdvanceSearchTechnologies', [
     'currentuserdetails',
     'forgotpassword',
     'changepassword',
+    'store',
     'resetpassword',
 ]);
 //# sourceMappingURL=app.module.js.map

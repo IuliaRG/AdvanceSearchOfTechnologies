@@ -20,26 +20,15 @@
                 <div class="navbar-inner">
                     <!--<a class="brand" href="index.html"><img src="Content/themes/images/logo.png" alt="Bootsshop" /></a>-->
                     <form class="form-inline navbar-search" method="post" action="products.html">
-                        <input id="srchFld" class="srchTxt" type="text" />
-                        <select class="srchTxt">
-                            <option>All</option>
-                            <option>CLOTHES </option>
-                            <option>FOOD AND BEVERAGES </option>
-                            <option>HEALTH & BEAUTY </option>
-                            <option>SPORTS & LEISURE </option>
-                            <option>BOOKS & ENTERTAINMENTS </option>
-                        </select>
-                        <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+                       
                     </form>
                     <ul id="topMenu" class="nav pull-right">
                         <li class="" ng-hide="$ctrl.currentUser==null"><a href="/index.html#!/currentuserdetails">User Details</a></li>
-                        <li class=""><a href="normal.html">Delivery</a></li>
-                        <li class=""><a href="contact.html">Contact</a></li>
-                        <li class="" ng-show="$ctrl.currentUser!=null" ><a href="#" ng-click="$ctrl.LogOut()">Log Out</a></li>
-                        <li class="">
-                            <a href="/index.html#!/register" ng-show="$ctrl.currentUser==null" type="button"  style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
-                           
-                        </li>
+                        
+                  
+                        <li class=" " ng-show="$ctrl.currentUser==null"><a href="/index.html#!/register">Login</a></li>
+                        <li class="" ng-show="$ctrl.currentUser!=null"><a href="#" ng-click="$ctrl.LogOut()">Log Out</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -51,7 +40,7 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="container">
-                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/1.png" alt="special offers" /></a>
+                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/slider22.png" alt="special offers" /></a>
                         <div class="carousel-caption">
                             <h4>Second Thumbnail label</h4>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -115,202 +104,64 @@
             <div class="row">
                 <!-- Sidebar ================================================== -->
                 <div id="sidebar" class="span3">
-                   
                     <ul id="sideManu" class="nav nav-tabs nav-stacked">
-
-
-
-
                         <li class="subMenu open" ng-repeat="data in $ctrl.ProductVM.meniu">
                             <a ng-model="$ctrl.ProductVM.Category"> {{data.Category}}</a>
                             <ul style="display:none">
                                     <li  type="button" ng-repeat="brand in data.Brands"  ng-click="$ctrl.ProductPagination(null,null,data.Category,brand)"  >
                                         <i class="icon-chevron-right"></i>{{brand}}
                                     </li>
-
                                 </ul>
                         </li>
-                      
-                       
                     </ul>
                     <br />
+                    
                 </div>
+                
                 <!-- Sidebar end=============================================== -->
                 <div class="span9">
                     <div class="well well-small">
-                        <h4>Featured Products <small class="pull-right">200+ featured products</small></h4>
+                        <h4>Popular Products <small class="pull-right">200+ featured products</small></h4>
                         <div class="row-fluid">
                             <div id="featured" class="carousel slide">
                                 <div class="carousel-inner">
                                     <div class="item active">
                                         <ul class="thumbnails">
-                                            <li class="span3">
+                                            <li class="span3" ng-repeat="popular in $ctrl.PopularProductVM.popularProducts">
+
                                                 <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/b1.jpg" alt=""></a>
+                                                  
+                                                    <a href="/index.html#!/productdetails?id={{popular.Id}}"><img src="{{popular.Image}}" alt=""></a>
                                                     <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
+                                                        <h5>{{popular.Name}}</h5>
+                                                        <h4><a class="btn" href="/index.html#!/productdetails?id={{popular.Id}}">VIEW</a> <span class="pull-right">${{popular.Price}}</span></h4>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/b2.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/b3.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/b4.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                     
+
+                                          
                                         </ul>
                                     </div>
                                     <div class="item">
                                         <ul class="thumbnails">
-                                            <li class="span3">
+                                            <li class="span3" ng-repeat="popular in $ctrl.PopularProductVM.popularProducts">
+
                                                 <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/5.jpg" alt=""></a>
+                                                  
+                                                    <a href="/index.html#!/productdetails?id={{popular.Id}}"><img src="{{popular.Image}}" alt=""></a>
                                                     <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <i class="tag"></i>
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/6.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/7.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/8.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
+                                                        <h5>{{popular.Name}}</h5>
+                                                        <h4><a class="btn" href="/index.html#!/productdetails?id={{popular.Id}}">VIEW</a> <span class="pull-right">${{popular.Price}}</span></h4>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="item">
-                                        <ul class="thumbnails">
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/9.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/10.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/11.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/1.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="item">
-                                        <ul class="thumbnails">
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/2.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/3.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/4.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="span3">
-                                                <div class="thumbnail">
-                                                    <a href="product_details.html"><img src="Content/themes/images/products/5.jpg" alt=""></a>
-                                                    <div class="caption">
-                                                        <h5>Product name</h5>
-                                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                              
+                                 
                                 </div>
-                                <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
-                                <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+                               
                             </div>
                         </div>
                     </div>
@@ -352,7 +203,7 @@
                                         {{product.ShortDescription}}
                                     </p>
 
-                                    <h4 style="text-align:center"><a class="btn" href="/index.html#!/productdetails?id={{product.Id}}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">${{product.Price}}</a></h4>
+                                    <h4 style="text-align:center"><a class="btn" href="/index.html#!/productdetails?id={{product.Id}}"> <i class="icon-zoom-in"></i></a>  <a class="btn btn-primary" href="#">${{product.Price}}</a></h4>
                                 </div>
                             </div>
                         </li>

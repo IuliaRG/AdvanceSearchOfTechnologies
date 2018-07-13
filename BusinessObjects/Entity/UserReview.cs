@@ -15,7 +15,6 @@ namespace BusinessObjects
         public double? Sentiment { get; set; }
         public string Brand { get; set; }
         public string ProductCode { get; set; }
-        // public List<UserSentiment> Documents { get; set; }
         public string ApplicationUserId { get; set; }
        public ApplicationUser ApplicationUser { get; set; }
         public int ProductDetails_Id { get; set; }

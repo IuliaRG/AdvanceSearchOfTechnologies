@@ -6,6 +6,7 @@
     protected iLocalStorageService: ILocalStorageService;
     protected currentUser: CurrentUserModel;
     private iWindowService: ng.IWindowService;
+    protected ProductVM: StorePageModel;
     private route: any;
     constructor(iLocalStorageService: ILocalStorageService, $window: ng.IWindowService,iProductService: IProductService, $http: ng.IHttpService, $routeParams: ng.RouteData) {
         this.initialize();
@@ -19,9 +20,39 @@
       
         this.route = $routeParams;
         this.iProductService.GetProduct("api/Product/GetProductByID?id=" + this.route.id, this, this.GetProductCallback);
-
+        this.ProductVM = new StorePageModel();
+        this.Meniu();
         
     }
+    protected Meniu(itemsNumber?: number, pageNumber?: number, category?: string, brand?: string) {
+        var self = this;
+        self.ProductVM.ItemsOnPage = itemsNumber;
+        self.ProductVM.PageNumber = pageNumber;
+        self.ProductVM.Brand = brand;
+        self.ProductVM.Category = category;
+        var pageDto = {
+
+
+            "Brand": self.ProductVM.Brand,
+            "Category": self.ProductVM.Category,
+        };
+
+        self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetMeniuCallback);
+    }
+    protected GetMeniuCallback(data: any, self: ProductDetailsController): void {
+        self.ProductVM.FromProductsDto(data);
+
+        self.loadBootstrap();
+    }
+    public loadBootstrap(): void {
+        var self = this;
+        setTimeout(() => {
+            self.loadScript('jquery.lightbox-0.5.js');
+            self.loadScript('bootstrap.min.js');
+            self.loadScript('bootshop.js');
+        });
+    }
+   
     protected GetProductCallback(data: any, self: ProductDetailsController): void {
         self.ProductDetailsVM.FromProductDto(data);
         console.log("code" + self.ProductDetailsVM.Reviews);
@@ -100,6 +131,7 @@ class ProductDetailsModel {
     public ReleaseDate: Date;
     public Model: string;
     public Dimensions: string;
+    public Category: string;
     public Image: string;
     public Reviews: Array<any>;
     constructor() {
@@ -116,6 +148,7 @@ class ProductDetailsModel {
         this.Brand = dto.Brand;
         this.ReleaseDate = dto.ReleaseDate;
         this.Model = dto.Model;
+        this.Category = dto.Category;
         this.Dimensions = dto.Dimensions;
         this.Reviews = dto.Reviews.map(data => ((new ProducReviewModel()).FromProductReviewDto(data)));
         return this;

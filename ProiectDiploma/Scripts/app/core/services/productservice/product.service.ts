@@ -6,7 +6,7 @@
     GetProductReviews(url: string, caller: any): any;
     GetProductPage(url: string, data: any, caller: any, successCallback: Function): any;
     DeleteProduct(url: string, id: any, caller: any, successCallback: Function);
-    AddOrUpdateProduct(url: string, data: any, caller: any);
+    AddOrUpdateProduct(url: string, data: any, caller: any, successCallback: Function);
     GetPageProducts(url: string, data: any, caller: any, successCallback: Function): any;
     AddOrUpdateReview(url: string,config:any, data: any, caller: any);
 
@@ -84,9 +84,11 @@ class ProductService implements IProductService {
             }).catch((err) => {
             });
     }
-    public AddOrUpdateProduct(url: string,data: any, caller: any): any {
+    public AddOrUpdateProduct(url: string, data: any, caller: any, successCallback: Function): any {
         this._iHttpService.post(
-            url,  data).then((response) => {
+            url, data).then((response) => {
+                successCallback(response.data);
+                this.iWindowService.location.href = '/index.html#!/usersmanager'
             }).catch((err) => {
             });
     }

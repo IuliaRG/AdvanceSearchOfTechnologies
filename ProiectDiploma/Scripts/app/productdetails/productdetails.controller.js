@@ -10,7 +10,33 @@ var ProductDetailsController = (function () {
         this.currentUser = iLocalStorageService.GetCurrentUser();
         this.route = $routeParams;
         this.iProductService.GetProduct("api/Product/GetProductByID?id=" + this.route.id, this, this.GetProductCallback);
+        this.ProductVM = new StorePageModel();
+        this.Meniu();
     }
+    ProductDetailsController.prototype.Meniu = function (itemsNumber, pageNumber, category, brand) {
+        var self = this;
+        self.ProductVM.ItemsOnPage = itemsNumber;
+        self.ProductVM.PageNumber = pageNumber;
+        self.ProductVM.Brand = brand;
+        self.ProductVM.Category = category;
+        var pageDto = {
+            "Brand": self.ProductVM.Brand,
+            "Category": self.ProductVM.Category,
+        };
+        self.iProductService.GetPageProducts('api/Product/ProductPage', pageDto, this, this.GetMeniuCallback);
+    };
+    ProductDetailsController.prototype.GetMeniuCallback = function (data, self) {
+        self.ProductVM.FromProductsDto(data);
+        self.loadBootstrap();
+    };
+    ProductDetailsController.prototype.loadBootstrap = function () {
+        var self = this;
+        setTimeout(function () {
+            self.loadScript('jquery.lightbox-0.5.js');
+            self.loadScript('bootstrap.min.js');
+            self.loadScript('bootshop.js');
+        });
+    };
     ProductDetailsController.prototype.GetProductCallback = function (data, self) {
         self.ProductDetailsVM.FromProductDto(data);
         console.log("code" + self.ProductDetailsVM.Reviews);
@@ -77,6 +103,7 @@ var ProductDetailsModel = (function () {
         this.Brand = dto.Brand;
         this.ReleaseDate = dto.ReleaseDate;
         this.Model = dto.Model;
+        this.Category = dto.Category;
         this.Dimensions = dto.Dimensions;
         this.Reviews = dto.Reviews.map(function (data) { return ((new ProducReviewModel()).FromProductReviewDto(data)); });
         return this;

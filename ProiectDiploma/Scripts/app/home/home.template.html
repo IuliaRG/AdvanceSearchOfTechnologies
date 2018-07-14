@@ -23,6 +23,7 @@
                        
                     </form>
                     <ul id="topMenu" class="nav pull-right">
+                        <li class="" ng-hide="$ctrl.isAdmin==false"><a href="/index.html#!/usersmanager">User Manager</a></li>
                         <li class="" ng-hide="$ctrl.currentUser==null"><a href="/index.html#!/currentuserdetails">User Details</a></li>
                         
                   
@@ -40,7 +41,7 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="container">
-                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/slider22.png" alt="special offers" /></a>
+                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/2.jpg" alt="special offers" /></a>
                         <div class="carousel-caption">
                             <h4>Second Thumbnail label</h4>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -49,7 +50,7 @@
                 </div>
                 <div class="item">
                     <div class="container">
-                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/2.png" alt="" /></a>
+                        <a href="/index.html#!/register"><img style="width:100%" src="Content/themes/images/carousel/1.jpg" alt="" /></a>
                         <div class="carousel-caption">
                             <h4>Second Thumbnail label</h4>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -58,7 +59,7 @@
                 </div>
                 <div class="item">
                     <div class="container">
-                        <a href="/index.html#!/register"><img src="Content/themes/images/carousel/3.png" alt="" /></a>
+                        <a href="/index.html#!/register"><img src="Content/themes/images/carousel/3.jpg" alt="" /></a>
                         <div class="carousel-caption">
                             <h4>Second Thumbnail label</h4>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -66,7 +67,7 @@
 
                     </div>
                 </div>
-                <div class="item">
+                <!--<div class="item">
                     <div class="container">
                         <a href="/index.html#!/register"><img src="Content/themes/images/carousel/4.png" alt="" /></a>
                         <div class="carousel-caption">
@@ -93,7 +94,7 @@
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
             <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
@@ -133,7 +134,7 @@
                                                   
                                                     <a href="/index.html#!/productdetails?id={{popular.Id}}"><img src="{{popular.Image}}" alt=""></a>
                                                     <div class="caption">
-                                                        <h5>{{popular.Name}}</h5>
+                                                        <h5 style="min-height:40px;">{{popular.Name}}</h5>
                                                         <h4><a class="btn" href="/index.html#!/productdetails?id={{popular.Id}}">VIEW</a> <span class="pull-right">${{popular.Price}}</span></h4>
                                                     </div>
                                                 </div>
@@ -151,7 +152,7 @@
                                                   
                                                     <a href="/index.html#!/productdetails?id={{popular.Id}}"><img src="{{popular.Image}}" alt=""></a>
                                                     <div class="caption">
-                                                        <h5>{{popular.Name}}</h5>
+                                                        <h5 style="min-height:40px;">{{popular.Name}}</h5>
                                                         <h4><a class="btn" href="/index.html#!/productdetails?id={{popular.Id}}">VIEW</a> <span class="pull-right">${{popular.Price}}</span></h4>
                                                     </div>
                                                 </div>
@@ -194,19 +195,19 @@
                     </form>
                
                     <ul class="thumbnails">
-                        <li class="span3" ng-repeat="product in $ctrl.ProductVM.products">
+                        <li style="min-height:90px;"   class="span3" ng-repeat="product in $ctrl.ProductVM.products">
                             <div class="thumbnail">
-                                <a href="/index.html#!/productdetails?id={{product.Id}}"><img src="{{product.Image}}" alt="" /></a>
+                                <a href="/index.html#!/productdetails?id={{product.Id}}"><img  src="{{product.Image}}"  alt="" /></a>
                                 <div class="caption">
-                                    <h5>{{product.Name}}</h5>
-                                    <p>
+                                    <h5  >{{product.Name}}</h5>
+                                    <p style="min-height:40px;" >
                                         {{product.ShortDescription}}
                                     </p>
 
                                     <h4 style="text-align:center"><a class="btn" href="/index.html#!/productdetails?id={{product.Id}}"> <i class="icon-zoom-in"></i></a>  <a class="btn btn-primary" href="#">${{product.Price}}</a></h4>
                                 </div>
                             </div>
-                        </li>
+                        </li >
                       
                     </ul>
                     <!--<div class="pagination">

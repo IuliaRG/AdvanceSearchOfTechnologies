@@ -293,6 +293,24 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\camera1.jpg" />
+    <Content Include="Content\camera2.jpg" />
+    <Content Include="Content\camera3.jpg" />
+    <Content Include="Content\camera4.jpg" />
+    <Content Include="Content\camera5.jpg" />
+    <Content Include="Content\camera6.jpg" />
+    <Content Include="Content\drona1.jpg" />
+    <Content Include="Content\drona2.jpg" />
+    <Content Include="Content\drona3.jpg" />
+    <Content Include="Content\laptop1.jpg" />
+    <Content Include="Content\laptop2.jpg" />
+    <Content Include="Content\laptop3.jpg" />
+    <Content Include="Content\laptop4.jpg" />
+    <Content Include="Content\laptop5.jpg" />
+    <Content Include="Content\laptop6.jpg" />
+    <Content Include="Content\nikond8.jpg" />
+    <Content Include="Content\phone1.jpg" />
+    <Content Include="Content\phone2.jpg" />
     <Content Include="Content\themes\amelia\bootstrap.css" />
     <Content Include="Content\themes\amelia\bootstrap.min.css" />
     <Content Include="Content\themes\bootshop\bootstrap.min.css" />
@@ -304,9 +322,9 @@
     <Content Include="Content\themes\css\font-awesome.css" />
     <Content Include="Content\themes\cyborg\bootstrap.min.css" />
     <Content Include="Content\themes\font\fontawesome-webfont.svg" />
-    <Content Include="Content\themes\images\carousel\1.png" />
-    <Content Include="Content\themes\images\carousel\2.png" />
-    <Content Include="Content\themes\images\carousel\3.png" />
+    <Content Include="Content\themes\images\carousel\1.jpg" />
+    <Content Include="Content\themes\images\carousel\2.jpg" />
+    <Content Include="Content\themes\images\carousel\3.jpg" />
     <Content Include="Content\themes\images\carousel\4.png" />
     <Content Include="Content\themes\images\carousel\5.png" />
     <Content Include="Content\themes\images\carousel\6.png" />
@@ -334,7 +352,6 @@
     <Content Include="Content\themes\images\logoo.png" />
     <Content Include="Content\themes\images\new.png" />
     <Content Include="Content\themes\images\payment_methods.png" />
-    <Content Include="Content\themes\images\products\1.jpg" />
     <Content Include="Content\themes\images\products\10.jpg" />
     <Content Include="Content\themes\images\products\11.jpg" />
     <Content Include="Content\themes\images\products\12.jpg" />
@@ -596,6 +613,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\less\oregional\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

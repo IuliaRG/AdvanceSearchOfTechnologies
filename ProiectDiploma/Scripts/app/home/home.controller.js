@@ -1,20 +1,47 @@
 var HomeController = (function () {
-    function HomeController($scope, iLocalStorageService, iProductService, $http, $window, $routeParams) {
+    function HomeController($scope, iLocalStorageService, iUserService, iProductService, $http, $window, $routeParams) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
+        this.isAdmin = false;
         this.currentUser = iLocalStorageService.GetCurrentUser();
         this.route = $routeParams;
         this.PopularProductVM = new PopularProductModel();
         // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination(null, null, this.route.category, this.route.brand);
+        this.ProductPagination(null, null, (this.route && this.route.category) ? this.route.category : null, (this.route && this.route.brand) ? this.route.brand : null);
         this.GetPopularProducts();
+        this.GetRole(this.currentUser, this);
     }
+    HomeController.prototype.GetRole = function (data, self) {
+        self = this;
+        if (self.currentUser != null) {
+            var config = {
+                headers: {
+                    "Authorization": 'Bearer ' + self.currentUser.token,
+                }
+            };
+            self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetRoleCallback);
+        }
+    };
+    HomeController.prototype.GetRoleCallback = function (user, self) {
+        self.role = user.Roles;
+        if (self.role.indexOf("Admin") > -1) {
+            self.isAdmin = true;
+        }
+    };
+    //protected GetUserRole(): void {
+    //    var self = this;
+    //   self.role = false;
+    //   if (self.currentUser!=null && self.currentUser.role.indexOf("Admin") > -1) {
+    //       self.role = true;
+    //    }
+    //}
     HomeController.prototype.GetProductsCallback = function (data, self) {
         self.ProductVM.FromProductsDto(data);
         console.log(self.ProductVM.CurrentPage);
@@ -64,7 +91,6 @@ var HomeController = (function () {
             self.loadScript('jquery.js');
             //self.loadBoostrapScript('bootstrap.min.css');
             self.loadCssScript('base.css');
-            console.log(0);
             $(function () {
                 self.chat = $.connection.chatHub;
                 _this.chat.client.receiveFromAdmin = function (from, message) { self.ReceiveFromAdmin(from, message, self); };

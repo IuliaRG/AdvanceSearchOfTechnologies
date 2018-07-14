@@ -19,7 +19,7 @@ namespace BuisniessLogic
             this.productDetailsRepository = productDetailsRepository;
            
         }
-        public void AddOrUpdateProduct(ProductDetailsDto product)
+        public int AddOrUpdateProduct(ProductDetailsDto product)
         {
             ProductDetails entityProduct=new ProductDetails();
             if (product.Code != null)
@@ -35,6 +35,7 @@ namespace BuisniessLogic
                 productDetailsRepository.Insert(entityProduct);
             }
             productDetailsRepository.Save();
+           return  entityProduct.Id;
         }
        
 
@@ -47,7 +48,7 @@ namespace BuisniessLogic
         }
         public IEnumerable<ProductDetailsDto> GetPopularProducts()
         {
-            var productEnitiy = productDetailsRepository.GetAll().Where(it => it.Code != "").OrderByDescending(it => it.UserReview.Count()).Take(4);
+            var productEnitiy = productDetailsRepository.GetAll().Where(it => it.Code != "" &&  it.Category != null).OrderByDescending(it => it.UserReview.Count()).Take(4);
             var result = productEnitiy.ToProductDetailsDtos().ToList();
          
             return result;
@@ -58,6 +59,15 @@ namespace BuisniessLogic
             var product = productDetailsRepository.GetById(id).ToProductDetailsDto();
 
             return product;
+        }
+        public void UpdatePhoto(int id, string name)
+        {
+            
+            ProductDetails entityProduct = new ProductDetails();
+            entityProduct = productDetailsRepository.GetAll().FirstOrDefault(it => it.Id == id);
+            entityProduct.Image= name;
+            productDetailsRepository.Update(entityProduct);
+            productDetailsRepository.Save();
         }
         public List<ProductDto> GetBrandProducts(string brandName)
         {
@@ -70,7 +80,7 @@ namespace BuisniessLogic
         {
             
             var allProducts = productDetailsRepository.GetAll().AsQueryable();
-            var products = allProducts.Where(it => it.Code != "");
+            var products = allProducts.Where(it => it.Code != "" && it.Category != null);
             if (!string.IsNullOrEmpty(paginationParameters.Category))
             {
                 products = allProducts.Where(it => it.Category.Equals(paginationParameters.Category ) );
@@ -112,7 +122,7 @@ namespace BuisniessLogic
             var allProducts = productDetailsRepository.GetAll();
 
             var results = from p in allProducts
-                          where p.Brand != null
+                          where p.Brand != null &&  p.Category!=null
                           group p.Brand
                           by p.Category into g
                           select new MeniuModelDto()
@@ -124,7 +134,7 @@ namespace BuisniessLogic
         {
             var allProducts = productDetailsRepository.GetAll();
 
-            var products = allProducts.Where(it => it.Brand != null).Select(r => new { Name= r.Brand}).Distinct().ToList();
+            var products = allProducts.Where(it => it.Brand != null &&  it.Category != null).Select(r => new { Name= r.Brand}).Distinct().ToList();
             return products;
         }
 
@@ -134,5 +144,4 @@ namespace BuisniessLogic
         }
 
        
-    }
-}
+    }}

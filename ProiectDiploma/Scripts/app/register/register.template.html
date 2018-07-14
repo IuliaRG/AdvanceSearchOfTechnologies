@@ -38,9 +38,12 @@
                     <li class="subMenu open" ng-repeat="data in $ctrl.ProductVM.meniu">
                         <a ng-model="$ctrl.ProductVM.Category"> {{data.Category}}</a>
                         <ul style="display:none">
-                            <li type="button" ng-repeat="brand in data.Brands" ng-click="$ctrl.ProductPagination(null,null,data.Category,brand)">
-                                <i class="icon-chevron-right"></i>{{brand}}
-                            </li>
+                            <li type="button" ng-repeat="brand in data.Brands">
+                                <a href="/index.html#!/store?category={{data.Category}}&brand={{brand}}">
+                                    <i class="icon-chevron-right"></i>{{brand}}
+                                </a>
+</li>
+                      
                         </ul>
                     </li>
                    

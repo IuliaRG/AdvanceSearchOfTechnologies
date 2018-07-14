@@ -123,12 +123,12 @@
 }
 
 .border-chat {
-    border: 1px solid #4CAF50;
+    border: 1px solid #006dcc;
     margin: 0px;
 }
 
 .first-section {
-    background-color: #4CAF50;
+    background-color: #006dcc;
 }
 
     .first-section p {
@@ -224,7 +224,9 @@
 .third-section {
     border-top: 8px solid #EEEEEE;
 }
-
+.text-bar {
+    background-color: #F3F3F3;
+}
 .text-bar input {
     width: 90%;
     /*margin-left: 0.5px;*/

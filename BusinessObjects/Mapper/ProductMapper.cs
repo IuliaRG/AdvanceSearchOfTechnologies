@@ -21,7 +21,8 @@ namespace BusinessObjects.Mapper
             result.Price = product.Price;
             result.Code = product.Code;
             result.Brand = product.Brand;
-            result.Image = "Content/themes/images/products/large/" + product.Image;
+            result.Category = product.Category;
+            result.Image = "Content/" + product.Image;
             result.Reviews = product.UserReview.ToReviewDtos();
             return result;
         }
@@ -38,8 +39,9 @@ namespace BusinessObjects.Mapper
                 Model = it.Model,
                 Brand = it.Brand,
                 Code = it.Code,
+                Category = it.Category,
                 Dimensions = it.Dimensions,
-                Image = "Content/themes/images/products/large/" + it.Image,
+                Image = "Content/" + it.Image,
                 
                 Reviews = it.UserReview.ToReviewDtos(),
             });
@@ -63,6 +65,7 @@ namespace BusinessObjects.Mapper
         {
             entityProductDetails.Name = productDetailsDto.Name;
             entityProductDetails.Code = productDetailsDto.Code;
+            entityProductDetails.Category = productDetailsDto.Category;
             entityProductDetails.Description = productDetailsDto.Description;
             entityProductDetails.ShortDescription = productDetailsDto.ShortDescription;
             entityProductDetails.ReleaseDate = DateTime.Parse(productDetailsDto.ReleaseDate);
@@ -70,7 +73,7 @@ namespace BusinessObjects.Mapper
             entityProductDetails.Dimensions = productDetailsDto.Dimensions;
             entityProductDetails.Price = productDetailsDto.Price;
             entityProductDetails.Brand = productDetailsDto.Brand;
-            entityProductDetails.Image = "Content/themes/images/products/large/" + productDetailsDto.Image;
+          
             
 
             return entityProductDetails;

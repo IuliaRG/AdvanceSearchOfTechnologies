@@ -1,5 +1,5 @@
 var StoreController = (function () {
-    function StoreController($scope, iLocalStorageService, iProductService, $http, $window) {
+    function StoreController($scope, iLocalStorageService, iProductService, $http, $window, $routeParams) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new StorePageModel();
@@ -7,10 +7,11 @@ var StoreController = (function () {
         this.iLocalStorageService = iLocalStorageService;
         this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
+        this.route = $routeParams;
         // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination();
+        this.ProductPagination(null, null, (this.route && this.route.category) ? this.route.category : null, (this.route && this.route.brand) ? this.route.brand : null);
     }
     StoreController.prototype.GetProductsCallback = function (data, self) {
         self.ProductVM.FromProductsDto(data);

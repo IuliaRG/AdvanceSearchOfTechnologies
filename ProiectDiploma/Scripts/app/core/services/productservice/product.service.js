@@ -56,8 +56,11 @@ var ProductService = (function () {
         }).catch(function (err) {
         });
     };
-    ProductService.prototype.AddOrUpdateProduct = function (url, data, caller) {
+    ProductService.prototype.AddOrUpdateProduct = function (url, data, caller, successCallback) {
+        var _this = this;
         this._iHttpService.post(url, data).then(function (response) {
+            successCallback(response.data);
+            _this.iWindowService.location.href = '/index.html#!/usersmanager';
         }).catch(function (err) {
         });
     };

@@ -11,7 +11,8 @@
     protected chat: any;
     protected scope: any;
     protected id: any;
-    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService) {
+    private route: any;
+    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService, $routeParams: ng.RouteData) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new StorePageModel();
@@ -19,11 +20,11 @@
         this.iLocalStorageService = iLocalStorageService;
         this.iWindowService = $window;
         this.currentUser = iLocalStorageService.GetCurrentUser();
-
+        this.route = $routeParams;
         // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination();
+        this.ProductPagination(null, null, (this.route && this.route.category) ? this.route.category : null, (this.route && this.route.brand) ? this.route.brand : null);
     }
     protected GetProductsCallback(data: any, self: StoreController): void {
         self.ProductVM.FromProductsDto(data);

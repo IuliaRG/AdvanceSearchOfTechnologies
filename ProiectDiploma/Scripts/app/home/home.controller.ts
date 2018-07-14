@@ -13,14 +13,19 @@
     protected scope: any;
     protected id: any;
     protected bestProducts: any;
+    protected iUserService: IUserService;
     private route: any;
-    constructor($scope, iLocalStorageService: ILocalStorageService, iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService, $routeParams: ng.RouteData) {
+    public role: any;
+    public isAdmin: boolean;
+    constructor($scope, iLocalStorageService: ILocalStorageService, iUserService: IUserService , iProductService: IProductService, $http: ng.IHttpService, $window: ng.IWindowService, $routeParams: ng.RouteData) {
         this.initialize();
         this._httpService = $http;
         this.ProductVM = new ProductPageModel();
         this.iProductService = iProductService;
         this.iLocalStorageService = iLocalStorageService;
+        this.iUserService = iUserService;
         this.iWindowService = $window;
+        this.isAdmin = false;
         this.currentUser = iLocalStorageService.GetCurrentUser();
         this.route = $routeParams;
 
@@ -28,9 +33,38 @@
        // this.iProductService.GetProduct('api/Product/GetAllProducts', this, this.GetProductsCallback);
         this.Discussion = [];
         this.scope = $scope;
-        this.ProductPagination(null,null,this.route.category, this.route.brand);
+        this.ProductPagination(null, null, (this.route && this.route.category) ? this.route.category : null, (this.route && this.route.brand) ? this.route.brand : null);
         this.GetPopularProducts();
+        this.GetRole(this.currentUser,this);
     }
+    protected GetRole(data: any, self: any): void {
+        self = this;
+        if (self.currentUser != null) {
+            var config: angular.IRequestShortcutConfig = {
+                headers: {
+                    "Authorization": 'Bearer ' + self.currentUser.token,
+                }
+            }
+            self.iUserService.GetUserRole('api/User/GetRole', config, self, self.GetRoleCallback);
+       }
+       
+    }
+    protected GetRoleCallback(user: any, self: HomeController): void {
+     
+        self.role = user.Roles;
+      
+        if (self.role.indexOf("Admin") > -1) {
+            self.isAdmin = true;
+        }
+    }
+
+    //protected GetUserRole(): void {
+    //    var self = this;
+    //   self.role = false;
+    //   if (self.currentUser!=null && self.currentUser.role.indexOf("Admin") > -1) {
+    //       self.role = true;
+    //    }
+    //}
     protected GetProductsCallback(data: any, self: HomeController): void {
         self.ProductVM.FromProductsDto(data);
         console.log(self.ProductVM.CurrentPage);
@@ -88,7 +122,7 @@
             self.loadScript('jquery.js');
             //self.loadBoostrapScript('bootstrap.min.css');
            self.loadCssScript('base.css');
-            console.log(0);
+           
             $(() => {
                 self.chat = (<any>$).connection.chatHub;
                 this.chat.client.receiveFromAdmin = (from: string, message: string) => { self.ReceiveFromAdmin(from, message, self) };

@@ -2,6 +2,7 @@
 using BusinessObjects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -35,11 +36,11 @@ namespace ProiectDiploma.Controllers
             return user;
         }
         [Route("AddOrUpdateProduct")]
-        public IHttpActionResult AddOrUpdateProduct(ProductDetailsDto product)
+        public int AddOrUpdateProduct(ProductDetailsDto product)
         {
             service = DIContainerST.GetInstance().Resolve<IProductService>();
-            service.AddOrUpdateProduct(product);
-            return Ok();
+           var id= service.AddOrUpdateProduct(product);
+            return id;
         }
         [Route("GetProductByID")]
         public ProductDetailsDto GetProductByID(int id)
@@ -76,6 +77,29 @@ namespace ProiectDiploma.Controllers
 
 
             return products;
+        }
+        [HttpPost]
+        public void UploadFile(int id)
+        {
+            if (HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                // Get the uploaded image from the Files collection
+                var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
+
+                if (httpPostedFile != null)
+                {
+                    // Validate the uploaded image(optional)
+
+                    // Get the complete file path
+                  
+                    var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Content"), httpPostedFile.FileName);
+
+                    // Save the uploaded file to "UploadedFiles" folder
+                    httpPostedFile.SaveAs(fileSavePath);
+                   service = DIContainerST.GetInstance().Resolve<IProductService>();
+                 service.UpdatePhoto(id, httpPostedFile.FileName);
+                }
+            }
         }
     }
 }

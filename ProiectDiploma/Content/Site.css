@@ -15,3 +15,10 @@ select,
 textarea {
     max-width: 280px;
 }
+.text-bar {
+    background-color: #F3F3F3;
+}
+
+#sideManu h5 {
+    min-height: 40px;
+}

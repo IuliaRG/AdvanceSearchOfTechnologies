@@ -12,11 +12,12 @@ namespace Abstracts
     {
         IEnumerable<ProductDetailsDto> GetAllProducts();
         IEnumerable<ProductDetailsDto> GetPopularProducts();
-        void AddOrUpdateProduct(ProductDetailsDto product);
+        int AddOrUpdateProduct(ProductDetailsDto product);
         ProductDetailsDto GetProductById(int id);
         object GetAllBrands();
         List<ProductDto> GetBrandProducts(string brandName);
         IEnumerable<MeniuModelDto> GetBrandsByCategory();
+         void UpdatePhoto(int id, string name);
         ProductPaginingParametersDto GetProductsOnPage(ProductPaginingParametersDto paginationParameters);
     }
 }
